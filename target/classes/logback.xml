@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- scan: 设置为true时，配置文件如果发生改变 将会被重新加载 默认为true -->
+<!-- scanPeriod: 设置监测文件是否有修改时间的间隔 如没有给出时间单位 默认ms scan为true时
+	该属性才会生效 默认的时间间隔为1分钟 -->
+<!-- debug: 当该属性设置为true时 打印出logBack内部日志信息 实时查看logback运行状态 
+默认值为false -->
+<configuration debug="true">
+	<!-- appender 负责写日志的组件 name指定appender名称 class指定全限定名 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoders are by default assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
+		<!-- 日志格式化参数 -->
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<!-- 每天生成一个日志文件 保存30天 -->
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender"> 
+　　　　　　　　　　　　<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> 
+　　　　　　　　　　　　　　<fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern> 
+　　　　　　　　　　　　　　<maxHistory>30</maxHistory> 
+　　　　　　　　　　　　</rollingPolicy> 
+　　　　　　　　　　　　<encoder> 
+　　　　　　　　　　　　　　<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern> 
+　　　　　　　　　　　　</encoder> 
+　　　　　　　　　　</appender> 
+	<!-- >=debug 级别的日志都输出到控制台 -->
+	<root level="debug">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>
