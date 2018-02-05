@@ -88,10 +88,7 @@ function getUserData(userChart){
  * 获取关键词数据
  */
 function getWordCount(){
-	
-	if( cache.keyword === keyword ){
-		loadWordEcharts(cht.data);
-	}else{
+
 		$.ajax({
 			type:'GET',
 			url: ctx+'/data/getIndexData',
@@ -106,16 +103,14 @@ function getWordCount(){
 				debugger;
 				if(ret.status === 0 && ret.data != null){
 					//加载关键词条形图
-					cache.keyword = keyword;
-					cache.data = ret.data;
-					loadWordEcharts(ret.data);
+					//没有编码，无多余信息信息
+					loadWordEcharts(ret.data,"");
 				}else{
 					wordChart.hideLoading();
 					toastr.error("FAILED：" + ret.info);
 				}
 			}
 		});
-	}
 }
 
 /**

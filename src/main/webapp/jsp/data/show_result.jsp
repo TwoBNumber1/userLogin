@@ -163,11 +163,11 @@
 						    <div class="text-inter">
 									    <div class="container">
 										      <div class="row">
-											        <div class="col-md-3" id="wordCount" style="height:550px;border:1px solid #ccc;padding:20px"></div>  
+											        <div class="col-md-3" id="wordCount" style="height:450px;border:1px solid #ccc;padding:20px"></div>  
 										      		<div class="col-md-9" id="attention_table" 
 										      		data-tipso="研究者关注的热点文献"
 										      		style="
-										      			height:550px;
+										      			height:450px;
 										      			border:1px solid #ccc;
 										      			padding:0 0 0 0;
 										      			overflow:auto">
@@ -176,10 +176,10 @@
 								   		</div>
 								   		<div class="container">
 								   		   	<div class="row">
-											        <div class="col-md-6" id="orgCount" style="height:550px;border:1px solid #ccc;padding:20px"></div>  
+											        <div class="col-md-6" id="orgCount" style="height:450px;border:1px solid #ccc;padding:20px"></div>  
 										      		<div class="col-md-6" id="subjectCount" 
 										      		style="
-										      			height:550px;
+										      			height:450px;
 										      			border:1px solid #ccc;
 										      			padding:0 0 0 0;
 										      			overflow:auto">

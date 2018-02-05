@@ -130,8 +130,12 @@ function loadUserChart(data,userChart){
     }
 }
 
-function loadWordEcharts(data){
+function loadWordEcharts(data,name){
 	debugger;
+	var info = "";
+	if( name != ""){
+		info = "学科-> "+name;
+	}
 	var obj = jQuery.parseJSON(data.ret);
 	var ys = [];
 	var xs = [];
@@ -147,12 +151,12 @@ function loadWordEcharts(data){
 	wordChart.hideLoading();
 	wordChart.setOption( {
 	    title: {
-	        text: '相关词 Top 5',
-	        subtext: '与<'+keyword+'>共现次数最多的关键词 top 5'
+	        text: '相关词 Top 5 \n'+info,
+	        subtext:'与<'+keyword+'>共现次数最多的关键词 top 5'
 	    },
 	    tooltip: {
 	        trigger: 'item',
-	        formatter:'与<'+keyword+'>共现次数<br/>{b}:{c} ({d}%)'
+	        formatter:'共现次数<br/>{b}:{c} ({d}%)'
 	        
 	    },
 	    legend: {

@@ -82,7 +82,7 @@ public class ConvertUtil {
 			case "GetProgresEarlist":
 				result = "{'sval': '"+
 					ConvertUtil.stringConvertToUTF8(keyword).toString()
-					+"','scode': '*'}";
+					+"','scode': '"+ (numType.length()>5?"*":numType.length()>0?numType:"*")  +"'}";
 				break;
 				
 			default:result = "";break;

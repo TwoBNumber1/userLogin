@@ -104,6 +104,10 @@ function loadOrgan(data){
                xAxis: {
             	   type:"category",
                    data: xs,
+                   axisLabel: {  
+	            	   interval:0,  
+	            	   rotate:-20  
+	            	}  
                    //boundaryGap:[]
                },
                yAxis:[{
@@ -147,7 +151,7 @@ function loadSubject(data){
 	var obj = jQuery.parseJSON(data.ret);
 	//var code 
 	subjectChart.hideLoading();
-	
+	sub_data = [];
 	for( var i=0; i<obj.show.length; i++ ){
 		var param = {};
 		param.name = obj.show[i][0];
@@ -223,10 +227,38 @@ subjectChart.on('click', function (params) {
     	//获取对应下标
     	for( var i=0; i<10; i++){
     		if( name === sub_data[i].name ) {
+    			
     			console.log(sub_code[i]);
+    			updateChart(sub_code[i],name);
     			break;
     		}
     	}
     	//刷新文献数据 关键词数据
     }
 });
+
+
+function updateChart(code,name){
+	wordChart.showLoading();
+	$.ajax({
+		type:'GET',
+		url: ctx+'/data/getIndexData',
+		dataType: 'json',
+		
+		data:{"topSearch":keyword,
+			"resultType":"GetTotalRelevanceWordsForCht",
+			"numType":code
+		},
+		async:true,
+		success: function(ret){
+			debugger;
+			if(ret.status === 0 && ret.data != null){
+				//加载关键词条形图
+				loadWordEcharts(ret.data,name);
+			}else{
+				wordChart.hideLoading();
+				toastr.error("FAILED：" + ret.info);
+			}
+		}
+	});
+}

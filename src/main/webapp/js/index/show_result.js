@@ -32,10 +32,9 @@ $(function(){
 	getIndexData(keyword,'GetAttention','Academic');
 	getWordCount();
 	debugger;
-	getAttentionArticle();
-	getSubject();
-	getOrgan();
-	
+	setTimeout('getAttentionArticle();',1000);
+	setTimeout('getSubject();',2500);
+	setTimeout('getOrgan();',4000);
 });
 
 
