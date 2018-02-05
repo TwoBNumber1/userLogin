@@ -95,7 +95,7 @@
 			<div class="row">
 				<ul id="all-tab" class="nav nav-tabs">
 				  <li class="active"><a  data-toggle="tab" href="#index-data">指数分析</a></li>
-				  <li><a data-toggle="tab" href="#caculate-data">SVN</a></li>
+				  <li><a href="#caculate-data">计量可视化</a></li>
 				  <li><a href="#">iOS</a></li>
 				  <li><a href="#">VB.Net</a></li>
 				  <li><a href="#">Java</a></li>
@@ -192,7 +192,22 @@
 					</div>
 					<div id="caculate-data" class="tab-pane">
 						<div class="panel-body">
-							<h2>暂无数据</h2>
+							<div class="text-inter">
+								<div class="container">
+									<div class="row">
+										<div class="col-sm-12" id="matrix" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
+									</div>
+								</div>
+							</div>
+								<div class="text-inter">
+								<div class="container">
+									<div class="row">
+										<div class="col-sm-8" id="wordCount" style="height:400px;border:1px solid #ccc;padding:10px;"></div>
+										<div class="col-sm-4" id="wordCloud" style="height:400px;border:1px solid #ccc;padding:10px;"></div>
+									
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 					
@@ -267,7 +282,7 @@
         </div>
       </div>  
     </footer>
-    
+    <script src="<%=path %>/js/echarts/echarts-wordcloud.min.js"></script>
     <script src="<%=path %>/js/jquery-1.8.3.min.js"></script>
     <script src="<%=path %>/js/bootstrap.min.js"></script>
     <script src="<%=path %>/js/scripts.js"></script>
@@ -281,6 +296,7 @@
     <script src="<%=path %>/js/index/show_result.js"></script>
     <script src="<%=path %>/js/index/get_index_data.js"></script>
     <script src="<%=path %>/js/index/load_echarts.js"></script>
+    <script src="<%=path %>/js/index/get_caculate_data.js"></script>
     <script src="<%=path %>/js/index/load_index_subject.js"></script>
     <script src="<%=path %>/js/plugins/tooltip/tipso.min.js"></script>
    	<!-- Sweet alert -->

@@ -1,17 +1,3 @@
-$(function(){
-	//搜索框监听
-	debugger;
-	//关键词柱状图获取
-	keyword = getUrlParam('keyword');
-	groupName = getUrlParam('groupName');
-	getCaculateData(keyword,groupName);
-	getMatrixData(keyword,groupName);
-	//获取数据
-});
-
-var keyword = "";
-var groupName = "";
-
 function getMatrixData(keyword,groupName){
 	$.ajax({
 		type:'POST',
@@ -25,12 +11,14 @@ function getMatrixData(keyword,groupName){
 			debugger;
 			if(ret.status === 0 && ret.data != null){
 				//%u 解码
+				// 显示标题，图例和空的坐标轴
+				var matrixChart = echarts.init(document.getElementById('matrix'),'wonderland');
+				matrixChart.showLoading();
 				var str = unescape(ret.data.ret);
-				loadMatrix(str);
+				loadMatrix(str,matrixChart);
 			}
 		},
 		error:function(){
-			
 		}
 	});
 }
@@ -41,7 +29,7 @@ function getCaculateData(keyword,groupName){
 		type:'POST',
 		url: ctx+'/data/caculate',
 		dataType: 'json',
-		async:false,
+		async:true,
 		data:{"keyword":keyword,
 			"groupName":groupName,
 			"urlName":"GroupTrend.aspx"
@@ -50,9 +38,14 @@ function getCaculateData(keyword,groupName){
 			debugger;
 			if(ret.status === 0 && ret.data != null){
 				//%u 解码
+				var wordChart = echarts.init(document.getElementById('wordCount'),"wonderland");
+				wordChart.showLoading();
+				// 显示标题，图例和空的坐标轴
+				var cloudChart = echarts.init(document.getElementById('wordCloud'),'wonderland');
+				cloudChart.showLoading();
 				var str = unescape(ret.data.ret);
-				loadWordCount(str);
-				loadWordCloud(str);
+				loadWordCount(str,wordChart);
+				loadWordCloud(str,cloudChart);
 			}
 		},
 		error:function(){
@@ -61,8 +54,7 @@ function getCaculateData(keyword,groupName){
 	});
 }
 
-
-var wordChart = echarts.init(document.getElementById('wordCount'),"vintage");
+/*var wordChart = echarts.init(document.getElementById('wordCount'),"wonderland");
 wordChart.showLoading();
 // 显示标题，图例和空的坐标轴
 var matrixChart = echarts.init(document.getElementById('matrix'),'vintage');
@@ -70,9 +62,10 @@ matrixChart.showLoading();
 
 var cloudChart = echarts.init(document.getElementById('wordCloud'),'vintage');
 cloudChart.showLoading();
+*/
 
 
-function loadMatrix(str){
+function loadMatrix(str,matrixChart){
 	debugger;
 	var obj = jQuery.parseJSON(str);
 	var data = [];
@@ -147,8 +140,6 @@ function loadMatrix(str){
 		    },
 		          selectedMode: 'false',
 		          bottom: 20,
-		          data: ['计算机科学与教育软件学院', 
-		          '地理科学学院']
 		      }],
 		      toolbox: {
 		        show : true,
@@ -209,7 +200,7 @@ function loadMatrix(str){
 
 var keywordCount = [];
 
-function loadWordCloud(data){
+function loadWordCloud(data,cloudChart){
 	debugger;
 	var obj = jQuery.parseJSON(data);
 	var data = [];
@@ -219,7 +210,7 @@ function loadWordCloud(data){
 		data.push({name:obj[i].name,value:obj[i].y});
 	}
 	
-	cloudChart.setOption({
+	setTimeout(cloudChart.setOption({
 	 
 		 title:{
 		        text:"词云图",
@@ -250,19 +241,18 @@ function loadWordCloud(data){
 		            }
 		        },
 		        data:data}]
-	});
+	}),1000);
 	
 	
 	cloudChart.hideLoading();
 	
 }
 
-
-function loadWordCount(data){
+var keywordCount;
+function loadWordCount(data,wordChart){
 	var obj = jQuery.parseJSON(data);
 	var ys = []; 
 	var xs = [];
-	wordChart.hideLoading();
 	for( var i=0; i<obj.length; i++){
 		xs.push(obj[i].name);
 		ys.push(obj[i].y);
@@ -328,13 +318,10 @@ function loadWordCount(data){
 	        }
 	    ]
 	});
-	
-	
+
 	wordChart.hideLoading();
 	
 }
-
-
 
 
 

@@ -1,4 +1,7 @@
-
+function getSum(a){
+	
+	return eval(a.join("+"));
+}
 
 /*根据name获取当前Url中的参数*/
 function getUrlParam(name){
@@ -32,6 +35,10 @@ function year_to_year(now,pre){
  */
 function replaceAll(str,key,value){
 	return str.replace( new RegExp(key,'g'),value );
+}
+
+function deal_with_undefined(obj){
+	return typeof(obj) == 'undefined'?'':obj;
 }
 
 

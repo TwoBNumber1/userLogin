@@ -30,11 +30,11 @@ $(function(){
 	keyword = getUrlParam('keyword');
 	$("#search").val(keyword);
 	getIndexData(keyword,'GetAttention','Academic');
-	getWordCount();
+	setTimeout('getWordCount();',1000)
 	debugger;
-	setTimeout('getAttentionArticle();',1000);
-	setTimeout('getSubject();',2500);
-	setTimeout('getOrgan();',4000);
+	setTimeout('getAttentionArticle();',2500);
+	setTimeout('getSubject();',4000);
+	setTimeout('getOrgan();',6000);
 });
 
 
@@ -56,14 +56,23 @@ $("#searchBtn").on("click",function(){
 	getOrgan();
 });
 
-/*
+
 $("#all-tab a").click(function(e){
+	debugger;
 	e.preventDefault();
+	if( deal_with_undefined($(this).parent().attr("class")).indexOf("active") != -1 ){
+		return;
+	}
+	var href = $(this).attr('href');
 	$(this).tab('show');
-});*/
+	if( href === "#caculate-data" ){
+		getCaculateData(keyword,"关键词");
+		getMatrixData(keyword,"关键词");
+	}
+});
 
 /**
- * 选项卡切换 并显示
+ * 指数分析选项卡切换--（部分操作） 并显示
  * @param e
  * @returns
  */
