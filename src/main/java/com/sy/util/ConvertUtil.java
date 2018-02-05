@@ -65,6 +65,7 @@ public class ConvertUtil {
 					+ "','xkcode': '*','scomp1': '','scomp2': '','scomp3': '','stype': '"+numType+"'}";
 				break;
 			case "GetSubject": 
+			case "GetInstitution":
 				result = "{'sval': '"+
 					ConvertUtil.stringConvertToUTF8(keyword).toString()
 					+"','xkcode': '*'}";
@@ -73,6 +74,7 @@ public class ConvertUtil {
 					ConvertUtil.stringConvertToUTF8(keyword).toString()
 					+"','xkcode': '*','scode':'','stype':'0'}";
 					break;
+		
 			//相关词分布 研究文献
 			case "GetTotalRelevanceWordsForCht":
 			case "GetProgressClassic":

@@ -16,8 +16,8 @@ function getIndexData(keyword,type,numType){
 		url: ctx+'/data/getIndexData',
 		dataType: 'json',
 		data:{"topSearch":keyword,
-			"resultType":type,
-			"numType":numType
+			"resultType":"GetSubject",
+			"numType":""
 		},
 		success: function(ret){
 			debugger;

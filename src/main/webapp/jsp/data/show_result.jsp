@@ -174,7 +174,19 @@
 										      		</div>  
 										      </div>
 								   		</div>
-								    </div>
+								   		<div class="container">
+								   		   	<div class="row">
+											        <div class="col-md-6" id="orgCount" style="height:550px;border:1px solid #ccc;padding:20px"></div>  
+										      		<div class="col-md-6" id="subjectCount" 
+										      		style="
+										      			height:550px;
+										      			border:1px solid #ccc;
+										      			padding:0 0 0 0;
+										      			overflow:auto">
+										      		</div>  
+										      </div>
+								   		</div>
+						    </div>
 						    <!-- 指数分析选项卡 end -->
 					    </div>
 					</div>
@@ -269,6 +281,7 @@
     <script src="<%=path %>/js/index/show_result.js"></script>
     <script src="<%=path %>/js/index/get_index_data.js"></script>
     <script src="<%=path %>/js/index/load_echarts.js"></script>
+    <script src="<%=path %>/js/index/load_index_subject.js"></script>
     <script src="<%=path %>/js/plugins/tooltip/tipso.min.js"></script>
    	<!-- Sweet alert -->
     <script src="<%=path %>/js/plugins/sweetalert/sweetalert.min.js"></script>

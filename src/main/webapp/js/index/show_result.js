@@ -33,7 +33,8 @@ $(function(){
 	getWordCount();
 	debugger;
 	getAttentionArticle();
-	
+	getSubject();
+	getOrgan();
 	
 });
 
@@ -45,7 +46,6 @@ var all_flag = {};
  */
 $("#searchBtn").on("click",function(){
 	all_flag = {};
-	
 	alert($("#search").val());
 	keyword = $("#search").val();
 	publishChart.showLoading();
@@ -53,6 +53,8 @@ $("#searchBtn").on("click",function(){
 	wordChart.showLoading();
 	getAttentionArticle();
 	getWordCount();
+	getSubject();
+	getOrgan();
 });
 
 /*
@@ -101,7 +103,6 @@ $("#count-tab a").click(function(e){
 	}else{
 		return;
 	}
-	
 })
 
 
