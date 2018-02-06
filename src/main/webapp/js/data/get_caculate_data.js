@@ -65,7 +65,7 @@ function getCaculateData(keyword,groupName){
 var wordChart = echarts.init(document.getElementById('wordCount'),"vintage");
 wordChart.showLoading();
 // 显示标题，图例和空的坐标轴
-var matrixChart = echarts.init(document.getElementById('matrix'),'vintage');
+var matrixChart = echarts.init(document.getElementById('matrix'),'wonderland');
 matrixChart.showLoading();
 
 var cloudChart = echarts.init(document.getElementById('wordCloud'),'vintage');

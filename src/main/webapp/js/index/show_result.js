@@ -67,7 +67,7 @@ $("#all-tab a").click(function(e){
 	$(this).tab('show');
 	if( href === "#caculate-data" ){
 		getCaculateData(keyword,"关键词");
-		getMatrixData(keyword,"关键词");
+		setTimeout('getMatrixData("'+keyword+'","关键词")',3000);
 	}
 });
 

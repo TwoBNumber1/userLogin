@@ -192,6 +192,14 @@
 					</div>
 					<div id="caculate-data" class="tab-pane">
 						<div class="panel-body">
+						<div class="text-inter">
+							<div class="container">
+									<div class="row">
+										<div class="col-sm-8" id="wordAllCount" style="height:400px;border:1px solid #ccc;padding:10px;"></div>
+										<div class="col-sm-4" id="wordCloud" style="height:400px;border:1px solid #ccc;padding:10px;"></div>
+									</div>
+								</div>
+							</div>
 							<div class="text-inter">
 								<div class="container">
 									<div class="row">
@@ -199,15 +207,7 @@
 									</div>
 								</div>
 							</div>
-								<div class="text-inter">
-								<div class="container">
-									<div class="row">
-										<div class="col-sm-8" id="wordCount" style="height:400px;border:1px solid #ccc;padding:10px;"></div>
-										<div class="col-sm-4" id="wordCloud" style="height:400px;border:1px solid #ccc;padding:10px;"></div>
-									
-									</div>
-								</div>
-							</div>
+							
 						</div>
 					</div>
 					
@@ -219,44 +219,7 @@
 	    </div>
     </div>
    
-  
-   
  
- 
-    <div class="quote-container">
-      <div class="container">
-        <div class="row">
-      
-      		<table id='test-table'>
-      			<thead>
-      				<tr>
-      					<th>测试</th>
-      					<th>raging</th>
-      					<th>loop</th>
-      				</tr>
-      			</thead>
-      			<tbody>
-      				<tr>
-      					<td>cbb</td>
-      					<td>cbb</td>
-      					<td>cbb</td>
-      				</tr>
-      				<tr>
-      					<td>cbb</td>
-      					<td>cbb</td>
-      					<td>cbb</td>
-      				</tr>
-      				<tr>
-      					<td>cbb</td>
-      					<td>cbb</td>
-      					<td>cbb</td>
-      				</tr>
-      			
-      			</tbody>
-      		</table>
-        </div>
-      </div>
-    </div>
     <div class="shadow"></div>
     <footer>
       <div class="container">
@@ -290,6 +253,7 @@
     <script src="<%=path %>/js/echarts/echarts.js"></script>
     <script src="<%=path %>/js/echarts/vintage.js"></script>
     <script src="<%=path %>/js/echarts/wonderland.js"></script>
+    <script src="<%=path %>/js/echarts/shine.js"></script>
     <script src="<%=path %>/js/plugins/dataTables/jquery.dataTables.min.js"></script>
     <script src="<%=path %>/js/data/util.js"></script>
     <script src="<%=path %>/js/plugins/toastr/toastr.min.js"></script>

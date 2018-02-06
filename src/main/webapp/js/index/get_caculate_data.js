@@ -12,10 +12,9 @@ function getMatrixData(keyword,groupName){
 			if(ret.status === 0 && ret.data != null){
 				//%u 解码
 				// 显示标题，图例和空的坐标轴
-				var matrixChart = echarts.init(document.getElementById('matrix'),'wonderland');
-				matrixChart.showLoading();
+				
 				var str = unescape(ret.data.ret);
-				loadMatrix(str,matrixChart);
+				loadMatrix(str);
 			}
 		},
 		error:function(){
@@ -38,14 +37,14 @@ function getCaculateData(keyword,groupName){
 			debugger;
 			if(ret.status === 0 && ret.data != null){
 				//%u 解码
-				var wordChart = echarts.init(document.getElementById('wordCount'),"wonderland");
+				var wordChart = echarts.init(document.getElementById('wordAllCount'),"wonderland");
 				wordChart.showLoading();
 				// 显示标题，图例和空的坐标轴
 				var cloudChart = echarts.init(document.getElementById('wordCloud'),'wonderland');
 				cloudChart.showLoading();
 				var str = unescape(ret.data.ret);
 				loadWordCount(str,wordChart);
-				loadWordCloud(str,cloudChart);
+				//loadWordCloud(str,cloudChart);
 			}
 		},
 		error:function(){
@@ -65,7 +64,9 @@ cloudChart.showLoading();
 */
 
 
-function loadMatrix(str,matrixChart){
+function loadMatrix(str){
+	var matrixChart = echarts.init(document.getElementById('matrix'),'wonderland');
+	matrixChart.showLoading();
 	debugger;
 	var obj = jQuery.parseJSON(str);
 	var data = [];
@@ -75,7 +76,7 @@ function loadMatrix(str,matrixChart){
 		var row = {};
 		row.name = obj.XTitles[i] ;
 		row.value = keywordCount[i];
-		row.symbolSize = parseInt( Percentage(row.value,getSum(keywordCount)) ) * 10;
+		row.symbolSize = parseInt( Percentage(row.value,getSum(keywordCount)) ) * 5;
 	/*	row.tooltip = {};
 		row.tooltip.formatter = row.name  + "：" + keywordCount[i];*/
 		data.push(row);
@@ -117,7 +118,7 @@ function loadMatrix(str,matrixChart){
 	}
     	  
 	matrixChart.hideLoading();
-	option = {
+	var option = {
 			  
 		       title:{
 		        text: "关键词共现网络",
@@ -134,12 +135,12 @@ function loadMatrix(str,matrixChart){
 		          formatter: function (name) {
 		        return echarts.format.truncateText(name, 40, 
 		        '18px Microsoft Yahei', '…');
-		    },
-		    tooltip: {
-		        show: true
-		    },
-		          selectedMode: 'false',
-		          bottom: 20,
+		          },
+			    tooltip: {
+			        show: true
+			    },
+			    selectedMode: 'false',
+			    bottom: 20
 		      }],
 		      toolbox: {
 		        show : true,
@@ -288,7 +289,8 @@ function loadWordCount(data,wordChart){
 	        show: true,
 	        realtime:true,
 	        start: 0,
-	        end: Percentage(10,obj.length)
+	        end: Percentage(10,obj.length),
+	        
 	    },
 	    xAxis: [
 	        {
