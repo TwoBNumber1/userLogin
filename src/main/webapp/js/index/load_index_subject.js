@@ -115,7 +115,7 @@ function loadOrgan(data){
                    scale: true,
                    name: '文献量(篇)',
                    nameLocation:"center",
-   	               nameGap:50,
+   	               nameGap:20,
    	               min: 0.000000001, //如果使用0，会出现你之前的情况，必须大于0的，使用0.000000001无限接近0
    	               axisLabel: {
    	            	   formatter: function(value, index) {

@@ -12,7 +12,8 @@ function getMatrixData(keyword,groupName){
 			if(ret.status === 0 && ret.data != null){
 				//%u 解码
 				// 显示标题，图例和空的坐标轴
-				
+				deal_with_chart(matrixChart);
+				matrixChart = echarts.init(document.getElementById("matrix"),"wonderland");
 				var str = unescape(ret.data.ret);
 				loadMatrix(str);
 			}
@@ -62,11 +63,11 @@ matrixChart.showLoading();
 var cloudChart = echarts.init(document.getElementById('wordCloud'),'vintage');
 cloudChart.showLoading();
 */
-
+var matrixChart;
 
 function loadMatrix(str){
-	var matrixChart = echarts.init(document.getElementById('matrix'),'wonderland');
-	matrixChart.showLoading();
+	
+	
 	debugger;
 	var obj = jQuery.parseJSON(str);
 	var data = [];

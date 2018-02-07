@@ -96,7 +96,7 @@
 				<ul id="all-tab" class="nav nav-tabs">
 				  <li class="active"><a  data-toggle="tab" href="#index-data">指数分析</a></li>
 				  <li><a href="#caculate-data">计量可视化</a></li>
-				  <li><a href="#">iOS</a></li>
+				  <li><a href="#source-distribute">资源分布</a></li>
 				  <li><a href="#">VB.Net</a></li>
 				  <li><a href="#">Java</a></li>
 				  <li><a href="#">PHP</a></li>
@@ -210,6 +210,26 @@
 							
 						</div>
 					</div>
+					<div id="source-distribute" class="tab-pane">
+						<div class="panel-body">
+						<div class="text-inter">
+							<div class="container">
+									<div class="row">
+										<div class="col-sm-8" id="wordAllCount" style="height:400px;border:1px solid #ccc;padding:10px;"></div>
+										<div class="col-sm-4" id="wordCloud" style="height:400px;border:1px solid #ccc;padding:10px;"></div>
+									</div>
+								</div>
+							</div>
+							<div class="text-inter">
+								<div class="container">
+									<div class="row">
+										<div class="col-sm-12" id="matrix" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+					</div>
 					
 				
 				
@@ -251,9 +271,8 @@
     <script src="<%=path %>/js/scripts.js"></script>
     <script src="<%=path %>/js/unslider.min.js"></script>
     <script src="<%=path %>/js/echarts/echarts.js"></script>
-    <script src="<%=path %>/js/echarts/vintage.js"></script>
+    <script src="<%=path %>/js/echarts/macarons.js"></script>
     <script src="<%=path %>/js/echarts/wonderland.js"></script>
-    <script src="<%=path %>/js/echarts/shine.js"></script>
     <script src="<%=path %>/js/plugins/dataTables/jquery.dataTables.min.js"></script>
     <script src="<%=path %>/js/data/util.js"></script>
     <script src="<%=path %>/js/plugins/toastr/toastr.min.js"></script>

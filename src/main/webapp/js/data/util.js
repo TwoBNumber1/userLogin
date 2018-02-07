@@ -37,8 +37,24 @@ function replaceAll(str,key,value){
 	return str.replace( new RegExp(key,'g'),value );
 }
 
+/**
+ * 处理值可能为undefined 的对象
+ * @param obj
+ * @returns
+ */
 function deal_with_undefined(obj){
 	return typeof(obj) == 'undefined'?'':obj;
+}
+
+/**
+ * 检测图表是否需要清空
+ * @param chart
+ */
+function deal_with_chart(chart){
+	
+	if (chart != null && chart != "" && chart != undefined) {  
+        chart.dispose();  
+    }  
 }
 
 

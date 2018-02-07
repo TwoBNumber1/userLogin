@@ -175,37 +175,16 @@
                 }
             }
         },
-        "graph": {
-            "itemStyle": {
-                "normal": {
-                    "borderWidth": 0,
-                    "borderColor": "#ccc"
-                }
-            },
-            "lineStyle": {
-                "normal": {
-                    "width": "1",
-                    "color": "#cccccc"
-                }
-            },
-            "symbolSize": "8",
-            "symbol": "emptyCircle",
-            "smooth": false,
-            "color": [
+        graph: {
+       
+            color: [
                 "#4ea397",
                 "#22c3aa",
                 "#7bd9a5",
                 "#d0648a",
                 "#f58db2",
                 "#f2b3c9"
-            ],
-            "label": {
-                "normal": {
-                    "textStyle": {
-                        "color": "#ffffff"
-                    }
-                }
-            }
+            ]
         },
         "map": {
             "itemStyle": {

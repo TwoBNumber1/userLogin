@@ -1,3 +1,4 @@
+
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
@@ -19,7 +20,8 @@
         log('ECharts is not Loaded');
         return;
     }
-    var colorPalette = [   "#2ec7c9",
+    var colorPalette = [
+        "#2ec7c9",
         "#b6a2de",
         "#5ab1ef",
         "#ffb980",
@@ -38,12 +40,23 @@
         "#c9ab00",
         "#7eb00a",
         "#6f5553",
-        "#c14089"];
-    echarts.registerTheme('vintage', {
+        "#c14089"
+    ]
+    echarts.registerTheme('macarons', {
         color: colorPalette,
-        backgroundColor: '#ffffff',
+        backgroundColor: "transparent",
+        textStyle: {},
+        title: {
+            textStyle: {
+                color: "#008acd"
+            },
+            subtextStyle: {
+                color: "#aaaaaa"
+            }
+        },
         graph: {
-            color: colorPalette
+            color: colorPalette,
         }
+
     });
 }));
