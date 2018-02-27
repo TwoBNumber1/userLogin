@@ -36,19 +36,26 @@ function getReferData(type,href){
 		success:function(ret){
 			console.log("获取被引数据");
 			var table = $(href).find("table");
-			table.prepend(ret);
-			//table.prepend('<tfoot style="align:center">更多...</tfoot>');
-			table.DataTable({
-				//规定排序列
-				paging:false,
-				searching:false,
-				info:false,
-				//order:[[7,"desc"]],
-				columnDefs:[{
-					targets:[0,1],
-					ordering:false
-				}]
-			});
+			
+			if( typeof(table.find("tbody")) === 'undefined' ){
+				table.prepend(ret);
+				//table.prepend('<tfoot style="align:center">更多...</tfoot>');
+				table.DataTable({
+					//规定排序列
+					paging:false,
+					searching:false,
+					info:false,
+					//order:[[7,"desc"]],
+					columnDefs:[{
+						targets:[0,1],
+						ordering:false
+					}]
+				});
+			}else{
+				table.find("tbody").empty();
+				table.prepend(ret);
+			}
+		
 		}
 	});
 	

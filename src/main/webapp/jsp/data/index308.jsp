@@ -91,10 +91,10 @@
                         </li>
                     </ul>
                     <div class="tab-content">
+                    	<!-- 期刊 begin -->
                        <div id="tab-auth" class="tab-pane active">
                             <div class="panel-body">
                                       <table 
-                            id = "auth-ref"
                             class="table table-striped table-bordered table-hover dataTables-example dataTable">
                             <thead>
 									<tr>
@@ -128,11 +128,11 @@
                             </table>
                             </div>
                         </div>
+                        <!-- 作者 End -->
+                        <!-- 期刊 begin -->
                         <div id="tab-qikn" class="tab-pane">
                             <div class="panel-body">
-                            <table 
-                            id = "qikn-ref"
-                            class="table table-striped table-bordered table-hover dataTables-example dataTable">
+                            <table class="table table-striped table-bordered table-hover dataTables-example dataTable">
                             <thead>
 									<tr>
 	                                	<th style="width :">期刊名称</th>
@@ -155,11 +155,138 @@
                             </table>
                             </div>
                         </div>
+                        <!-- 期刊 End -->
+                        <!-- 院校 begin -->
+                        <div id="tab-nuiv" class="tab-pane">
+                            <div class="panel-body">
+                                      <table 
+                            class="table table-striped table-bordered table-hover dataTables-example dataTable">
+                            <thead>
+									<tr>
+	                                	<th style="width :">院校名称</th>
+	                                	<th style="width :20%">选择学科</th>
+	                                    <th align="right" style="width :7%">发文量</th>
+	                                    <th align="right" style="width :8%"
+	                                    data-tipso="核心期刊收录文献量"
+	                                    >核心期刊</th>
+	                                    <th align="right" style="width :6%"
+	                                    data-tipso="SCI(科学引文索引)收录文献量"
+	                                    >SCI</th>
+	                                    <th align="right" style="width :4%"
+	                                    data-tipso="EI(工程索引)收录文献量"
+	                                    >EI</th>
+	                                    <th align="right" style="width :6%"
+	                                    data-tipso="该作者所发表的文献被其它文献引用次数"
+	                                    >被引频次</th>
+	                                    <th align="right" style="width :9%"
+	                                    data-tipso="文献被除作者及合作者以外其他人的引用次数"
+	                                    >他引频次</th>
+	                                    <th align="right" style="width :9%"
+	                                    data-tipso="他引率又叫他引总引比，指某期刊的总被引频次中，被其他期刊引用次数所占的比例。"
+	                                    >他引率</th>
+	                                    <th align="right" style="width :7%"
+	                                    data-tipso="H指数是一种评价学术成就的方法,能够比较准确地反映一个人的学术成就.一个人的h指数越高，则表明他的论文影响力越大"
+	                                    >H指数</th>
+									</tr>
+							</thead>
+                            </table>
+                            </div>
+                        </div>
+                        <!-- 院校 End -->
+                        <!-- 医院 begin -->
+                          <div id="tab-hosp" class="tab-pane">
+                            <div class="panel-body">
+                                      <table 
+                            class="table table-striped table-bordered table-hover dataTables-example dataTable">
+                            <thead>
+									<tr>
+	                                	<th style="width :">医院名称</th>
+	                                	<th style="width :20%">选择学科</th>
+	                                    <th align="right" style="width :7%">发文量</th>
+	                                    <th align="right" style="width :8%"
+	                                    data-tipso="核心期刊收录文献量"
+	                                    >核心期刊</th>
+	                                    <th align="right" style="width :6%"
+	                                    data-tipso="SCI(科学引文索引)收录文献量"
+	                                    >SCI</th>
+	                                    <th align="right" style="width :4%"
+	                                    data-tipso="EI(工程索引)收录文献量"
+	                                    >EI</th>
+	                                    <th align="right" style="width :6%"
+	                                    data-tipso="该作者所发表的文献被其它文献引用次数"
+	                                    >被引频次</th>
+	                                    <th align="right" style="width :9%"
+	                                    data-tipso="文献被除作者及合作者以外其他人的引用次数"
+	                                    >他引频次</th>
+	                                    <th align="right" style="width :9%"
+	                                    data-tipso="他引率又叫他引总引比，指某期刊的总被引频次中，被其他期刊引用次数所占的比例。"
+	                                    >他引率</th>
+	                                    <th align="right" style="width :7%"
+	                                    data-tipso="H指数是一种评价学术成就的方法,能够比较准确地反映一个人的学术成就.一个人的h指数越高，则表明他的论文影响力越大"
+	                                    >H指数</th>
+									</tr>
+							</thead>
+                            </table>
+                            </div>
+                        </div>
+                        
+                        <!-- 医院 End -->
+                        <!-- 高被引文献 begin -->
+                          <div id="tab-docu" class="tab-pane">
+                            <div class="panel-body">
+                                      <table 
+                            class="table table-striped table-bordered table-hover dataTables-example dataTable">
+                            <thead>
+									<tr>
+	                                	<th style="width :">被引文献题名</th>
+	                                	<th style="width :15%">选择学科</th>
+	                                    <th align="right" style="width :12%">被引文献作者</th>
+	                                    <th align="right" style="width :12%">被引文献来源</th>
+	                                    <th align="right" style="width :12%"
+	                                    data-tipso="该作者所发表的文献被其它文献引用次数"
+	                                    >被引频次</th>
+	                                    <th align="right" style="width :12%"
+	                                    data-tipso="文献被除作者及合作者以外其他人的引用次数"
+	                                    >他引频次</th>
+	                                    <th align="right" style="width :12%"
+	                                    data-tipso="他引率又叫他引总引比，指某期刊的总被引频次中，被其他期刊引用次数所占的比例。"
+	                                    >他引率</th>
+									</tr>
+							</thead>
+                            </table>
+                            </div>
+                        </div>
+                        <!-- 高被引文献 End -->
+                        <!-- 高被引学科 begin -->
+                           <div id="tab-ztcs" class="tab-pane">
+                            <div class="panel-body">
+                                      <table 
+                            class="table table-striped table-bordered table-hover dataTables-example dataTable">
+                            <thead>
+									<tr>
+	                                	<th style="width :">学科名称</th>
+	                                	<th style="width :15%">发文量</th>
+	                                    <th align="right" style="width :6%"
+	                                    data-tipso="该作者所发表的文献被其它文献引用次数"
+	                                    >被引频次</th>
+	                                    <th align="right" style="width :9%"
+	                                    data-tipso="文献被除作者及合作者以外其他人的引用次数"
+	                                    >他引频次</th>
+	                                    <th align="right" style="width :9%"
+	                                    data-tipso="他引率又叫他引总引比，指某期刊的总被引频次中，被其他期刊引用次数所占的比例。"
+	                                    >他引率</th>
+	                                       <th align="right" style="width :12%"
+	                                    data-tipso="H指数是一种评价学术成就的方法,能够比较准确地反映一个人的学术成就.一个人的h指数越高，则表明他的论文影响力越大"
+	                                    >H指数</th>
+									</tr>
+							</thead>
+                            </table>
+                            </div>
+                        </div>
+                        <!-- 高被引学科 End -->
                     </div>
                 </div>
-		</div>
-      
-      
+			</div>
       </div>
 
  	<div class="col-md-6">
