@@ -88,23 +88,25 @@ $("#count-tab a").click(function(e){
 	//显示数据结果
 	debugger;
 	if( !all_flag.userflag ||  typeof(all_flag.userflag) == 'undefined' ){
-		var userChart = echarts.init(document.getElementById('userCount'),"wonderland");
-		userChart.showLoading();
 		if( href === '#user-content' ){
+			var userChart = echarts.init(document.getElementById('userCount'),"wonderland");
+			userChart.showLoading();
 			getUserData(userChart);
 			all_flag.userflag = true;//图表已加载
 		}
 	}else if( !all_flag.citedflag ||  typeof(all_flag.citedflag) == 'undefined' ){
-		var citedChart = echarts.init(document.getElementById('citedCount'),"wonderland");
-		citedChart.showLoading();
+		
 		if( href === '#cited-content' ){
+			var citedChart = echarts.init(document.getElementById('citedCount'),"wonderland");
+			citedChart.showLoading();
 			getCitedData(citedChart);
 			all_flag.citedflag = true;//图表已加载
 		}
 	}else if( !all_flag.mediaflag ||  typeof(all_flag.mediaflag) == 'undefined' ){
-		var mediaChart = echarts.init(document.getElementById('mediaCount'),"wonderland");
-		mediaChart.showLoading();
+		
 		if( href === '#media-content' ){
+			var mediaChart = echarts.init(document.getElementById('mediaCount'),"wonderland");
+			mediaChart.showLoading();
 			getMediaData(mediaChart);
 			all_flag.mediaflag = true;//图表已加载
 		}

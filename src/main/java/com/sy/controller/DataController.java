@@ -26,6 +26,22 @@ public class DataController {
 	@Autowired
 	HttpCrawl httpCrawl;
 
+	@RequestMapping(value="/getRef",produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String getRefHome(String type) {
+		
+		String result = "";
+		try {
+			result =  httpCrawl.getReferenceData(type);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 	@RequestMapping("/getData")
 	public String showResult(String keyword) {

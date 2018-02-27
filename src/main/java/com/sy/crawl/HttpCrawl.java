@@ -21,6 +21,9 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,9 +55,41 @@ public class HttpCrawl {
 	
 	private static final String CACULATE_AJAX_URL = "http://kns.cnki.net/kns/Visualization/";
 	
+	//Reference URL 常量
+	private static final String REFERENCE_URL = "http://ref.cnki.net/REF/HighRef/Search?isPage=True&type=";
 	//http连接池
 	@Autowired
 	HttpConnectionManager connectionManager;
+	
+	/**
+	 * 获取被引统计数据(首页)
+	 * @param type QIKN 期刊 AUTH 作者
+	 * @return 
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
+	 */
+	public String getReferenceData(String type) throws ClientProtocolException, IOException {
+		
+		Logger.info("开始获取高被引数据");
+		String result = "";
+		HttpGet httpGet = new HttpGet(REFERENCE_URL+type);
+		HttpUtil.setRequestConfig(httpGet);
+		//新建httpCLient对象
+		CloseableHttpClient httpClient = connectionManager.getHttpClient();
+		CloseableHttpResponse response = null;
+		
+		Logger.info("执行被引数据请求");
+		response = httpClient.execute(httpGet);
+		//请求成功
+		if(HttpStatus.SC_OK == response.getStatusLine().getStatusCode()) {
+			HttpEntity entity = response.getEntity();
+			String temp = EntityUtils.toString(entity,"utf-8");
+			Document doc = Jsoup.parse(temp);
+			result = doc.getElementById("subPager").html();
+		} 
+		return result;
+	}
+	
 	
 	/**
 	 * 指数分析界面用到的抓取策略

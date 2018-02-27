@@ -11,9 +11,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">  
-    <title>Infusion WP Theme</title>
+    <title>index - 中国知网文献数据分析 </title>
+    <link href="<%=path %>/css/tipso.min.css" rel="stylesheet">
     <!-- Bootstrap -->
-        <link href="<%=path %>/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="<%=path %>/css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet">
     <link href="<%=path %>/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
     <link rel="stylesheet" href="<%=path %>/css/styles.css">
@@ -28,15 +29,15 @@
     <![endif]-->
   </head>
   <body>
-		<header class="clearfix">
+		<header class="clearfix" style="
+		    position:  fixed;
+		    width: 100%;
+		    z-index: 9999;">
 		    <div class="logo col-md-3"><h2 class="logo-text"><i class="fa fa-area-chart"></i>数据可视化分析</h2></div>
 		    <nav class="clearfix">
             <ul class="clearfix">
                 <li><a href="#" class="active">首页</a></li>
                 <li><a href="index3">历史查询</a></li>
-                <!-- <li><a href="#">our business</a></li>
-                <li><a href="#">how we help</a></li>
-                <li><a href="#">take the tour</a></li> -->
                 <li><a href="#" class="last">关于我们</a></li>
             </ul>
         </nav>
@@ -44,8 +45,9 @@
         <a href="#" id="pull"><i class="fa fa-bars fa-2x"></i></a>
         </div>     
 		</header>
+		<div style="padding-top:40px"></div>
     <div class="banner">
-    <ul >
+    <ul>
           <li style="background-image: url('<%=path %>/img/02.jpg');">
           <div class="container">
             <div class="row">
@@ -63,206 +65,118 @@
     </ul>
 </div>
     <div class="container">
-    <div class="arrow"></div>
+    	<div class="arrow"></div>
     </div>
-    <div class="container carousel">
-      <div class="row">
-
-        <div class="col-md-3">
-        <div class="ca-hover">
-          <div class="carousel-img">
-            <img src="<%=path %>/img/c01.jpg" alt="Carousel Img">
-          </div>
-          <div class="carousel-avatar av1">
-          </div>
-          <div class="carousel-content">
-            <h3>Lorem ipsum dolor sit amet consectetur</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa.</p>
-          </div>
-        <div class="overlay"></div>
-        </div>
-        </div>
-
-        <div class="col-md-3">
-        <div class="ca-hover">
-          <div class="carousel-img">
-            <img src="<%=path %>/img/c02.jpg" alt="Carousel Img">
-          </div>
-          <div class="carousel-avatar av2">
-          </div>
-          <div class="carousel-content">
-            <h3>Lorem ipsum dolor sit amet consectetur</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa.</p>
-          </div>
-          <div class="overlay"></div>
-        </div>
-        </div>
-
-        <div class="col-md-3">
-        <div class="ca-hover">
-          <div class="carousel-img">
-            <img src="<%=path %>/img/c03.jpg" alt="Carousel Img">
-          </div>
-          <div class="carousel-avatar av3">
-          </div>
-          <div class="carousel-content">
-            <h3>Lorem ipsum dolor sit amet consectetur</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa.</p>
-          </div>
-          <div class="overlay"></div>
-        </div>
-        </div>
-
-        <div class="col-md-3">
-        <div class="ca-hover">
-          <div class="carousel-img">
-            <img src="<%=path %>/img/c04.jpg" alt="Carousel Img">
-          </div>
-          <div class="carousel-avatar av4">
-          </div>
-          <div class="carousel-content">
-            <h3>Lorem ipsum dolor sit amet consectetur</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa.</p>
-          </div>
-          <div class="overlay"></div>
-        </div>
-        </div>
+    
+    <div  style="width:100%;height:100px"></div>
+    
+    <div class="container" style="width:95%">
+    
+      <!-- 被引表格  -->
+		<div class="col-md-12">
+			<!-- 选项卡 -->
+		<div class="tabs-container">
+                    <ul id="ref-tab" class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#tab-auth" aria-expanded="true">高被引作者</a>
+                        </li>
+                        <li class=""><a data-toggle="tab" href="#tab-qikn" aria-expanded="false">高被引期刊</a>
+                        </li>
+                         <li class=""><a data-toggle="tab" href="#tab-nuiv" aria-expanded="false">高被引院校</a>
+                        </li>
+                         <li class=""><a data-toggle="tab" href="#tab-hosp" aria-expanded="false">高被引医院</a>
+                        </li>
+                         <li class=""><a data-toggle="tab" href="#tab-docu" aria-expanded="false">高被引文献</a>
+                        </li>
+                         <li class=""><a data-toggle="tab" href="#tab-ztcs" aria-expanded="false">高被引学科</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                       <div id="tab-auth" class="tab-pane active">
+                            <div class="panel-body">
+                                      <table 
+                            id = "auth-ref"
+                            class="table table-striped table-bordered table-hover dataTables-example dataTable">
+                            <thead>
+									<tr>
+	                                	<th style="width :">作者</th>
+	                                	<th style="width :15%">选择学科</th>
+	                                    <th align="right" style="width :7%">发文量</th>
+	                                    <th align="right" style="width :8%"
+	                                    data-tipso="核心期刊收录文献量"
+	                                    >核心期刊</th>
+	                                    <th align="right" style="width :6%"
+	                                    data-tipso="SCI(科学引文索引)收录文献量"
+	                                    >SCI</th>
+	                                    <th align="right" style="width :4%"
+	                                    data-tipso="EI(工程索引)收录文献量"
+	                                    >EI</th>
+	                                    <th align="right" style="width :8%">基金文献</th>
+	                                    <th align="right" style="width :6%"
+	                                    data-tipso="该作者所发表的文献被其它文献引用次数"
+	                                    >被引</th>
+	                                    <th align="right" style="width :6%"
+	                                    data-tipso="文献被除作者及合作者以外其他人的引用次数"
+	                                    >他引</th>
+	                                    <th align="right" style="width :7%"
+	                                    data-tipso="他引率又叫他引总引比，指某期刊的总被引频次中，被其他期刊引用次数所占的比例。"
+	                                    >他引率</th>
+	                                    <th align="right" style="width :7%"
+	                                    data-tipso="H指数是一种评价学术成就的方法,能够比较准确地反映一个人的学术成就.一个人的h指数越高，则表明他的论文影响力越大"
+	                                    >H指数</th>
+									</tr>
+							</thead>
+                            </table>
+                            </div>
+                        </div>
+                        <div id="tab-qikn" class="tab-pane">
+                            <div class="panel-body">
+                            <table 
+                            id = "qikn-ref"
+                            class="table table-striped table-bordered table-hover dataTables-example dataTable">
+                            <thead>
+									<tr>
+	                                	<th style="width :">期刊名称</th>
+	                                	<th style="width :22%">选择学科</th>
+	                                    <th align="right" style="width :10%">发文量</th>
+	                                    <th align="right" style="width :10%"
+	                                    data-tipso="该作者所发表的文献被其它文献引用次数"
+	                                    >被引频次</th>
+	                                    <th align="right" style="width :10%"
+	                                    data-tipso="文献被除作者及合作者以外其他人的引用次数"
+	                                    >他引频次</th>
+	                                    <th align="right" style="width :10%"
+	                                    data-tipso="他引率又叫他引总引比，指某期刊的总被引频次中，被其他期刊引用次数所占的比例。"
+	                                    >他引率</th>
+	                                    <th align="right" style="width :10%"
+	                                    data-tipso="H指数是一种评价学术成就的方法,能够比较准确地反映一个人的学术成就.一个人的h指数越高，则表明他的论文影响力越大"
+	                                    >H指数</th>
+									</tr>
+							</thead>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+		</div>
+      
+      
       </div>
+
+ 	<div class="col-md-6">
+          <h3>Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed.</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa. Nullam condimentum mauris et rhoncus sagittis. Sed eu metus in diam tincidunt egestas non at odio. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <div class="divider"></div>
+          <a href="#" class="button solid-color">BUTTON</a>
+          <a href="#" class="button extra-color">BUTTON</a>
     </div>
-    <div class="container">
-      <div class="row">
-        <div class="controls">
-          <ul>
-            <li><span class="pagination active"></span></li>
-            <li><span class="pagination"></span></li>
-            <li><span class="pagination"></span></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="text-inter">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
+   <div class="col-md-6">
           <h3>Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed.</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa. Nullam condimentum mauris et rhoncus sagittis. Sed eu metus in diam tincidunt egestas non at odio. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
           <div class="divider"></div>
           <a href="#" class="button solid-color">BUTTON</a>
           <a href="#" class="button extra-color">BUTTON</a>
         </div>
-        <div class="col-md-6">
-          <h3>Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed.</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa. Nullam condimentum mauris et rhoncus sagittis. Sed eu metus in diam tincidunt egestas non at odio.</p>
-          <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean vitae lectus erat. Duis consequat laoreet velit. Mauris convallis, sapien sit amet scelerisque accumsan, felis urna aliquet nunc, viverra mollis odio tellus a nisl. Nulla lobortis lectus non rutrum viverra. Sed et molestie libero. Sed ut ultrices dui.</p>
-        </div>  
-      </div>
-    </div>
-    </div>
-    <div class="h2-wrap">
-      <div class="container">
-        <div class="row">
-        <div class="col-md-12">
-          <h2 class="standard-block">LATEST ARTICLES</h2>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container-fluid container-articles">
-      <div class="row articles">
-        <div class="col-md-2 article-img">
-          <a href="#"><img src="<%=path %>/img/articles/01.jpg" alt=""></a>
-          <div class="article-overlay"></div>
-        </div>
-        <div class="col-md-2 article-img">
-          <a href="#"><img src="<%=path %>/img/articles/02.jpg" alt=""></a>
-          <div class="article-overlay"></div>
-        </div>
-        <div class="col-md-2 article-img">
-          <a href="#"><img src="<%=path %>/img/articles/03.jpg" alt=""></a>
-          <div class="article-overlay"></div>
-        </div>
-        <div class="col-md-2 article-img">
-          <a href="#"><img src="<%=path %>/img/articles/04.jpg" alt=""></a>
-          <div class="article-overlay"></div>
-        </div>
-        <div class="col-md-2 article-img">
-          <a href="#"><img src="<%=path %>/img/articles/05.jpg" alt=""></a>
-          <div class="article-overlay"></div>
-        </div>
-        <div class="col-md-2 article-img">
-          <a href="#"><img src="<%=path %>/img/articles/06.jpg" alt=""></a>
-          <div class="article-overlay"></div>
-        </div>
-      </div>
-      <div class="row articles">
-        <div class="col-md-2 article-img">
-          <a href="#"><img src="<%=path %>/img/articles/07.jpg" alt=""></a>
-          <div class="article-overlay"></div>
-        </div>
-        <div class="col-md-2 article-img">
-          <a href="#"><img src="<%=path %>/img/articles/08.jpg" alt=""></a>
-          <div class="article-overlay"></div>
-        </div>
-        <div class="col-md-2 article-img">
-          <a href="#"><img src="<%=path %>/img/articles/09.jpg" alt=""></a>
-          <div class="article-overlay"></div>
-        </div>
-        <div class="col-md-2 article-img">
-          <a href="#"><img src="<%=path %>/img/articles/10.jpg" alt=""></a>
-          <div class="article-overlay"></div>
-        </div>
-        <div class="col-md-2 article-img">
-          <a href="#"><img src="<%=path %>/img/articles/11.jpg" alt=""></a>
-          <div class="article-overlay"></div>
-        </div>
-        <div class="col-md-2 article-img">
-          <a href="#"><img src="<%=path %>/img/articles/12.jpg" alt=""></a>
-          <div class="article-overlay"></div>
-        </div>
-      </div>
-    </div>
-    <div class="laptop-slider">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-10 col-md-offset-1 laptop-placeholder">
-        <div class="slideshow">
-        <figure class="show"><img alt="" src="<%=path %>/img/slider/slide-01.png" /></figure>
-        <figure><img alt="" src="<%=path %>/img/slider/slide-02.png" /></figure>
-        <figure><img alt="" src="<%=path %>/img/slider/slide-01.png" /></figure>
-        <figure><img alt="" src="<%=path %>/img/slider/slide-02.png" /></figure>
-        <span class="prev"><i class="fa fa-angle-left fa-4x"></i></span>
-        <span class="next"><i class="fa fa-angle-right fa-4x"></i></span>
-        </div>
-        </div>
-        <div> 
-        </div>
-      </div>
-    </div>
-    </div>
-    <div class="quote-container">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-          <div class="col-md-10 col-md-offset-1">
-            <div class="quote-slideshow">
-              <figure class="show"><h2>Nam mi enim, auctor non ultricies a, fringilla eu risus. Praesent vitae lorem et elit tincidunt accumsan suscipit eu libero. </h2>
-              <figcaption>
-                Nam mi enim, auctor non ultricies.
-              </figcaption>
-              </figure>
-              <figure><h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa.</h2>
-              <figcaption>
-                Nam mi enim, auctor.
-              </figcaption>
-              </figure>
-            </div>
-            </div>
-            <span class="quote-prev circle"><i class="fa fa-angle-left fa-2x"></i></span>
-            <span class="quote-next circle"><i class="fa fa-angle-right fa-2x"></i></span>
-          </div>
-        </div>
-      </div>
-    </div>
+        
     <div class="shadow"></div>
     <footer>
       <div class="container">
@@ -303,7 +217,12 @@
     <script src="<%=path %>/js/plugins/pace/pace.min.js"></script>
     <script src="<%=path %>/js/data/main.operate.js"></script>
     <script src="<%=path %>/js/plugins/toastr/toastr.min.js"></script>
-        <script src="<%=path %>/js/index/index_operate.js"></script>
+    <script src="<%=path %>/js/index/index_operate.js"></script>
+    <script src="<%=path %>/js/index/get_ref_data.js"></script>
+    <!-- tipso -->
+       <script src="<%=path %>/js/plugins/tooltip/tipso.min.js"></script>
+    <!-- dataTables -->
+    <script src="<%=path %>/js/plugins/dataTables/jquery.dataTables.min.js"></script>
    	<!-- Sweet alert -->
     <script src="<%=path %>/js/plugins/sweetalert/sweetalert.min.js"></script>
     <script type="text/javascript">
