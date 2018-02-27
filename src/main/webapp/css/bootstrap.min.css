@@ -143,6 +143,7 @@ table {
 	border-spacing:0
 }
 td,th {
+	vertical-align:middle;
 	padding:0
 }
 @media print {
