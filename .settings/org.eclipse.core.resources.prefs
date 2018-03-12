@@ -1,11 +1,13 @@
 eclipse.preferences.version=1
 encoding//src/main/java/com/sy/controller/DataController.java=UTF-8
+encoding//src/main/java/com/sy/controller/KeywordController.java=UTF-8
 encoding//src/main/java/com/sy/controller/UserController.java=UTF-8
 encoding//src/main/java/com/sy/crawl/HttpConnectionManager.java=UTF-8
 encoding//src/main/java/com/sy/crawl/HttpCrawl.java=UTF-8
 encoding//src/main/java/com/sy/gt/GeetestLib.java=UTF-8
 encoding//src/main/java/com/sy/realm/UserRealm.java=UTF-8
 encoding//src/main/java/com/sy/util/ConvertUtil.java=UTF-8
+encoding//src/main/java/struct/KeywordsAutocompleteTest.java=UTF-8
 encoding//src/main/webapp/jsp/500.jsp=UTF-8
 encoding//src/main/webapp/jsp/data/index_data.jsp=UTF-8
 encoding//src/main/webapp/jsp/data/mainPage.jsp=UTF-8

@@ -77,7 +77,7 @@
     
       <!-- 被引表格  -->
 		<div class="col-md-12">
-			<!-- 选项卡 -->
+		<!-- 选项卡 -->
 		<div class="tabs-container">
                     <ul id="ref-tab" class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" href="#tab-auth" aria-expanded="true">高被引作者</a>
