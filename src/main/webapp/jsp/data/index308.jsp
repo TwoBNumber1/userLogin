@@ -58,7 +58,9 @@
                 <div class="hero-title">
                   	输入想搜索的文献关键词
                 </div>
-              <input class="hero-content" name="topSearch" id ="topSearch" value="" style="width:500px"/>
+              <input class="hero-content" name="topSearch" id ="topSearch" value="" 
+              autocomplete="off" 
+              style="width:500px"/>
               <a href="#" class="hero-btn" >SEARCH IT!</a>
               </div>
             </div>

@@ -131,7 +131,6 @@ public class KeywordsAutocomplete {
                         Logger.info("执行一次autocomplete监控线程");
                         //模拟写入...
                         System.out.println("模拟写入文件操作...");
-                       System.out.println(autocomplete.suffixMap.toString());
                     }  
                 }  
             } catch (InterruptedException ex) {  
