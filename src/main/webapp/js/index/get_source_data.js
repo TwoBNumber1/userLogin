@@ -14,7 +14,6 @@ $("#button3").bind("click",function(){
 })
 $("#button4").bind("click",function(){
 	getDocuSource($("#search").val().trim(),"文献来源");
-	getOrgMap();
 })
 
 
