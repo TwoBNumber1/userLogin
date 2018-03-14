@@ -45,7 +45,7 @@ var all_flag = {};
  */
 $("#searchBtn").on("click",function(){
 	all_flag = {};
-	alert($("#search").val());
+	console.log("本次搜索关键词"+$("#search").val());
 	keyword = $("#search").val();
 	publishChart.showLoading();
 	getIndexData(keyword,'GetAttention','Academic');
@@ -68,6 +68,8 @@ $("#all-tab a").click(function(e){
 	if( href === "#caculate-data" ){
 		getCaculateData(keyword,"关键词");
 		setTimeout('getMatrixData("'+keyword+'","关键词")',3000);
+	}else if( href === "#source-distribute"){
+		getResourceType(keyword,"资源类型")
 	}
 });
 

@@ -97,9 +97,9 @@
 				  <li class="active"><a  data-toggle="tab" href="#index-data">指数分析</a></li>
 				  <li><a href="#caculate-data">计量可视化</a></li>
 				  <li><a href="#source-distribute">资源分布</a></li>
-				  <li><a href="#">VB.Net</a></li>
+<!-- 				  <li><a href="#">VB.Net</a></li>
 				  <li><a href="#">Java</a></li>
-				  <li><a href="#">PHP</a></li>
+				  <li><a href="#">PHP</a></li> -->
 				</ul>
 <!-- 导航菜单 end   -->			
 			<div class="tab-content">
@@ -214,16 +214,40 @@
 						<div class="panel-body">
 						<div class="text-inter">
 							<div class="container">
+							 <a id="button1" class="button solid-color">资源类型</a>
+							 <a id="button2" class="button solid-color">研究层次</a>
+							 <a id="button3" class="button solid-color">学科分布</a>
+							 <a id="button4" class="button solid-color">文献来源</a>
 									<div class="row">
-										<div class="col-sm-8" id="wordAllCount" style="height:400px;border:1px solid #ccc;padding:10px;"></div>
-										<div class="col-sm-4" id="wordCloud" style="height:400px;border:1px solid #ccc;padding:10px;"></div>
+										<div class="col-sm-6" id="resource_type" style="height:400px;border:1px solid #ccc;padding:10px;"></div>
+										<div class="col-sm-6" id="research_level" style="height:400px;border:1px solid #ccc;padding:10px;"></div>
+									</div>
+							</div>
+						</div>
+							<div class="text-inter">
+								<div class="container">
+									<div class="row">
+										<div class="col-sm-6" id="sub_distribute" style="height:450px;border:1px solid #ccc;padding:10px;"></div>
+										<div class="col-sm-6" id="docu_source" style="height:450px;border:1px solid #ccc;padding:10px;"></div>
+								
 									</div>
 								</div>
 							</div>
 							<div class="text-inter">
 								<div class="container">
 									<div class="row">
-										<div class="col-sm-12" id="matrix" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
+										<div class="col-sm-4" id="org_bar" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
+										<div class="col-sm-8" id="org_distribute" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
+								
+									</div>
+								</div>
+							</div>
+							<div class="text-inter">
+								<div class="container">
+									<div class="row">
+										<div class="col-sm-4" id="fund_bar" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
+										<div class="col-sm-8" id="fund_distribute" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
+								
 									</div>
 								</div>
 							</div>
@@ -282,11 +306,17 @@
     <script src="<%=path %>/js/index/get_caculate_data.js"></script>
     <script src="<%=path %>/js/index/load_index_subject.js"></script>
     <script src="<%=path %>/js/plugins/tooltip/tipso.min.js"></script>
+    <script src="<%=path %>/js/index/get_source_data.js" type="text/javascript"></script>
+     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=cudRWYxjcLLBjz37p40zRRTn4124YeQw"></script>
+    
+      <script src="<%=path %>/js/index/get_org_map.js" type="text/javascript"></script>
+        <script src="<%=path %>/js/echarts/bmap.min.js"></script>
    	<!-- Sweet alert -->
     <script src="<%=path %>/js/plugins/sweetalert/sweetalert.min.js"></script>
     <script type="text/javascript">
     </script>
 	<script type="text/javascript"> var ctx = "<%=path%>";
+	
     </script>
 
 </body>

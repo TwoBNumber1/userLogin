@@ -10,6 +10,8 @@ public class ConvertUtil {
 	public static String getGroupCode(String groupName) {
 		String groupCode = "";
 		switch(groupName) {
+			case "资源类型":
+				groupCode = "RESOURCE_TYPE";break;
 			case "关键词":
 				groupCode = "KEYWORD";break;
 			case "文献来源":

@@ -19,6 +19,10 @@
     <link href="<%=path %>/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
     <link rel="stylesheet" href="<%=path %>/css/styles.css">
     <link rel="stylesheet" href="<%=path %>/css/queries.css">
+
+	<link href='<%=path %>/css/horsey/jquery-ui.css' rel='stylesheet' type='text/css' />
+
+</head>
     <link href=" <%=path %>/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -349,16 +353,17 @@
     <script src="<%=path %>/js/plugins/pace/pace.min.js"></script>
     <script src="<%=path %>/js/data/main.operate.js"></script>
     <script src="<%=path %>/js/plugins/toastr/toastr.min.js"></script>
+
     <script src="<%=path %>/js/index/index_operate.js"></script>
     <script src="<%=path %>/js/index/get_ref_data.js"></script>
     <!-- tipso -->
-       <script src="<%=path %>/js/plugins/tooltip/tipso.min.js"></script>
+    <script src="<%=path %>/js/plugins/tooltip/tipso.min.js"></script>
     <!-- dataTables -->
     <script src="<%=path %>/js/plugins/dataTables/jquery.dataTables.min.js"></script>
    	<!-- Sweet alert -->
     <script src="<%=path %>/js/plugins/sweetalert/sweetalert.min.js"></script>
-    <script type="text/javascript">
-    </script>
+  <script src="<%=path %>/js/horsey/jquery-ui.min.js"></script>
+
 <script type="text/javascript"> var ctx = "<%=path%>";
     </script>
 </html>

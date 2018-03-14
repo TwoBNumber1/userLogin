@@ -11,20 +11,32 @@ $("a[class='hero-btn']").on("click",function(){
 	window.location.href="getData?keyword="+keyword; 
 });
 
+var array;
+
+
+
+
 $("#topSearch").bind("keyup",function(){
-	debugger;
 	 
-	$.ajax({
+
+		
+		$.ajax({
 		url:ctx+"/search/prefix?prefix="+$("#topSearch").val().trim(),
 		type:'GET',
 		success:function(ret){
+			array = ret.substring(1,ret.length-1).split(",");
 			debugger;
-			var array = ret.substring(1,ret.length).split(",");
-			
+			$("#topSearch").autocomplete({
+				source:array
+			})
 		}
-		
 	})
 })
+
+
+	
+	
+	
 
 
 

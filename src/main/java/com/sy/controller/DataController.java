@@ -120,10 +120,14 @@ public class DataController {
 		try {
 
 			Logger.info("-------------Controller keyword");
+			Logger.info("  -=- "+topSearch+"  -=- "+resultType+"  -=- "+numType);
 			result = httpCrawl.getIndexData(topSearch, resultType,numType);
 			if(result != null && result.length()>0) {
 				response = new AjaxResponse(0, "获取数据成功");
 				response.addDataItem("ret", result);
+			}else {
+				response = new AjaxResponse(-1,"get Cookie failed or data's post failed..");
+				
 			}
 		} catch (Exception e) {
 			response = new AjaxResponse(-1, "失败："+e.getMessage());

@@ -212,8 +212,6 @@ function loadPublishEcharts(data){
 	//X轴坐标值 
     var xs=[];
     //ys 
-    var ys=[];    
-    var ys2=[];
     
     //grow
     var growY = [];
@@ -639,3 +637,5 @@ function loadCitedChart(data,citedChart){
 		toastr.warning("Failed!");
     }
 }
+
+

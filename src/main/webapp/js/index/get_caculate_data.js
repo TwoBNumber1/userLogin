@@ -321,9 +321,7 @@ function loadWordCount(data,wordChart){
 	        }
 	    ]
 	});
-
 	wordChart.hideLoading();
-	
 }
 
 
