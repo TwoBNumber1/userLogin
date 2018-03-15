@@ -44,9 +44,12 @@ var all_flag = {};
  * @returns 老子不返回
  */
 $("#searchBtn").on("click",function(){
+
 	all_flag = {};
 	console.log("本次搜索关键词"+$("#search").val());
 	keyword = $("#search").val();
+	//为空直接return 
+	if(keyword == null || keyword === "") return;
 	publishChart.showLoading();
 	getIndexData(keyword,'GetAttention','Academic');
 	wordChart.showLoading();
@@ -55,6 +58,26 @@ $("#searchBtn").on("click",function(){
 	getSubject();
 	getOrgan();
 });
+
+/**
+ * 监听键盘输出
+ * @returns
+ */
+$("#search").bind("keyup",function(){
+	 //关键词提示
+	debugger;
+		$.ajax({
+			url:ctx+"/search/prefix?prefix="+$("#search").val().trim(),
+			type:'GET',
+			success:function(ret){
+				var array = ret.substring(1,ret.length-1).split(",");
+				debugger;
+				$("#search").autocomplete({
+					source:array
+				})
+			}
+		});
+})
 
 
 $("#all-tab a").click(function(e){

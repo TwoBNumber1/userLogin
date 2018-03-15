@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">  
     <title>Infusion WP Theme</title>
     <!-- Bootstrap -->
-    
+    <link href='<%=path %>/css/horsey/jquery-ui.css' rel='stylesheet' type='text/css' />
     <link href="<%=path %>/css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet">
     <link href="<%=path %>/css/tipso.min.css" rel="stylesheet">
@@ -61,7 +61,7 @@
 	    </div>
 	    <nav class="clearfix">
             <ul class="clearfix">
-                <li><a href="#" class="frist">首页</a></li>
+                <li><a href="../" class="frist">首页</a></li>
                 <li><a href="index3">历史查询</a></li>
                 <li><a href="#" class="last">关于我们</a></li>
             </ul>
@@ -313,13 +313,12 @@
     <script src="<%=path %>/js/index/load_index_subject.js"></script>
     <script src="<%=path %>/js/plugins/tooltip/tipso.min.js"></script>
     <script src="<%=path %>/js/index/get_source_data.js" type="text/javascript"></script>
-     <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=cudRWYxjcLLBjz37p40zRRTn4124YeQw&callback=initialize"></script>
-    	<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.3&key=174b348e6b6503d788bf7f9903ae8296&plugin=AMap.Geocoder"></script>
-  
-      <script src="<%=path %>/js/index/get_org_map.js" type="text/javascript"></script>
-        <script src="<%=path %>/js/echarts/bmap.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=cudRWYxjcLLBjz37p40zRRTn4124YeQw&callback=initialize"></script>
+    <script src="<%=path %>/js/index/get_org_map.js" type="text/javascript"></script>
+    <script src="<%=path %>/js/echarts/bmap.min.js"></script>
    	<!-- Sweet alert -->
     <script src="<%=path %>/js/plugins/sweetalert/sweetalert.min.js"></script>
+        <script src="<%=path %>/js/horsey/jquery-ui.min.js"></script>
     <script type="text/javascript">
     </script>
 	<script type="text/javascript"> var ctx = "<%=path%>";

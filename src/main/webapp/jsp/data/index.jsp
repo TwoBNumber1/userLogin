@@ -6,175 +6,361 @@
             + request.getServerName() + ":" + request.getServerPort()
             + path + "/";
 %>
-<html>
-<head>
-  <title>Home</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link href="<%=path %>/css/style.297.css" rel="stylesheet" type="text/css"  media="all" />
-  <link rel="stylesheet" href="<%=path %>/css/flexslider.css" type="text/css" media="screen" />
-  <script src="<%=path %>/js/jquery-1.10.2.min.js" type="text/javascript"></script>
-  <script defer src="<%=path %>/js/jquery.flexslider.js"></script>
- </head>
-<body>
-	<!----start-header----->
-	 <div class="header">
-	     <div class="wrap">
-	      <div class="header-top">
-			<!---start-top-nav---->
-			<div class="top-nav">
-					<div class="top-header">
-						<div class="logo">
-							<a href="index.html"><h1>Customer</h1></a>
-						</div>
-					</div>
-				<nav class="nav clearfix">
-					<a id="menu-toggle" class="anchor-link" href="#"><img src="<%=path %>/img/men-bars.png" alt="" /></a>
-					<ul class="simple-toggle" id="menu">
-			        	<li><a href="index.html">首页</a></li>
-			        	
-			        	<!-- logo -->
-			        	 <li class="logo"><a href="index.html"><h1>Customer</h1></a></li>
-			        	<!-- logo -->
-			        	<li><a href="portfolio.html">历史查询</a></li>
-			        	<li><a href="404.html">关于我们</a></li>
-			        </ul>
-				</nav>
-				
-				<script type="text/javascript">
-					  $(document).ready(function() {
-					
-						$('#menu-toggle').click(function () {
-					      $('#menu').toggleClass('open');
-					      e.preventDefault();
-					    });
-					    
-					});
-				</script>
-			</div>
-			<!---End-top-nav---->
-		</div>
-		<div class="banner">
-			<div class="banner-text">
-				<h2><span>输入要搜索的文献关键字</span></h2>
-				<span><input name="userName" type="text" class="textbox">
-					<input type="submit" value="Submit"></span>
-			</div>
-			 <div class="flexslider">
-				  <ul class="slides">
-				    <li><img src="<%=path %>/img/slide1.jpg" alt="" /></li>
-				    <li><img src="<%=path %>/img/slide2.jpg" alt="" /></li>
-				    <li><img src="<%=path %>/img/slide3.jpg" alt="" /></li>
-				   </ul>
-				  <script type="text/javascript">
-				    $(function(){
-				      SyntaxHighlighter.all();
-				    });
-				    $(window).load(function(){
-				      $('.flexslider').flexslider({
-				        animation: "slide",
-				        controlNav: false
-				      });
-				    });
-				  </script>
-				</div>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">  
+    <title>index - 中国知网文献数据分析 </title>
+    <link href="<%=path %>/css/tipso.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="<%=path %>/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<%=path %>/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link rel="stylesheet" href="<%=path %>/css/styles.css">
+    <link rel="stylesheet" href="<%=path %>/css/queries.css">
 
-		</div>
-	  </div>
-	</div>
-   <!----End-header----->
-	       
-		 <!---start-content---->
-		 <div class="wrap">
-		   <div class="content">	 	 
-		       <div class="top-grids">
-			 		<div class="section group">
-						<div class="grid_1_of_3 images_1_of_3 top_grid">
-							<div class="topgrid-desc">							 
-							  <h3>Qullam luctus</h3>
-						      <p>Aenean porta, tellus porttitor ugiat elementum, mi justo vehicula te, nec tristique leo dolor at odio. </p>
-						      </div>
-						      <img src="<%=path %>/img/grid-img1.jpg" alt="" />
-						</div>
-						 <div class="grid_1_of_3 images_1_of_3 top_grid">
-							 <div class="topgrid-desc">							 
-							  <h3>Lipsu mluctus</h3>
-						      <p>Jenean porta, tellus porttitor ugiat elementum, mi justo vehicula te, nec tristique leo dolor at odio. </p>
-						      </div>
-							  <img src="<%=path %>/img/grid-img2.jpg" alt="" />
-						 </div>
-						<div class="grid_1_of_3 images_1_of_3 top_grid">
-							 <div class="topgrid-desc">							 
-							  <h3>Vivams laoreet</h3>
-						      <p>Qonean porta, tellus porttitor ugiat elementum, mi justo vehicula te, nec tristique leo dolor at odio.</p>
-						      </div>
-						   <img src="<%=path %>/img/grid-img3.jpg" alt="" />
-						</div>
-					</div>
-		 		</div>
-		 		
-		      <div class="content-middle">
-		      <div class="content-middle-top">
-		      	<h4>Integer vitae libero ac risus egestas placerat</h4>
-		      </div>
-		       <div class="content-middle-desc">
-				<div class="section group">
-				<div class="lsidebar span_3_of_1">
-				    <img src="<%=path %>/img/grid-img.jpg" alt="" />
-				 </div>	
-				<div class="cont span_3_of_2">
-				 	<h3>Joltricies pharetra magna</h3>
-				 	<p>Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi. Cum sociis natoque penatibus et magnis dis parturient montes. Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem. </p>
-				    <div class="more-info more-info2"><a href="#">More Info</a></div>
-				  </div>
-		        </div>
-		       </div>
-		      </div>
-		      
-		     <div class="content-bottom"> 
-		      <div class="section group">
-				<div class="cont span_2_of_3">
-				 <div class="services-desc-block">
-				 	<h3>Tricies pharetra magna</h3>
-				 	<p>Eent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi. Cum sociis natoque penatibus et magnis dis parturient montes. Nulla dui. Fusce feugiat malesuada odio. </p>
-				    <div class="more-info"><a href="#">More Info</a></div>
-				 </div>
-				  <div class="services-desc-block">
-				 	<h3>Cies retra odio</h3>
-				 	<p>Vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi. Cum sociis natoque penatibus et magnis dis parturient montes. Nulla dui. Fusce feugiat malesuada odio. </p>
-				    <div class="more-info"><a href="#">More Info</a></div>
-				 </div>
-				</div>	
-				<div class="rsidebar span_1_of_3">
-				    <h3>Ciaretra lipsum</h3>
-				    <div class="news-letter">
-				        <form method="post" action="contact-post.html">
-						    	<span><label>Your name</label></span>
-						    	<span><input name="userName" type="text" class="textbox"></span>
-						    	<span><label>Your email</label></span>
-						    	<span><input name="userEmail" type="text" class="textbox"></span>
-						    	<span><label>Your message</label></span>
-						    	<span><textarea name="userMsg"> </textarea></span>
-						   		<span><input type="submit" value="Submit" ></span>
-					     </form>
-				     </div>
-				 </div>			
-		       </div>
-		      </div>  
+	<link href='<%=path %>/css/horsey/jquery-ui.css' rel='stylesheet' type='text/css' />
+
+</head>
+    <link href=" <%=path %>/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<style type="text/css">
+	td{vertical-align:middle }
+</style>
+</head>
+  <body>
+		<header class="clearfix" style="
+		    position:  fixed;
+		    width: 100%;
+		    z-index: 9999;">
+		    <div class="logo col-md-3"><h2 class="logo-text"><i class="fa fa-area-chart"></i>数据可视化分析</h2></div>
+		    <nav class="clearfix">
+            <ul class="clearfix">
+                <li><a href="#" class="active">首页</a></li>
+                <li><a href="index3">历史查询</a></li>
+                <li><a href="#" class="last">关于我们</a></li>
+            </ul>
+        </nav>
+        <div class="pullcontainer">
+        <a href="#" id="pull"><i class="fa fa-bars fa-2x"></i></a>
+        </div>     
+		</header>
+		<div style="padding-top:40px"></div>
+    <div class="banner">
+    <ul>
+          <li style="background-image: url('<%=path %>/img/02.jpg');">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 col-md-offset-3">
+                <div class="hero-title">
+                  	输入想搜索的文献关键词
+                </div>
+              <input class="hero-content" name="topSearch" id ="topSearch" value="" 
+              autocomplete="off" 
+              style="width:500px"/>
+              <a href="#" class="hero-btn" >SEARCH IT!</a>
+              </div>
+            </div>
+          </div>
+        </li>
+     
+    </ul>
+</div>
+    <div class="container">
+    	<div class="arrow"></div>
+    </div>
+    
+    <div  style="width:100%;height:100px"></div>
+    
+    <div class="container" style="width:95%">
+    
+      <!-- 被引表格  -->
+		<div class="col-md-12">
+		<!-- 选项卡 -->
+		<div class="tabs-container">
+                    <ul id="ref-tab" class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#tab-auth" aria-expanded="true">高被引作者</a>
+                        </li>
+                        <li class=""><a data-toggle="tab" href="#tab-qikn" aria-expanded="false">高被引期刊</a>
+                        </li>
+                         <li class=""><a data-toggle="tab" href="#tab-nuiv" aria-expanded="false">高被引院校</a>
+                        </li>
+                         <li class=""><a data-toggle="tab" href="#tab-hosp" aria-expanded="false">高被引医院</a>
+                        </li>
+                         <li class=""><a data-toggle="tab" href="#tab-docu" aria-expanded="false">高被引文献</a>
+                        </li>
+                         <li class=""><a data-toggle="tab" href="#tab-ztcs" aria-expanded="false">高被引学科</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                    	<!-- 期刊 begin -->
+                       <div id="tab-auth" class="tab-pane active">
+                            <div class="panel-body">
+                                      <table 
+                            class="table table-striped table-bordered table-hover dataTables-example dataTable">
+                            <thead>
+									<tr>
+	                                	<th style="width :">作者</th>
+	                                	<th style="width :15%">选择学科</th>
+	                                    <th align="right" style="width :7%">发文量</th>
+	                                    <th align="right" style="width :8%"
+	                                    data-tipso="核心期刊收录文献量"
+	                                    >核心期刊</th>
+	                                    <th align="right" style="width :6%"
+	                                    data-tipso="SCI(科学引文索引)收录文献量"
+	                                    >SCI</th>
+	                                    <th align="right" style="width :4%"
+	                                    data-tipso="EI(工程索引)收录文献量"
+	                                    >EI</th>
+	                                    <th align="right" style="width :8%">基金文献</th>
+	                                    <th align="right" style="width :6%"
+	                                    data-tipso="该作者所发表的文献被其它文献引用次数"
+	                                    >被引</th>
+	                                    <th align="right" style="width :6%"
+	                                    data-tipso="文献被除作者及合作者以外其他人的引用次数"
+	                                    >他引</th>
+	                                    <th align="right" style="width :7%"
+	                                    data-tipso="他引率又叫他引总引比，指某期刊的总被引频次中，被其他期刊引用次数所占的比例。"
+	                                    >他引率</th>
+	                                    <th align="right" style="width :7%"
+	                                    data-tipso="H指数是一种评价学术成就的方法,能够比较准确地反映一个人的学术成就.一个人的h指数越高，则表明他的论文影响力越大"
+	                                    >H指数</th>
+									</tr>
+							</thead>
+                            </table>
+                            </div>
+                        </div>
+                        <!-- 作者 End -->
+                        <!-- 期刊 begin -->
+                        <div id="tab-qikn" class="tab-pane">
+                            <div class="panel-body">
+                            <table class="table table-striped table-bordered table-hover dataTables-example dataTable">
+                            <thead>
+									<tr>
+	                                	<th style="width :">期刊名称</th>
+	                                	<th style="width :22%">选择学科</th>
+	                                    <th align="right" style="width :10%">发文量</th>
+	                                    <th align="right" style="width :10%"
+	                                    data-tipso="该作者所发表的文献被其它文献引用次数"
+	                                    >被引频次</th>
+	                                    <th align="right" style="width :10%"
+	                                    data-tipso="文献被除作者及合作者以外其他人的引用次数"
+	                                    >他引频次</th>
+	                                    <th align="right" style="width :10%"
+	                                    data-tipso="他引率又叫他引总引比，指某期刊的总被引频次中，被其他期刊引用次数所占的比例。"
+	                                    >他引率</th>
+	                                    <th align="right" style="width :10%"
+	                                    data-tipso="H指数是一种评价学术成就的方法,能够比较准确地反映一个人的学术成就.一个人的h指数越高，则表明他的论文影响力越大"
+	                                    >H指数</th>
+									</tr>
+							</thead>
+                            </table>
+                            </div>
+                        </div>
+                        <!-- 期刊 End -->
+                        <!-- 院校 begin -->
+                        <div id="tab-nuiv" class="tab-pane">
+                            <div class="panel-body">
+                                      <table 
+                            class="table table-striped table-bordered table-hover dataTables-example dataTable">
+                            <thead>
+									<tr>
+	                                	<th style="width :">院校名称</th>
+	                                	<th style="width :20%">选择学科</th>
+	                                    <th align="right" style="width :7%">发文量</th>
+	                                    <th align="right" style="width :8%"
+	                                    data-tipso="核心期刊收录文献量"
+	                                    >核心期刊</th>
+	                                    <th align="right" style="width :6%"
+	                                    data-tipso="SCI(科学引文索引)收录文献量"
+	                                    >SCI</th>
+	                                    <th align="right" style="width :4%"
+	                                    data-tipso="EI(工程索引)收录文献量"
+	                                    >EI</th>
+	                                    <th align="right" style="width :6%"
+	                                    data-tipso="该作者所发表的文献被其它文献引用次数"
+	                                    >被引频次</th>
+	                                    <th align="right" style="width :9%"
+	                                    data-tipso="文献被除作者及合作者以外其他人的引用次数"
+	                                    >他引频次</th>
+	                                    <th align="right" style="width :9%"
+	                                    data-tipso="他引率又叫他引总引比，指某期刊的总被引频次中，被其他期刊引用次数所占的比例。"
+	                                    >他引率</th>
+	                                    <th align="right" style="width :7%"
+	                                    data-tipso="H指数是一种评价学术成就的方法,能够比较准确地反映一个人的学术成就.一个人的h指数越高，则表明他的论文影响力越大"
+	                                    >H指数</th>
+									</tr>
+							</thead>
+                            </table>
+                            </div>
+                        </div>
+                        <!-- 院校 End -->
+                        <!-- 医院 begin -->
+                          <div id="tab-hosp" class="tab-pane">
+                            <div class="panel-body">
+                                      <table 
+                            class="table table-striped table-bordered table-hover dataTables-example dataTable">
+                            <thead>
+									<tr>
+	                                	<th style="width :">医院名称</th>
+	                                	<th style="width :20%">选择学科</th>
+	                                    <th align="right" style="width :7%">发文量</th>
+	                                    <th align="right" style="width :8%"
+	                                    data-tipso="核心期刊收录文献量"
+	                                    >核心期刊</th>
+	                                    <th align="right" style="width :6%"
+	                                    data-tipso="SCI(科学引文索引)收录文献量"
+	                                    >SCI</th>
+	                                    <th align="right" style="width :4%"
+	                                    data-tipso="EI(工程索引)收录文献量"
+	                                    >EI</th>
+	                                    <th align="right" style="width :6%"
+	                                    data-tipso="该作者所发表的文献被其它文献引用次数"
+	                                    >被引频次</th>
+	                                    <th align="right" style="width :9%"
+	                                    data-tipso="文献被除作者及合作者以外其他人的引用次数"
+	                                    >他引频次</th>
+	                                    <th align="right" style="width :9%"
+	                                    data-tipso="他引率又叫他引总引比，指某期刊的总被引频次中，被其他期刊引用次数所占的比例。"
+	                                    >他引率</th>
+	                                    <th align="right" style="width :7%"
+	                                    data-tipso="H指数是一种评价学术成就的方法,能够比较准确地反映一个人的学术成就.一个人的h指数越高，则表明他的论文影响力越大"
+	                                    >H指数</th>
+									</tr>
+							</thead>
+                            </table>
+                            </div>
+                        </div>
+                        
+                        <!-- 医院 End -->
+                        <!-- 高被引文献 begin -->
+                          <div id="tab-docu" class="tab-pane">
+                            <div class="panel-body">
+                                      <table 
+                            class="table table-striped table-bordered table-hover dataTables-example dataTable">
+                            <thead>
+									<tr>
+	                                	<th style="width :">被引文献题名</th>
+	                                	<th style="width :15%">选择学科</th>
+	                                    <th align="right" style="width :12%">被引文献作者</th>
+	                                    <th align="right" style="width :12%">被引文献来源</th>
+	                                    <th align="right" style="width :12%"
+	                                    data-tipso="该作者所发表的文献被其它文献引用次数"
+	                                    >被引频次</th>
+	                                    <th align="right" style="width :12%"
+	                                    data-tipso="文献被除作者及合作者以外其他人的引用次数"
+	                                    >他引频次</th>
+	                                    <th align="right" style="width :12%"
+	                                    data-tipso="他引率又叫他引总引比，指某期刊的总被引频次中，被其他期刊引用次数所占的比例。"
+	                                    >他引率</th>
+									</tr>
+							</thead>
+                            </table>
+                            </div>
+                        </div>
+                        <!-- 高被引文献 End -->
+                        <!-- 高被引学科 begin -->
+                           <div id="tab-ztcs" class="tab-pane">
+                            <div class="panel-body">
+                                      <table 
+                            class="table table-striped table-bordered table-hover dataTables-example dataTable">
+                            <thead>
+									<tr>
+	                                	<th style="width :">学科名称</th>
+	                                	<th style="width :15%">发文量</th>
+	                                    <th align="right" style="width :6%"
+	                                    data-tipso="该作者所发表的文献被其它文献引用次数"
+	                                    >被引频次</th>
+	                                    <th align="right" style="width :9%"
+	                                    data-tipso="文献被除作者及合作者以外其他人的引用次数"
+	                                    >他引频次</th>
+	                                    <th align="right" style="width :9%"
+	                                    data-tipso="他引率又叫他引总引比，指某期刊的总被引频次中，被其他期刊引用次数所占的比例。"
+	                                    >他引率</th>
+	                                       <th align="right" style="width :12%"
+	                                    data-tipso="H指数是一种评价学术成就的方法,能够比较准确地反映一个人的学术成就.一个人的h指数越高，则表明他的论文影响力越大"
+	                                    >H指数</th>
+									</tr>
+							</thead>
+                            </table>
+                            </div>
+                        </div>
+                        <!-- 高被引学科 End -->
+                    </div>
+                </div>
 			</div>
-		  </div>		   			
-		 <!---End-content---->
-		 <!---start-footer---->
-		  <div class="footer">
-		    <div class="wrap">
-			   	<div class="copy-right">
-					<p>Copyright &copy; 2014.Company name All rights reserved.<a target="_blank" href="http://h2design.taobao.com/">æ°¢è®¾è®¡</a></p>
-				</div>
-			<div class="clear"> </div>
-		</div>
-	</div>
-		 <!---End-footer---->
-	
+      </div>
+
+ 	<div class="col-md-6">
+          <h3>Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed.</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa. Nullam condimentum mauris et rhoncus sagittis. Sed eu metus in diam tincidunt egestas non at odio. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <div class="divider"></div>
+          <a href="#" class="button solid-color">BUTTON</a>
+          <a href="#" class="button extra-color">BUTTON</a>
+    </div>
+   <div class="col-md-6">
+          <h3>Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed.</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa. Nullam condimentum mauris et rhoncus sagittis. Sed eu metus in diam tincidunt egestas non at odio. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <div class="divider"></div>
+          <a href="#" class="button solid-color">BUTTON</a>
+          <a href="#" class="button extra-color">BUTTON</a>
+        </div>
+        
+    <div class="shadow"></div>
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-2">
+            <h2>INFUSION</h2>
+          </div>
+          <div class="col-md-5">
+            <p>Nam mi enim, auctor non ultricies a, fringilla eu risus. Praesent vitae lorem et elit tincidunt accumsan suscipit eu libero. Maecenas diam est, venenatis vitae dui in, vestibulum mollis arcu. Donec eu nibh tincidunt, dapibus sem eu, aliquam dolor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum consectetur commodo eros, vitae laoreet lectus aliq</p>
+          </div>
+          <div class="col-md-3">
+            <p>aliquam dolor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum consectetur commodo eros, vitae laoreet lectus aliq</p>
+          </div>
+          <div class="col-md-2">
+            <ul class="footer-links">
+              <li><a href="#">List One</a></li>
+              <li><a href="#">Page Two</a></li>
+              <li><a href="#">Design</a></li>
+              <li><a href="#">Work</a></li>
+              <li><a href="#">Contact Me</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>  
+    </footer>
 </body>
-</html>
+	<script src="<%=path %>/js/jquery-1.8.3.min.js"></script>
+    <script src="<%=path %>/js/bootstrap.min.js"></script>
+    <script src="<%=path %>/js/scripts.js"></script>
+    <script src="<%=path %>/js/unslider.min.js"></script>
+    <script src="<%=path %>/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="<%=path %>/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="<%=path %>/js/plugins/layer/layer.js"></script>
+    <script src="<%=path %>/js/hplus.min.js?v=4.0.0"></script>
+    <script type="text/javascript" src="<%=path %>/js/contabs.min.js"></script>
+    <script src="<%=path %>/js/plugins/pace/pace.min.js"></script>
+    <script src="<%=path %>/js/data/main.operate.js"></script>
+    <script src="<%=path %>/js/plugins/toastr/toastr.min.js"></script>
 
+    <script src="<%=path %>/js/index/index_operate.js"></script>
+    <script src="<%=path %>/js/index/get_ref_data.js"></script>
+    <!-- tipso -->
+    <script src="<%=path %>/js/plugins/tooltip/tipso.min.js"></script>
+    <!-- dataTables -->
+    <script src="<%=path %>/js/plugins/dataTables/jquery.dataTables.min.js"></script>
+   	<!-- Sweet alert -->
+    <script src="<%=path %>/js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="<%=path %>/js/horsey/jquery-ui.min.js"></script>
+	<script type="text/javascript"> var ctx = "<%=path%>";
+    </script>
+</html>

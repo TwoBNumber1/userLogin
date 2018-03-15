@@ -19,59 +19,62 @@ import com.sy.util.AjaxResponse;
 
 public class DataController {
 
-	//private static final HtmlPage page = HttpUtil.getWebFirstPage(webClient);
+	//日志常量
 	private static final Logger Logger = LoggerFactory.getLogger(DataController.class);
-
 
 	@Autowired
 	HttpCrawl httpCrawl;
 
+	/**
+	 * 获取高被引数据
+	 * @param type 分组类型
+	 * @return json对象
+	 */
 	@RequestMapping(value="/getRef",produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String getRefHome(String type) {
 		
 		String result = "";
+		AjaxResponse response = null;
+		Logger.info("获取被引数据--->[type:"+type+"]");
+		Long start = System.currentTimeMillis();
 		try {
 			result =  httpCrawl.getReferenceData(type);
+			//获取数据出错
+			if(result.contains("error")) {
+				response = new AjaxResponse(-1, "Failed: "+result);
+			}else {
+				response = new AjaxResponse(0, "get reference data, type is "+type);
+				response.addDataItem("ret", result);
+			}
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
+			response = new AjaxResponse(-1, "Failed: "+e.getMessage());
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			response = new AjaxResponse(-1, "Failed: "+e.getMessage());
 			e.printStackTrace();
 		}
-		return result;
+		Logger.info("操作耗时："+(System.currentTimeMillis()-start)+"ms");
+		return response.toString();
 	}
-	
-	@RequestMapping("/getData")
-	public String showResult(String keyword) {
-		System.out.println("keyword = "+keyword );
-		return "data/show_result";
-	}
-	
-	@RequestMapping("/index_data")
-	public String returnIndexData(String keyword) {
-		System.out.println("keyword = "+keyword );
-		return "data/index_data";
-	}
-	
-	
-	
-	@RequestMapping("/index3")
-	public String testIndex3() {
-		return "data/index308";
-	}
-	@RequestMapping("/mapDistribute")
-	public String testMain() {
-		return "data/mapDistribute";
-	}
-	
+
+	/**
+	 * 获取计量可视化的数据
+	 * @param keyword 关键词
+	 * @param groupName 分组统计关键词
+	 * @param urlName 对应请求名称
+	 * @return json对象
+	 */
 	@RequestMapping("/caculate")
 	@ResponseBody
-	public String testCaculate(String keyword,String groupName,String urlName) {
+	public String caculate(String keyword,String groupName,String urlName) {
 		
 		String result = "";
 		AjaxResponse response = null;
+		Logger.info("执行计量分析 -->[keyword:"+keyword+"] [groupName:"+groupName+"] [urlName:"+urlName+"].");
+		Long start = System.currentTimeMillis();
 		try {
 			result = httpCrawl.getCaculateData(keyword,groupName,urlName);
 			if(result != null && result.length()>0) {
@@ -84,6 +87,7 @@ public class DataController {
 			response = new AjaxResponse(-1, "失败："+e.getMessage());
 			
 		}
+		Logger.info("操作耗时："+(System.currentTimeMillis()-start)+"ms");
 		return response.toString();
 	}
 	
@@ -97,11 +101,11 @@ public class DataController {
 	}
 	
 	//正常访问文献发表量页面
-		@RequestMapping(value = "/wordDistribute")
-		public String toWord(){
+	@RequestMapping(value = "/getData")
+	public String toWord(){
 
-			return "data/wordDistribute";
-		}
+		return "data/show_result";
+	}
 	
 	/**
 	 * keyon 才触发

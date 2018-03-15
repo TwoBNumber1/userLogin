@@ -91,7 +91,6 @@ function checkKeyword(){
 
 /*搜索框搜索*/
 function search(){
-	
 	//输入框为空
 	if( checkKeyword() ){
 		 swal({
@@ -121,8 +120,6 @@ function search(){
 
 	return;
 	}
-
-	
 }
 
 

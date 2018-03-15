@@ -70,7 +70,6 @@ public class HttpCrawl {
 	 */
 	public String getReferenceData(String type) throws ClientProtocolException, IOException {
 		
-		Logger.info("开始获取高被引数据");
 		String result = "";
 		HttpGet httpGet = new HttpGet(REFERENCE_URL+type);
 		HttpUtil.setRequestConfig(httpGet);
@@ -78,15 +77,17 @@ public class HttpCrawl {
 		CloseableHttpClient httpClient = connectionManager.getHttpClient();
 		CloseableHttpResponse response = null;
 		
-		Logger.info("执行被引数据请求");
 		response = httpClient.execute(httpGet);
 		//请求成功
+		Logger.info("type:"+type+" 获取被引数据请求是否成功:"+response.getStatusLine().getStatusCode());
 		if(HttpStatus.SC_OK == response.getStatusLine().getStatusCode()) {
 			HttpEntity entity = response.getEntity();
 			String temp = EntityUtils.toString(entity,"utf-8");
 			Document doc = Jsoup.parse(temp);
 			result = doc.getElementById("subPager").html();
-		} 
+		}else {
+			result = "error "+response.getStatusLine().toString();
+		}
 		return result;
 	}
 	
@@ -176,7 +177,6 @@ public class HttpCrawl {
 	 */
 	public String getCaculateData(String keyword,String groupName,String urlName) throws ClientProtocolException, IOException {
 		
-        Logger.info("执行计量分析方法 对应关键词--->" + keyword);
 		//httpClient使用cookie保存上下文信息，以便后续的Ajax请求携带Cookie访问
 		CloseableHttpClient httpClient =  connectionManager.getHttpClient();
 		
@@ -186,21 +186,23 @@ public class HttpCrawl {
 				+ URLEncoder.encode(HttpUtil.setGMCTime(), "UTF-8"));
 
 		HttpUtil.setRequestConfig(httpGet);
-		//执行psot请求
 		CloseableHttpResponse response = null;
 
 		//如果请求成功则打印输出响应的JSON内容
 		String result = "";
-		do {
-			//执行本次post请求
-			Logger.info("连接中...");
-			response =  httpClient.execute(httpGet);
-			Logger.info("本次连接是否成功 ： "+response.getStatusLine());
+		Logger.info("连接中...");
+		response =  httpClient.execute(httpGet);
+		Logger.info("本次连接是否成功 ： "+response.getStatusLine());
+		if(HttpStatus.SC_OK != response.getStatusLine().getStatusCode() &&
+				result.indexOf("<!DOCTYPE html PUBLIC") == -1) {
+			//不成功
+			return "error:" + response.getStatusLine();
+		}else {
 			HttpEntity entity =  response.getEntity();
 			result = EntityUtils.toString(entity,"utf-8");
-			Logger.info("获取到的结果：" + result );
-		}while(HttpStatus.SC_OK != response.getStatusLine().getStatusCode() && 
-			result.indexOf("<!DOCTYPE html PUBLIC") == -1);
+			Logger.info("成功获取到的结果：" + result );
+		}
+
 		
 		/*HttpEntity entity =  response.getEntity();
 		String temp = EntityUtils.toString(entity,"utf-8");
@@ -217,29 +219,26 @@ public class HttpCrawl {
 				+"&groupCode="
 				+ ConvertUtil.getGroupCode(groupName)
 				+ "&valueType=3");
-		Logger.info("pagename=ASP.brief_default_result_aspx&dbPrefix=SCDB&groupName="
-				+ URLEncoder.encode(groupName,"utf-8")
-				+"&groupCode="
-				+ ConvertUtil.getGroupCode(groupName)
-				+ "&valueType=3");
+		Logger.info(strEntity.toString());
 		//将字符串中的关键词参数进行编码转换，否则不识别，返回json字符串中是乱码 统计数据也是错的
 		strEntity.setContentEncoding("utf-8");
 		//将参数插入请求体
 		httpPost.setEntity(strEntity);
 		CloseableHttpResponse response2 = null;
 		
-		do {
-			//执行本次post请求
-			Logger.info("连接中...");
-			response2 = httpClient.execute(httpPost);
-			Logger.info("本次连接是否成功 ： "+response2.getStatusLine());
+		
+		//执行本次post请求
+		Logger.info("连接中...");
+		response2 = httpClient.execute(httpPost);
+		Logger.info("本次连接是否成功 ： "+response2.getStatusLine());
 			
+		if(HttpStatus.SC_OK != response2.getStatusLine().getStatusCode() && result.indexOf("<!DOCTYPE html PUBLIC") == -1) {
+			Logger.info("error " + response2.getStatusLine());
+		}else {
 			HttpEntity entity =  response2.getEntity();
 			result = EntityUtils.toString(entity,"utf-8");
-			Logger.info("返回结果 : " + result);
-		}while(HttpStatus.SC_OK != response2.getStatusLine().getStatusCode() && result.indexOf("<!DOCTYPE html PUBLIC") == -1);
 			Logger.info("获取到有效的返回结果 : " + result);
-	
+		}
 		
 		//清空Cooike
 		//关闭httpClient连接
