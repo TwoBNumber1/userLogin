@@ -18,8 +18,6 @@ var array;
 
 $("#topSearch").bind("keyup",function(){
 	 
-
-		
 		$.ajax({
 		url:ctx+"/search/prefix?prefix="+$("#topSearch").val().trim(),
 		type:'GET',

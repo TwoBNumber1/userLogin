@@ -44,7 +44,7 @@ var orgMap;
 function loadOrganChart(organChart,str){
 	organChart.showLoading();
 	var obj = jQuery.parseJSON(str);
-	orgMap = obj;
+	orgMap = obj.slice(0,21);
 	var xs = [];
 	var ys = []
 	for( var i=0; i<obj.length; i++ ){
@@ -133,212 +133,226 @@ function loadOrganChart(organChart,str){
 	organChart.hideLoading();
 }
 
+
+
 function getOrgMap(){
 	
-	debugger;
-	var geoCoordMap={};
+
+	var address = [];
 	for( var i=0; i<orgMap.length; i++ ){
-
-		
-		$.ajax({
-			type:'GET',
-			url:"http://api.map.baidu.com/geocoder/v2/?address="+orgMap[i].name+"&output=json&ak=sYVnAXX43USSVPlnPt3CGwsVH4j17Zz4&callback=showLocation",
-			async:false,
-			success:function(ret){
-				debugger;
-				var location = ret.result.location;
-				geoCoordMap[orgMap[i].name]=[location.lng,location.lat];
-			}
-		})
+		address.push(orgMap[i].name)
 	}
-
+	var geoCoordMap;
+	
 	debugger;
-   
+	$.ajax({
+		type:"GET",
+		url:ctx+"/map/location?address="+address.toString(),
+		success:function(ret){
+			debugger;
+			geoCoordMap = jQuery.parseJSON(ret);
+			loadOrganMap(geoCoordMap);
+		}
+	});
+}
 
-   var convertData = function (orgMap) {
-       var res = [];
-       for (var i = 0; i < orgMap.length; i++) {
-           var geoCoord = geoCoordMap[orgMap[i].name];
-           if (geoCoord) {
-               res.push({
-                   name: data[i].name,
-                   value: geoCoord.concat(orgMap[i].y)
-               });
-           }
-       }
-       return res;
-   };
 
-   option = {
-       title: {
-           text: '发文机构分布',
-           subtext: 'data from cnki.net',
-           sublink: 'kns.cnki.net',
-           left: 'center'
-       },
-       tooltip : {
-           trigger: 'item'
-       },
-       bmap: {
-           center: [104.114129, 37.550339],
-           zoom: 5,
-           roam: true,
-           mapStyle: {
-               styleJson: [{
-                   'featureType': 'water',
-                   'elementType': 'all',
-                   'stylers': {
-                       'color': '#d1d1d1'
-                   }
-               }, {
-                   'featureType': 'land',
-                   'elementType': 'all',
-                   'stylers': {
-                       'color': '#f3f3f3'
-                   }
-               }, {
-                   'featureType': 'railway',
-                   'elementType': 'all',
-                   'stylers': {
-                       'visibility': 'off'
-                   }
-               }, {
-                   'featureType': 'highway',
-                   'elementType': 'all',
-                   'stylers': {
-                       'color': '#fdfdfd'
-                   }
-               }, {
-                   'featureType': 'highway',
-                   'elementType': 'labels',
-                   'stylers': {
-                       'visibility': 'off'
-                   }
-               }, {
-                   'featureType': 'arterial',
-                   'elementType': 'geometry',
-                   'stylers': {
-                       'color': '#fefefe'
-                   }
-               }, {
-                   'featureType': 'arterial',
-                   'elementType': 'geometry.fill',
-                   'stylers': {
-                       'color': '#fefefe'
-                   }
-               }, {
-                   'featureType': 'poi',
-                   'elementType': 'all',
-                   'stylers': {
-                       'visibility': 'off'
-                   }
-               }, {
-                   'featureType': 'green',
-                   'elementType': 'all',
-                   'stylers': {
-                       'visibility': 'off'
-                   }
-               }, {
-                   'featureType': 'subway',
-                   'elementType': 'all',
-                   'stylers': {
-                       'visibility': 'off'
-                   }
-               }, {
-                   'featureType': 'manmade',
-                   'elementType': 'all',
-                   'stylers': {
-                       'color': '#d1d1d1'
-                   }
-               }, {
-                   'featureType': 'local',
-                   'elementType': 'all',
-                   'stylers': {
-                       'color': '#d1d1d1'
-                   }
-               }, {
-                   'featureType': 'arterial',
-                   'elementType': 'labels',
-                   'stylers': {
-                       'visibility': 'off'
-                   }
-               }, {
-                   'featureType': 'boundary',
-                   'elementType': 'all',
-                   'stylers': {
-                       'color': '#fefefe'
-                   }
-               }, {
-                   'featureType': 'building',
-                   'elementType': 'all',
-                   'stylers': {
-                       'color': '#d1d1d1'
-                   }
-               }, {
-                   'featureType': 'label',
-                   'elementType': 'labels.text.fill',
-                   'stylers': {
-                       'color': '#999999'
-                   }
-               }]
-           }
-       },
-       series : [
-           {
-               name: 'pm2.5',
-               type: 'scatter',
-               coordinateSystem: 'bmap',
-               data: convertData(orgMap),
-               symbolSize: function (val) {
-                   return val[2] / 10;
-               },
-               label: {
-                   normal: {
-                       formatter: '{b}',
-                       position: 'right',
-                       show: false
-                   },
-                   emphasis: {
-                       show: true
-                   }
-               },
-               itemStyle: {
-                   normal: {
-                       color: 'purple'
-                   }
-               }
-           },
-           {
-               name: 'Top 5',
-               type: 'effectScatter',
-               coordinateSystem: 'bmap',
-               data: convertData(orgMap.slice(0, 6)),
-               symbolSize: function (val) {
-                   return val[2] / 10;
-               },
-               showEffectOn: 'render',
-               rippleEffect: {
-                   brushType: 'stroke'
-               },
-               hoverAnimation: true,
-               label: {
-                   normal: {
-                       formatter: '{b}',
-                       position: 'right',
-                       show: true
-                   }
-               },
-               itemStyle: {
-                   normal: {
-                       color: 'purple',
-                       shadowBlur: 10,
-                       shadowColor: '#333'
-                   }
-               },
-               zlevel: 1
-           }
-       ]
-   };
-   var myChart = echarts.init(document.getElementById('org_distribute'));
-   myChart.setOption(option);
+function loadOrganMap(geoCoordMap){
+	debugger;
+	 var convertData = function (orgMap) {
+		 debugger;
+	       var res = [];
+	       var count = 0;
+	       var length = orgMap.length;
+	       while(count<length){
+	           var geoCoord = geoCoordMap[orgMap[count].name].split(",");
+	           if (geoCoord) {
+	               res.push({
+	                   name: orgMap[count].name,
+	                   value: geoCoord.concat(orgMap[count].y)
+	               });
+	           }
+	           count++;
+	       }
+	       return res;
+	   };
+
+	   debugger;
+	   option = {
+	       title: {
+	           text: '发文机构分布',
+	           subtext: 'data from cnki.net',
+	           sublink: 'kns.cnki.net',
+	           left: 'center'
+	       },
+	       tooltip : {
+	           trigger: 'item'
+	       },
+	       bmap: {
+	           center: [104.114129, 37.550339],
+	           zoom: 5,
+	           roam: true,
+	           mapStyle: {
+	               styleJson: [{
+	                   'featureType': 'water',
+	                   'elementType': 'all',
+	                   'stylers': {
+	                       'color': '#d1d1d1'
+	                   }
+	               }, {
+	                   'featureType': 'land',
+	                   'elementType': 'all',
+	                   'stylers': {
+	                       'color': '#f3f3f3'
+	                   }
+	               }, {
+	                   'featureType': 'railway',
+	                   'elementType': 'all',
+	                   'stylers': {
+	                       'visibility': 'off'
+	                   }
+	               }, {
+	                   'featureType': 'highway',
+	                   'elementType': 'all',
+	                   'stylers': {
+	                       'color': '#fdfdfd'
+	                   }
+	               }, {
+	                   'featureType': 'highway',
+	                   'elementType': 'labels',
+	                   'stylers': {
+	                       'visibility': 'off'
+	                   }
+	               }, {
+	                   'featureType': 'arterial',
+	                   'elementType': 'geometry',
+	                   'stylers': {
+	                       'color': '#fefefe'
+	                   }
+	               }, {
+	                   'featureType': 'arterial',
+	                   'elementType': 'geometry.fill',
+	                   'stylers': {
+	                       'color': '#fefefe'
+	                   }
+	               }, {
+	                   'featureType': 'poi',
+	                   'elementType': 'all',
+	                   'stylers': {
+	                       'visibility': 'off'
+	                   }
+	               }, {
+	                   'featureType': 'green',
+	                   'elementType': 'all',
+	                   'stylers': {
+	                       'visibility': 'off'
+	                   }
+	               }, {
+	                   'featureType': 'subway',
+	                   'elementType': 'all',
+	                   'stylers': {
+	                       'visibility': 'off'
+	                   }
+	               }, {
+	                   'featureType': 'manmade',
+	                   'elementType': 'all',
+	                   'stylers': {
+	                       'color': '#d1d1d1'
+	                   }
+	               }, {
+	                   'featureType': 'local',
+	                   'elementType': 'all',
+	                   'stylers': {
+	                       'color': '#d1d1d1'
+	                   }
+	               }, {
+	                   'featureType': 'arterial',
+	                   'elementType': 'labels',
+	                   'stylers': {
+	                       'visibility': 'off'
+	                   }
+	               }, {
+	                   'featureType': 'boundary',
+	                   'elementType': 'all',
+	                   'stylers': {
+	                       'color': '#fefefe'
+	                   }
+	               }, {
+	                   'featureType': 'building',
+	                   'elementType': 'all',
+	                   'stylers': {
+	                       'color': '#d1d1d1'
+	                   }
+	               }, {
+	                   'featureType': 'label',
+	                   'elementType': 'labels.text.fill',
+	                   'stylers': {
+	                       'color': '#999999'
+	                   }
+	               }]
+	           }
+	       },
+	       series : [
+	           {
+	               name: '坐标及文献数量',
+	               type: 'scatter',
+	               coordinateSystem: 'bmap',
+	               data: convertData(orgMap),
+	               symbolSize: function (val) {
+	            	   switch(val%10){
+	            	   
+	            	   }
+	                   return val[2] / 100;
+	               },
+	               label: {
+	                   normal: {
+	                       formatter: '{b}',
+	                       position: 'right',
+	                       show: false
+	                   },
+	                   emphasis: {
+	                       show: true
+	                   }
+	               },
+	               itemStyle: {
+	                   normal: {
+	                       color: 'purple'
+	                   }
+	               }
+	           },
+	           {
+	               name: 'Top 5',
+	               type: 'effectScatter',
+	               coordinateSystem: 'bmap',
+	               data: convertData(orgMap.slice(0, 6)),
+	               symbolSize: function (val) {
+	                   return val[2] / 100;
+	               },
+	               showEffectOn: 'render',
+	               rippleEffect: {
+	                   brushType: 'stroke'
+	               },
+	               hoverAnimation: true,
+	               label: {
+	                   normal: {
+	                       formatter: '{b}',
+	                       position: 'right',
+	                       show: true
+	                   }
+	               },
+	               itemStyle: {
+	                   normal: {
+	                       color: 'purple',
+	                       shadowBlur: 10,
+	                       shadowColor: '#333'
+	                   }
+	               },
+	               zlevel: 1
+	           }
+	       ]
+	   };
+	   var myChart = echarts.init(document.getElementById('org_distribute'));
+	   $("#buttonMap").css("display","none");
+	   myChart.setOption(option);
+		
 }

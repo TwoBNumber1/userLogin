@@ -238,9 +238,12 @@
 									<div class="row">
 									 <a id="buttonOrg" class="button solid-color">机构分布</a>
 									
-									 <a id="buttonMap" class="button solid-color">点击加载地图分布</a>
+								
 										<div class="col-sm-4" id="org_bar" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
-										<div class="col-sm-8" id="org_distribute" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
+										<div class="col-sm-8" id="org_distribute" style="height:600px;border:1px solid #ccc;padding:10px;">
+												 <a id="buttonMap" class="button solid-color">点击加载地图分布</a>
+										
+										</div>
 								
 									</div>
 								</div>
@@ -310,8 +313,9 @@
     <script src="<%=path %>/js/index/load_index_subject.js"></script>
     <script src="<%=path %>/js/plugins/tooltip/tipso.min.js"></script>
     <script src="<%=path %>/js/index/get_source_data.js" type="text/javascript"></script>
-     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=cudRWYxjcLLBjz37p40zRRTn4124YeQw"></script>
-    
+     <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=cudRWYxjcLLBjz37p40zRRTn4124YeQw&callback=initialize"></script>
+    	<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.3&key=174b348e6b6503d788bf7f9903ae8296&plugin=AMap.Geocoder"></script>
+  
       <script src="<%=path %>/js/index/get_org_map.js" type="text/javascript"></script>
         <script src="<%=path %>/js/echarts/bmap.min.js"></script>
    	<!-- Sweet alert -->
