@@ -236,6 +236,9 @@
 							<div class="text-inter">
 								<div class="container">
 									<div class="row">
+									 <a id="buttonOrg" class="button solid-color">机构分布</a>
+									
+									 <a id="buttonMap" class="button solid-color">点击加载地图分布</a>
 										<div class="col-sm-4" id="org_bar" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
 										<div class="col-sm-8" id="org_distribute" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
 								
