@@ -25,6 +25,7 @@ $("#ref-tab a").click(function(e){
 	var href = $(this).attr("href");
 	debugger;
 	$(this).tab("show");
+	if( $(href).find("table").find("tbody").length > 0 ) return;
 	getReferData(href.split('-')[1].toUpperCase(),href);
 });
 
@@ -39,28 +40,24 @@ function getReferData(type,href){
 				var str = ret.data.ret;
 				console.log("获取被引数据");
 				var table = $(href).find("table");
-				
-				if( typeof(table.find("tbody")) === 'undefined' ){
-					table.prepend(str);
-					//table.prepend('<tfoot style="align:center">更多...</tfoot>');
-					table.DataTable({
-						//规定排序列
-						paging:false,
-						searching:false,
-						info:false,
-						//order:[[7,"desc"]],
-						columnDefs:[{
-							targets:[0,1],
-							ordering:false
-						}]
-					});
-				}else{
-					table.find("tbody").empty();
-					table.prepend(str);
-				}
+		
+				table.prepend(str);
+				//table.prepend('<tfoot style="align:center">更多...</tfoot>');
+				table.DataTable({
+					//规定排序列
+					paging:false,
+					searching:true,
+					info:false,
+					//order:[[7,"desc"]],
+					columnDefs:[{
+						targets:[0,1],
+						orderable:false
+					}]
+				});
+			
 			}else{
 				//错误信息 ret.info会有。
-				
+				alert(href+"获取失败："+ret.info);
 			}
 		},
 		error:function(){
