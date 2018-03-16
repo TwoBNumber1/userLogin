@@ -629,6 +629,7 @@ nav ul li a.active {
     font-size: 16px;
     font-weight: 600;
 }
+
 .hero-btn:hover {
     color: #63c6ae;
     text-decoration: none;
@@ -960,13 +961,7 @@ footer h2 {
     height: 776px;
     display: block;
 }
-.banner .dots {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 20px;
-    text-align: left;
-}
+
 .banner .dots li {
     display: inline-block;
     width: 10px;

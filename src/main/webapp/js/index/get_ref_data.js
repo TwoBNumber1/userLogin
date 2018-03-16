@@ -19,7 +19,8 @@ $(function(){
 $("#ref-tab a").click(function(e){
 	//切换选项卡
 	e.preventDefault();
-	if( $(this).parent().attr("class").indexOf("active") != -1 ){
+	var flag = $(this).parent().attr("class");
+	if( typeof(flag) != "undefined" && flag.indexOf("active") != -1 ){
 		return;
 	}
 	var href = $(this).attr("href");
@@ -46,11 +47,11 @@ function getReferData(type,href){
 				table.DataTable({
 					//规定排序列
 					paging:false,
-					searching:true,
+					searching:false,
 					info:false,
 					//order:[[7,"desc"]],
 					columnDefs:[{
-						targets:[0,1],
+						targets:'nosort',
 						orderable:false
 					}]
 				});

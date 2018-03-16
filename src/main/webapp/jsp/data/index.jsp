@@ -17,6 +17,7 @@
     <link href="<%=path %>/css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet">
     <link href="<%=path %>/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="<%=path %>/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link rel="stylesheet" href="<%=path %>/css/styles.css">
     <link rel="stylesheet" href="<%=path %>/css/queries.css">
 
@@ -33,6 +34,11 @@
     <![endif]-->
 <style type="text/css">
 	td{vertical-align:middle }
+	#loading{
+		width:40%;
+		margin:auto;
+		text-align:center;
+	}
 </style>
 </head>
   <body>
@@ -90,13 +96,13 @@
                         </li>
                         <li class=""><a data-toggle="tab" href="#tab-qikn" aria-expanded="false">高被引期刊</a>
                         </li>
-                         <li class=""><a data-toggle="tab" href="#tab-nuiv" aria-expanded="false">高被引院校</a>
+                        <li><a data-toggle="tab" href="#tab-nuiv" aria-expanded="false">高被引院校</a>
                         </li>
-                         <li class=""><a data-toggle="tab" href="#tab-hosp" aria-expanded="false">高被引医院</a>
+                        <li><a data-toggle="tab" href="#tab-hosp" aria-expanded="false">高被引医院</a>
                         </li>
-                         <li class=""><a data-toggle="tab" href="#tab-docu" aria-expanded="false">高被引文献</a>
+                        <li><a data-toggle="tab" href="#tab-docu" aria-expanded="false">高被引文献</a>
                         </li>
-                         <li class=""><a data-toggle="tab" href="#tab-ztcs" aria-expanded="false">高被引学科</a>
+                        <li><a data-toggle="tab" href="#tab-ztcs" aria-expanded="false">高被引学科</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -107,10 +113,10 @@
                             class="table table-striped table-bordered table-hover dataTables-example dataTable">
                             <thead>
 									<tr>
-	                                	<th style="width :">作者</th>
-	                                	<th style="width :15%">选择学科</th>
-	                                    <th align="right" style="width :7%">发文量</th>
-	                                    <th align="right" style="width :8%"
+	                                	<th class="nosort" style="width :22%">作者</th>
+	                                	<th class="nosort" style="width :12%">选择学科</th>
+	                                    <th align="right" style="width :8%">发文量</th>
+	                                    <th align="right" style="width :10%"
 	                                    data-tipso="核心期刊收录文献量"
 	                                    >核心期刊</th>
 	                                    <th align="right" style="width :6%"
@@ -119,14 +125,14 @@
 	                                    <th align="right" style="width :4%"
 	                                    data-tipso="EI(工程索引)收录文献量"
 	                                    >EI</th>
-	                                    <th align="right" style="width :8%">基金文献</th>
+	                                    <th align="right" style="width :10%">基金文献</th>
 	                                    <th align="right" style="width :6%"
 	                                    data-tipso="该作者所发表的文献被其它文献引用次数"
 	                                    >被引</th>
 	                                    <th align="right" style="width :6%"
 	                                    data-tipso="文献被除作者及合作者以外其他人的引用次数"
 	                                    >他引</th>
-	                                    <th align="right" style="width :7%"
+	                                    <th align="right" style="width :8%"
 	                                    data-tipso="他引率又叫他引总引比，指某期刊的总被引频次中，被其他期刊引用次数所占的比例。"
 	                                    >他引率</th>
 	                                    <th align="right" style="width :7%"
@@ -135,6 +141,7 @@
 									</tr>
 							</thead>
                             </table>
+                              <div><img id="loading" src="<%=path %>/img/loading.gif"></div>
                             </div>
                         </div>
                         <!-- 作者 End -->
@@ -144,8 +151,8 @@
                             <table class="table table-striped table-bordered table-hover dataTables-example dataTable">
                             <thead>
 									<tr>
-	                                	<th style="width :">期刊名称</th>
-	                                	<th style="width :22%">选择学科</th>
+	                                	<th class="nosort" style="width :">期刊名称</th>
+	                                	<th class="nosort" style="width :22%">选择学科</th>
 	                                    <th align="right" style="width :10%">发文量</th>
 	                                    <th align="right" style="width :10%"
 	                                    data-tipso="该作者所发表的文献被其它文献引用次数"
@@ -162,6 +169,7 @@
 									</tr>
 							</thead>
                             </table>
+                            <div id="loading"><img src="<%=path %>/img/loading.gif"></div>
                             </div>
                         </div>
                         <!-- 期刊 End -->
@@ -172,8 +180,8 @@
                             class="table table-striped table-bordered table-hover dataTables-example dataTable">
                             <thead>
 									<tr>
-	                                	<th style="width :">院校名称</th>
-	                                	<th style="width :20%">选择学科</th>
+	                                	<th class="nosort" style="width :">院校名称</th>
+	                                	<th class="nosort" style="width :20%">选择学科</th>
 	                                    <th align="right" style="width :7%">发文量</th>
 	                                    <th align="right" style="width :8%"
 	                                    data-tipso="核心期刊收录文献量"
@@ -209,8 +217,8 @@
                             class="table table-striped table-bordered table-hover dataTables-example dataTable">
                             <thead>
 									<tr>
-	                                	<th style="width :">医院名称</th>
-	                                	<th style="width :20%">选择学科</th>
+	                                	<th class="nosort" style="width :">医院名称</th>
+	                                	<th class="nosort" style="width :20%">选择学科</th>
 	                                    <th align="right" style="width :7%">发文量</th>
 	                                    <th align="right" style="width :8%"
 	                                    data-tipso="核心期刊收录文献量"
@@ -247,8 +255,8 @@
                             class="table table-striped table-bordered table-hover dataTables-example dataTable">
                             <thead>
 									<tr>
-	                                	<th style="width :">被引文献题名</th>
-	                                	<th style="width :15%">选择学科</th>
+	                                	<th class="nosort"  style="width :">被引文献题名</th>
+	                                	<th class="nosort" style="width :15%">选择学科</th>
 	                                    <th align="right" style="width :12%">被引文献作者</th>
 	                                    <th align="right" style="width :12%">被引文献来源</th>
 	                                    <th align="right" style="width :12%"
@@ -273,12 +281,11 @@
                             class="table table-striped table-bordered table-hover dataTables-example dataTable">
                             <thead>
 									<tr>
-	                                	<th style="width :">学科名称</th>
+	                                	<th  class="nosort" style="width :">学科名称</th>
 	                                	<th style="width :15%">发文量</th>
-	                                    <th align="right" style="width :6%"
-	                                    data-tipso="该作者所发表的文献被其它文献引用次数"
-	                                    >被引频次</th>
-	                                    <th align="right" style="width :9%"
+										<th align="right" style="width: 6%"
+											data-tipso="该作者所发表的文献被其它文献引用次数">被引频次</th>
+										<th align="right" style="width :9%"
 	                                    data-tipso="文献被除作者及合作者以外其他人的引用次数"
 	                                    >他引频次</th>
 	                                    <th align="right" style="width :9%"

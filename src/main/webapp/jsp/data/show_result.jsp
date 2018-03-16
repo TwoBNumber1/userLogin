@@ -94,7 +94,7 @@
 		<div class="container">
 			<div class="row">
 				<ul id="all-tab" class="nav nav-tabs">
-				  <li class="active"><a  data-toggle="tab" href="#index-data">指数分析</a></li>
+				  <li class="active"><a data-toggle="tab" href="#index-data">指数分析</a></li>
 				  <li><a href="#caculate-data">计量可视化</a></li>
 				  <li><a href="#source-distribute">资源分布</a></li>
 <!-- 				  <li><a href="#">VB.Net</a></li>
