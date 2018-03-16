@@ -75,8 +75,8 @@ public class MapDataUtil {
             int lngEnd = add.indexOf(",\"lat");
             int latEnd = add.indexOf("},\"precise");
             if( lngStart>0 && lngEnd>0 && latEnd>0 ){
-                String lng = add.substring(lngStart+5,lngEnd);
-                String lat = add.substring(lngEnd+7,latEnd);
+                String lng = add.substring(lngStart+5,lngStart+10);
+                String lat = add.substring(lngEnd+7,lngEnd+12);
                result =  Joiner.on(",").skipNulls().join(lng,lat);
             }
         }

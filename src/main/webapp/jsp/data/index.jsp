@@ -35,10 +35,12 @@
 <style type="text/css">
 	td{vertical-align:middle }
 	#loading{
+		display:none;
 		width:40%;
 		margin:auto;
 		text-align:center;
 	}
+
 </style>
 </head>
   <body>
@@ -85,7 +87,7 @@
     
     <div  style="width:100%;height:100px"></div>
     
-    <div class="container" style="width:95%">
+    <div class="container" style="width:92%">
     
       <!-- 被引表格  -->
 		<div class="col-md-12">
@@ -113,19 +115,19 @@
                             class="table table-striped table-bordered table-hover dataTables-example dataTable">
                             <thead>
 									<tr>
-	                                	<th class="nosort" style="width :22%">作者</th>
-	                                	<th class="nosort" style="width :12%">选择学科</th>
-	                                    <th align="right" style="width :8%">发文量</th>
-	                                    <th align="right" style="width :10%"
+	                                	<th class="nosort" style="width :20%">作者</th>
+	                                	<th class="nosort" style="width :10%">选择学科</th>
+	                                    <th align="right" style="width :9%">发文量</th>
+	                                    <th align="right" style="width :12%"
 	                                    data-tipso="核心期刊收录文献量"
 	                                    >核心期刊</th>
-	                                    <th align="right" style="width :6%"
+	                                    <th align="right" style="width :7%"
 	                                    data-tipso="SCI(科学引文索引)收录文献量"
 	                                    >SCI</th>
 	                                    <th align="right" style="width :4%"
 	                                    data-tipso="EI(工程索引)收录文献量"
 	                                    >EI</th>
-	                                    <th align="right" style="width :10%">基金文献</th>
+	                                    <th align="right" style="width :12%">基金文献</th>
 	                                    <th align="right" style="width :6%"
 	                                    data-tipso="该作者所发表的文献被其它文献引用次数"
 	                                    >被引</th>
@@ -141,7 +143,6 @@
 									</tr>
 							</thead>
                             </table>
-                              <div><img id="loading" src="<%=path %>/img/loading.gif"></div>
                             </div>
                         </div>
                         <!-- 作者 End -->
@@ -169,7 +170,7 @@
 									</tr>
 							</thead>
                             </table>
-                            <div id="loading"><img src="<%=path %>/img/loading.gif"></div>
+
                             </div>
                         </div>
                         <!-- 期刊 End -->
@@ -301,10 +302,18 @@
                         </div>
                         <!-- 高被引学科 End -->
                     </div>
+                    <div  id="loading"><img src="<%=path %>/img/gif/loading.gif"></div>
                 </div>
 			</div>
       </div>
-
+      <div class="container" style="width:92%">
+    
+      <!-- 院校分布  -->
+	  <div class="col-md-12">
+	  	<div  id="school_distribute" style="height:600px;"></div>
+		
+	  </div>
+	  </div>
  	<div class="col-md-6">
           <h3>Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed.</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa. Nullam condimentum mauris et rhoncus sagittis. Sed eu metus in diam tincidunt egestas non at odio. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
@@ -346,6 +355,8 @@
       </div>  
     </footer>
 </body>
+ <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=cudRWYxjcLLBjz37p40zRRTn4124YeQw&callback=initialize"></script>
+    
 	<script src="<%=path %>/js/jquery-1.8.3.min.js"></script>
     <script src="<%=path %>/js/bootstrap.min.js"></script>
     <script src="<%=path %>/js/scripts.js"></script>
@@ -358,9 +369,11 @@
     <script src="<%=path %>/js/plugins/pace/pace.min.js"></script>
     <script src="<%=path %>/js/data/main.operate.js"></script>
     <script src="<%=path %>/js/plugins/toastr/toastr.min.js"></script>
-
+    <script src="<%=path %>/js/echarts/echarts.js"></script>
     <script src="<%=path %>/js/index/index_operate.js"></script>
     <script src="<%=path %>/js/index/get_ref_data.js"></script>
+        <script src="<%=path %>/js/echarts/bmap.min.js"></script>
+    <script src="<%=path %>/js/index/get_school_distribute.js"></script>
     <!-- tipso -->
     <script src="<%=path %>/js/plugins/tooltip/tipso.min.js"></script>
     <!-- dataTables -->

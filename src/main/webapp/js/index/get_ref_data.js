@@ -13,6 +13,7 @@ $(function(){
 		}
 	})
 	getReferData("AUTH","#tab-auth");
+	loadDistributeMap();
 })
 
 
@@ -27,6 +28,7 @@ $("#ref-tab a").click(function(e){
 	debugger;
 	$(this).tab("show");
 	if( $(href).find("table").find("tbody").length > 0 ) return;
+	showLoading();
 	getReferData(href.split('-')[1].toUpperCase(),href);
 });
 
@@ -55,9 +57,10 @@ function getReferData(type,href){
 						orderable:false
 					}]
 				});
-			
+				hideLoading();
 			}else{
 				//错误信息 ret.info会有。
+				hideLoading();
 				alert(href+"获取失败："+ret.info);
 			}
 		},
@@ -65,5 +68,13 @@ function getReferData(type,href){
 			//错误信息
 		}
 	});
+}
+
+function showLoading(){
+	$("#loading").css("display","block");
+}
+
+function hideLoading(){
+	$("#loading").css("display","none");
 }
 

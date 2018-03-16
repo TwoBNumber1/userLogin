@@ -156,7 +156,7 @@ function loadWordEcharts(data,name){
 	    },
 	    tooltip: {
 	        trigger: 'item',
-	        formatter:'共现次数<br/>{b}:{c} ({d}%)'
+	        formatter:'{b}<br/>共现次数：{c}次 （{d}%）'
 	        
 	    },
 	    legend: {

@@ -9,8 +9,6 @@ $("#buttonOrg").bind("click",function(){
 $("#buttonMap").bind("click",function(){
 	debugger;
 	getOrgMap();
-	
-	
 });
 
 
@@ -44,14 +42,13 @@ var orgMap;
 function loadOrganChart(organChart,str){
 	organChart.showLoading();
 	var obj = jQuery.parseJSON(str);
-	orgMap = obj.slice(0,21);
+	orgMap = obj.slice(0,35);
 	var xs = [];
 	var ys = []
 	for( var i=0; i<obj.length; i++ ){
 		xs.push(obj[i].name);
 		ys.push(obj[i].y);
 	}
-	
 	organChart.setOption({
 		 title : {
 		        text: '机构分布',
@@ -89,7 +86,7 @@ function loadOrganChart(organChart,str){
 	     	   {
 	     	    	type:"inside",
 	     	    	start : 0,
-	        	        end : Percentage(9,obj.length)
+	        	    end : 4
 	     	   }
      	   ],
      	  xAxis: {
@@ -109,12 +106,12 @@ function loadOrganChart(organChart,str){
 	               min: 0.000000001, //如果使用0，会出现你之前的情况，必须大于0的，使用0.000000001无限接近0
 	               axisLabel: {
 	            	   formatter: function(value, index) {
-  	                 if (index === 0) { //因为最小值不是0，重新转化为0
-  	                     value = Math.floor(value);
-  	                 }
-  	                 return value;
-	            	   }
-	               },
+	  	                 if (index === 0) { //因为最小值不是0，重新转化为0
+	  	                     value = Math.floor(value);
+	  	                 }
+	  	                 return value;
+		            	   }
+		               },
           }],
          
      	    tooltip: {
@@ -127,10 +124,11 @@ function loadOrganChart(organChart,str){
 			        name: "文献数",
 			        type: 'bar',
 			        data:ys,
-			        barGap:"80%"
+			        barCategoryGap:"50%"
 			    }]
 	});
 	organChart.hideLoading();
+	$("#buttonMap").css("display","block");
 }
 
 
@@ -165,11 +163,13 @@ function loadOrganMap(geoCoordMap){
 	       var count = 0;
 	       var length = orgMap.length;
 	       while(count<length){
+	    	   debugger;
 	           var geoCoord = geoCoordMap[orgMap[count].name].split(",");
 	           if (geoCoord) {
 	               res.push({
 	                   name: orgMap[count].name,
 	                   value: geoCoord.concat(orgMap[count].y)
+
 	               });
 	           }
 	           count++;
@@ -186,7 +186,7 @@ function loadOrganMap(geoCoordMap){
 	           left: 'center'
 	       },
 	       tooltip : {
-	           trigger: 'item'
+	           trigger: 'item',
 	       },
 	       bmap: {
 	           center: [104.114129, 37.550339],
@@ -302,7 +302,7 @@ function loadOrganMap(geoCoordMap){
 	            	   switch(val%10){
 	            	   
 	            	   }
-	                   return val[2] / 100;
+	                   return val[2] / 50;
 	               },
 	               label: {
 	                   normal: {

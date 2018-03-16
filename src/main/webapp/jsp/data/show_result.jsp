@@ -43,7 +43,13 @@
 	 font-size: 18;
 	  
 	}
-	
+	.loadbtn{
+	    margin: auto;
+	    text-align: center;
+	    position: absolute;
+	    top: 40%;
+	    left: 40%;
+	}
 	body{
 	 	backgroud-color:#f8f9f9
 	}
@@ -235,13 +241,15 @@
 							</div>
 							<div class="text-inter">
 								<div class="container">
+								<a id="buttonOrg" class="button solid-color">机构分布</a>
 									<div class="row">
-									 <a id="buttonOrg" class="button solid-color">机构分布</a>
+									 
 									
 								
 										<div class="col-sm-4" id="org_bar" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
 										<div class="col-sm-8" id="org_distribute" style="height:600px;border:1px solid #ccc;padding:10px;">
-												 <a id="buttonMap" class="button solid-color">点击加载地图分布</a>
+												 <a style="margin:auto;text-align:center"
+												 id="buttonMap" class="button solid-color loadbtn">点击加载地图分布</a>
 										
 										</div>
 								
@@ -301,7 +309,6 @@
     <script src="<%=path %>/js/scripts.js"></script>
     <script src="<%=path %>/js/unslider.min.js"></script>
     <script src="<%=path %>/js/echarts/echarts.js"></script>
-    <script src="<%=path %>/js/echarts/macarons.js"></script>
     <script src="<%=path %>/js/echarts/wonderland.js"></script>
     <script src="<%=path %>/js/plugins/dataTables/jquery.dataTables.min.js"></script>
     <script src="<%=path %>/js/data/util.js"></script>
