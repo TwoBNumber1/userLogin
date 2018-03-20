@@ -2,7 +2,9 @@ package com.sy.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletConfig;
 
@@ -16,8 +18,13 @@ import org.springframework.web.context.ServletConfigAware;
 
 import com.github.stuxuhai.jpinyin.PinyinException;
 import com.google.common.base.Charsets;
+import com.google.common.collect.Lists;
 import com.google.common.io.Files;
+import com.google.gson.Gson;
+import com.sy.util.AjaxResponse;
+import com.sy.util.HeapSort;
 
+import struct.DataField;
 import struct.KeywordsAutocomplete;
 
 @Controller
@@ -27,45 +34,70 @@ public class KeywordController implements InitializingBean,ServletConfigAware {
 
 	//private static final HtmlPage page = HttpUtil.getWebFirstPage(webClient);
 	private static final Logger Logger = LoggerFactory.getLogger(KeywordController.class);
-
+	//项目路径
 	private static final String localPath =  KeywordController.class.getClassLoader().getResource("./").getPath();
 	
 	KeywordsAutocomplete kac;
 		
 	
+	@RequestMapping(value="/push",produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String pushSearchWord(String keyword) {
+		AjaxResponse response = null;
+		//写入临时文件
+		File tempFile = new File(localPath+"\\com\\sy\\controller\\tempwords.txt");
+		try {
+			Files.append(keyword+"\r\n", tempFile, Charsets.UTF_8);
+			response = new AjaxResponse(0, "push success.");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			response = new AjaxResponse(-1, "push failed.");
+			e.printStackTrace();
+		}
+		return response.toString();
+	}
+	
+	
 	@RequestMapping(value="/prefix",produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String getSearch(String prefix) {
-	
-		return kac.search(prefix).toString();
+		Long start = System.currentTimeMillis();
+		List<DataField> result = Lists.newArrayList(kac.search(prefix));
+		Logger.info("搜索规模-> 词典大小："+kac.size()
+		+ " 搜索结果规模：" + result.size()
+		+ " 后台搜索操作耗时：" + (System.currentTimeMillis()-start)+"ms");
+		Logger.info("搜索结果："+result);
+		
+		//排序
+		start = System.currentTimeMillis();
+		List<DataField> resultSort = HeapSort.sort(result, 5);
+		Logger.info("排序规模 top"+5+"："+result.size()+"，排序操作耗时："+(System.currentTimeMillis()-start)+"ms");
+		Logger.info("排序结果："+resultSort);
+		return new Gson().toJson(resultSort);
 	}
-	
 	
 	@Override
 	public void setServletConfig(ServletConfig arg0) {
 		// TODO Auto-generated method stub
 		   try {
-			   System.out.println("加载keywordautocomplete到内存...");
 			   kac = new KeywordsAutocomplete("ch");
-			   //读文件，加载进内存23333
-			   System.out.println("localPath"+localPath);
-			   File file = new File(localPath+"\\com\\sy\\controller\\words.txt");
-			   
-			List<String> words = Files.readLines(file, Charsets.UTF_8);
-			  
-			   Logger.info("词典读取完毕.. ");
-			   for(String word : words) {
-				   kac.add(word);
-			   }
-			   Logger.info("词典加载到内存完毕..");
+			   Logger.info("加载词典到内存，文件路径 : "+localPath);
+			   kac.load(localPath+"\\com\\sy\\controller\\words.txt");
+			   //kac.showDict();
 			   System.out.println(kac.search("j"));
+			   System.out.println("size is :" + kac.size());
+			   Logger.info("词典加载到内存完毕..");
 		} catch (PinyinException e) {
 			// TODO Auto-generated catch block
-			Logger.error("拼音转换出错....");
+			Logger.error("Pinyin convert fail ....");
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			Logger.error("词典读取出错");
+			Logger.error("load dictionary fail ...");
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Logger.error("Unknown Error in keywordController init .. ");
 			e.printStackTrace();
 		}
 
@@ -76,9 +108,6 @@ public class KeywordController implements InitializingBean,ServletConfigAware {
 		// TODO Auto-generated method stub
 		
 	}
-	
-
-	
 	
 
 

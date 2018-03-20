@@ -10,7 +10,7 @@ import com.sy.controller.KeywordController;
 /**
  * Created by zhangcheng on 15/3/5.
  */
-public class KeywordsAutocompleteTest {
+public class KeywordsAutocompleteTest2 {
 
     static KeywordsAutocomplete kac;
     private static final String localPath =  KeywordController.class.getClassLoader().getResource("./").getPath();
@@ -20,9 +20,9 @@ public class KeywordsAutocompleteTest {
     public void testSearch() throws Exception {
         kac = new KeywordsAutocomplete("en");
 //        kac.load("");
-    
+       // kac.add("abc");
         Assert.assertEquals("abc", Lists.newLinkedList(kac.search("ab")).get(0));
-
+       // kac.add("中国");
         Assert.assertEquals("中国", Lists.newLinkedList(kac.search("中")).get(0));
         Assert.assertEquals("中国", Lists.newLinkedList(kac.search("中国")).get(0));
         Assert.assertEquals("中国", Lists.newLinkedList(kac.search("zg")).get(0));
@@ -34,7 +34,7 @@ public class KeywordsAutocompleteTest {
     	KeywordsAutocomplete kac = new KeywordsAutocomplete("ch");
     	 System.out.println("加载词典到内存，文件路径 : "+localPath);
 		   kac.load(localPath+"\\com\\sy\\controller\\words.txt");
-		   //kac.add("中国");
+		 //  kac.add("中国");
 		   System.out.println(kac.showDict());
 		   System.out.println(kac.search("zg"));
 		   System.out.println(kac.search("x"));

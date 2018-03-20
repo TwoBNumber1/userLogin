@@ -63,7 +63,7 @@ public class HttpCrawl {
 	
 	/**
 	 * 获取被引统计数据(首页)
-	 * @param type QIKN 期刊 AUTH 作者
+	 * @param type QIKN 期刊 AUTH 作者 ...s
 	 * @return 
 	 * @throws IOException 
 	 * @throws ClientProtocolException 

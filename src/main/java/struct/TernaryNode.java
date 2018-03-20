@@ -3,7 +3,7 @@ package struct;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by zhangcheng on 15/3/4.
+ * Created on 18/3/4.
  * Ternary Search Tree Node
  */
 @Component
