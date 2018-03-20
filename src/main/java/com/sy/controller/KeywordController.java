@@ -2,21 +2,17 @@ package com.sy.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.ServletConfig;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletConfigAware;
 
-import com.github.stuxuhai.jpinyin.PinyinException;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.google.common.io.Files;
@@ -30,7 +26,7 @@ import struct.KeywordsAutocomplete;
 @Controller
 @RequestMapping("/search")
 
-public class KeywordController implements InitializingBean,ServletConfigAware {
+public class KeywordController implements ServletConfigAware {
 
 	//private static final HtmlPage page = HttpUtil.getWebFirstPage(webClient);
 	private static final Logger Logger = LoggerFactory.getLogger(KeywordController.class);
@@ -77,6 +73,9 @@ public class KeywordController implements InitializingBean,ServletConfigAware {
 	}
 	
 	@Override
+	/**
+	 * 启动时加载词典
+	 */
 	public void setServletConfig(ServletConfig arg0) {
 		// TODO Auto-generated method stub
 		   try {
@@ -87,28 +86,11 @@ public class KeywordController implements InitializingBean,ServletConfigAware {
 			   System.out.println(kac.search("j"));
 			   System.out.println("size is :" + kac.size());
 			   Logger.info("词典加载到内存完毕..");
-		} catch (PinyinException e) {
-			// TODO Auto-generated catch block
-			Logger.error("Pinyin convert fail ....");
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			Logger.error("load dictionary fail ...");
-			e.printStackTrace();
+		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			Logger.error("Unknown Error in keywordController init .. ");
-			e.printStackTrace();
+			Logger.error(e.getMessage());
 		}
 
 	}
-
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-	
-
-
 }

@@ -32,24 +32,6 @@ public class HeapSort {
 			return retList;
 		}
 	}
-	
-	public static void main(String[] args) {
-		List<DataField> dataList = Lists.newArrayList();
-	       dataList.add(new DataField("java",268));
-	        dataList.add(new DataField("java±‡≥Ã",89));
-	        dataList.add(new DataField("jvm",666));
-	        dataList.add(new DataField("trie",4564));
-	        dataList.add(new DataField("c++",789));
-	        dataList.add(new DataField("ternary",111));
-	        dataList.add(new DataField("struct",42));
-	        dataList.add(new DataField("nodern",1));
-	        dataList.add(new DataField("cba",64));
-	        dataList.add(new DataField("ffr",56));
-	    for(DataField obj : sort(dataList,5)) {
-	    	System.out.println(obj);
-	    	
-	    }
-	}
 
 	/**
 	 * ≥ı ºªØ∂—

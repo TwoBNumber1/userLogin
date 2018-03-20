@@ -38,7 +38,7 @@ public class DataField implements Comparable<DataField> {
 		else return -1;
 		//return 0;
 	}
-	//重写 equals 和 hashCode方法 便于去重
+	//重写 equals 和 hashCode方法 便于set实体泛型对象去重
 	@Override
 	public int hashCode() {
 		// TODO Auto-generated method stub
