@@ -60,12 +60,13 @@ function getReferData(type,href){
 				hideLoading();
 			}else{
 				//错误信息 ret.info会有。
-				hideLoading();
-				alert(href+"获取失败："+ret.info);
+				layer.msg(href+"获取失败："+ret.info+" 正在重新加载..");
+				getReferData(type,href);
 			}
 		},
 		error:function(){
 			//错误信息
+			alert("获取高被引表格 咋的出错了呢。"+ret.info);
 		}
 	});
 }

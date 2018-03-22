@@ -79,7 +79,7 @@ public class HttpConnectionManager {
 
     public CloseableHttpClient getHttpClient() {
         RequestConfig defaultRequestConfig;  
-        defaultRequestConfig = RequestConfig.custom().setConnectTimeout(3000).setSocketTimeout(3000).build();  
+        defaultRequestConfig = RequestConfig.custom().setConnectTimeout(2000).setSocketTimeout(2000).build();  
     	CookieStore cookieStore = new BasicCookieStore();
         CloseableHttpClient httpClient = HttpClients.custom()
         		.setDefaultCookieStore(cookieStore)
@@ -97,12 +97,17 @@ public class HttpConnectionManager {
     	}
     }
     
+    
+   
+    
     // 监控有异常的链接  
     private static class IdleConnectionMonitorThread extends Thread {  
 
     	private final HttpClientConnectionManager connMgr; 
         private volatile boolean shutdown;  
 
+       
+        
         public IdleConnectionMonitorThread(HttpClientConnectionManager connMgr) {  
             super();  
             this.connMgr = connMgr;  
@@ -114,7 +119,6 @@ public class HttpConnectionManager {
                 while (!shutdown) {  
                     synchronized (this) {  
                         wait(60000);
-                        
                         // 关闭失效的连接  
                         Logger.info(" 监控线程唤醒，即将关闭过期连接");
                         connMgr.closeExpiredConnections(); 

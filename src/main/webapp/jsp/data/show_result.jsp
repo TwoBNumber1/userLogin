@@ -53,6 +53,12 @@
 	body{
 	 	backgroud-color:#f8f9f9
 	}
+	
+	.button{
+		display:display;
+		margin:auto;
+		text-align:center;
+	}
 </style>
 </head>
  <body>
@@ -87,7 +93,7 @@
 		               <input type="text" placeholder="输入文献关键词" id="search" name="search" class="form-control input-lg">
 		               <div class="input-group-btn">
 		                   <button id="searchBtn" class="btn btn-lg btn-primary" type="button">
-		                       搜索
+		                     	 搜索
 		                   </button>
 		               </div>
 		            </div>
@@ -166,6 +172,7 @@
 						       </div>
 						   	</div>
 						    <!-- 关键词共现条形图 关注文献表格 -->
+						    <div  style="width:100%;height:50px"></div>
 						    <div class="text-inter">
 									    <div class="container">
 										      <div class="row">
@@ -180,9 +187,12 @@
 										      		</div>  
 										      </div>
 								   		</div>
+								   		<div  style="width:100%;height:50px"></div>
 								   		<div class="container">
 								   		   	<div class="row">
-											        <div class="col-md-6" id="orgCount" style="height:450px;border:1px solid #ccc;padding:20px"></div>  
+											        <div class="col-md-6" id="orgCount" style="height:450px;border:1px solid #ccc;padding:20px">
+											        	<a class="button extra-color">点击重新加载</a>
+											        </div>  
 										      		<div class="col-md-6" id="subjectCount" 
 										      		style="
 										      			height:450px;
@@ -196,26 +206,27 @@
 						    <!-- 指数分析选项卡 end -->
 					    </div>
 					</div>
+					<!-- 计量分析 begin -->
 					<div id="caculate-data" class="tab-pane">
 						<div class="panel-body">
-						<div class="text-inter">
+							<!-- 个关键词分布和词云图 -->
 							<div class="container">
 									<div class="row">
-										<div class="col-sm-8" id="wordAllCount" style="height:400px;border:1px solid #ccc;padding:10px;"></div>
-										<div class="col-sm-4" id="wordCloud" style="height:400px;border:1px solid #ccc;padding:10px;"></div>
+									<div class="col-sm-5" id="wordCloud" style="height:450px;border:1px solid #ccc;padding:10px;"></div>
+										<div class="col-sm-7" id="wordAllCount" style="height:450px;border:1px solid #ccc;padding:10px;"></div>
+										
 									</div>
+							</div>
+							<!-- 关系共现网络 -->
+							<div class="container">
+								<div class="row">
+									<div class="col-sm-12" id="matrix" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
 								</div>
 							</div>
-							<div class="text-inter">
-								<div class="container">
-									<div class="row">
-										<div class="col-sm-12" id="matrix" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
-									</div>
-								</div>
-							</div>
-							
 						</div>
 					</div>
+					<!-- 计量分析 End -->
+					<!-- 资源分布 begin -->
 					<div id="source-distribute" class="tab-pane">
 						<div class="panel-body">
 						<div class="text-inter">
@@ -230,21 +241,19 @@
 									</div>
 							</div>
 						</div>
-							<div class="text-inter">
-								<div class="container">
-									<div class="row">
-										<div class="col-sm-6" id="sub_distribute" style="height:450px;border:1px solid #ccc;padding:10px;"></div>
-										<div class="col-sm-6" id="docu_source" style="height:450px;border:1px solid #ccc;padding:10px;"></div>
-								
-									</div>
+							
+							<div class="container">
+								<div class="row">
+									<div class="col-sm-6" id="sub_distribute" style="height:450px;border:1px solid #ccc;padding:10px;"></div>
+									<div class="col-sm-6" id="docu_source" style="height:450px;border:1px solid #ccc;padding:10px;"></div>
+							
 								</div>
 							</div>
-							<div class="text-inter">
+
+						
 								<div class="container">
-								<a id="buttonOrg" class="button solid-color">机构分布</a>
+									<a id="buttonOrg" class="button solid-color">机构分布</a>
 									<div class="row">
-									 
-									
 								
 										<div class="col-sm-4" id="org_bar" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
 										<div class="col-sm-8" id="org_distribute" style="height:600px;border:1px solid #ccc;padding:10px;">
@@ -255,7 +264,7 @@
 								
 									</div>
 								</div>
-							</div>
+						
 							<div class="text-inter">
 								<div class="container">
 									<div class="row">
@@ -273,9 +282,9 @@
 				
 				</div>
 			</div>
-		
+		</div>
 	    </div>
-    </div>
+
    
  
     <div class="shadow"></div>
@@ -303,31 +312,32 @@
         </div>
       </div>  
     </footer>
-    <script src="<%=path %>/js/echarts/echarts-wordcloud.min.js"></script>
-    <script src="<%=path %>/js/jquery-1.8.3.min.js"></script>
+   
+    <script src="<%=path %>/js/jquery-1.10.2.min.js"></script>
     <script src="<%=path %>/js/bootstrap.min.js"></script>
     <script src="<%=path %>/js/scripts.js"></script>
     <script src="<%=path %>/js/unslider.min.js"></script>
+    <script src="<%=path %>/js/plugins/dataTables/jquery.dataTables.min.js"></script>
+
+    <script src="<%=path %>/js/plugins/toastr/toastr.min.js"></script>
+    <script src="<%=path %>/js/plugins/tooltip/tipso.min.js"></script>
+    <script src="<%=path %>/js/horsey/jquery-ui.min.js"></script>
+    <!-- 图表相关 -->
     <script src="<%=path %>/js/echarts/echarts.js"></script>
     <script src="<%=path %>/js/echarts/wonderland.js"></script>
-    <script src="<%=path %>/js/plugins/dataTables/jquery.dataTables.min.js"></script>
+     <script src="<%=path %>/js/echarts/echarts-wordcloud.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=cudRWYxjcLLBjz37p40zRRTn4124YeQw&callback=initialize"></script>
+    <script src="<%=path %>/js/echarts/bmap.min.js"></script>
+    <script src="<%=path %>/js/plugins/layer/layer.js"></script>
+    <!-- 业务相关的逻辑js -->
     <script src="<%=path %>/js/data/util.js"></script>
-    <script src="<%=path %>/js/plugins/toastr/toastr.min.js"></script>
+    <script src="<%=path %>/js/index/get_source_data.js" type="text/javascript"></script>
+    <script src="<%=path %>/js/index/get_org_map.js" type="text/javascript"></script>
     <script src="<%=path %>/js/index/show_result.js"></script>
     <script src="<%=path %>/js/index/get_index_data.js"></script>
     <script src="<%=path %>/js/index/load_echarts.js"></script>
     <script src="<%=path %>/js/index/get_caculate_data.js"></script>
     <script src="<%=path %>/js/index/load_index_subject.js"></script>
-    <script src="<%=path %>/js/plugins/tooltip/tipso.min.js"></script>
-    <script src="<%=path %>/js/index/get_source_data.js" type="text/javascript"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=cudRWYxjcLLBjz37p40zRRTn4124YeQw&callback=initialize"></script>
-    <script src="<%=path %>/js/index/get_org_map.js" type="text/javascript"></script>
-    <script src="<%=path %>/js/echarts/bmap.min.js"></script>
-   	<!-- Sweet alert -->
-    <script src="<%=path %>/js/plugins/sweetalert/sweetalert.min.js"></script>
-        <script src="<%=path %>/js/horsey/jquery-ui.min.js"></script>
-    <script type="text/javascript">
-    </script>
 	<script type="text/javascript"> var ctx = "<%=path%>";
 	
     </script>

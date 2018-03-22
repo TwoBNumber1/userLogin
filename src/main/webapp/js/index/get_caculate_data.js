@@ -16,9 +16,12 @@ function getMatrixData(keyword,groupName){
 				matrixChart = echarts.init(document.getElementById("matrix"),"wonderland");
 				var str = unescape(ret.data.ret);
 				loadMatrix(str);
+			}else{
+				layer.msg("getMatrixData status is -1");
 			}
 		},
 		error:function(){
+			layer.msg("getMatrixData ajax in error..");
 		}
 	});
 }
@@ -45,11 +48,15 @@ function getCaculateData(keyword,groupName){
 				cloudChart.showLoading();
 				var str = unescape(ret.data.ret);
 				loadWordCount(str,wordChart);
-				//loadWordCloud(str,cloudChart);
+				getMatrixData(keyword,"关键词");
+				loadWordCloud(str,cloudChart);
+			}else{
+				layer.msg("计量数据获取失败，重新加载中....");
+				getCaculateData(keyword,"关键词");
 			}
 		},
 		error:function(){
-			
+			layer.msg("wordChart Failed...");
 		}
 	});
 }
@@ -66,7 +73,6 @@ cloudChart.showLoading();
 var matrixChart;
 
 function loadMatrix(str){
-	
 	
 	debugger;
 	var obj = jQuery.parseJSON(str);
@@ -202,7 +208,11 @@ function loadMatrix(str){
 
 var keywordCount = [];
 
+
 function loadWordCloud(data,cloudChart){
+
+	var maskImage  = new Image();
+	maskImage.src = "/userLogin/img/word_cloud.svg";
 	debugger;
 	var obj = jQuery.parseJSON(data);
 	var data = [];
@@ -212,30 +222,34 @@ function loadWordCloud(data,cloudChart){
 		data.push({name:obj[i].name,value:obj[i].y});
 	}
 	
-	setTimeout(cloudChart.setOption({
+	var option =  {
 	 
 		 title:{
 		        text:"词云图",
 		        link:'https://github.com/ecomfe/echarts-wordcloud',
-		        subtext: '数据来自',
-		        sublink:'http://data-visual.cn',
+		        subtext: '数据来自 cnki.net',
+		        sublink:'http://kns.cnki.net',
 		    },
-		 tooltip: {},
+		tooltip: {},
 		series: [{
 		        type: 'wordCloud',
-		        gridSize: 20,
-		        sizeRange: [12, 50],
-		        rotationRange: [0, 0],
-		        shape: 'smooth',
+		        gridSize: 10,
+		        sizeRange: [12, 40],
+		        rotationRange: [0,0],
+		        shape: 'pentagon',
+		        //maskImage:maskImage,
 		        textStyle: {
 		            normal: {
-		                color: function() {
-		                    return 'rgb(' + [
-		                        Math.round(Math.random() * 160),
-		                        Math.round(Math.random() * 160),
-		                        Math.round(Math.random() * 160)
-		                    ].join(',') + ')';
-		                }
+		                color:function () {
+                            var colors =  [
+                                "#4ea397","#22c3aa","#7bd9a5", "#d0648a","#f58db2","#f2b3c9",
+                                "#2ec7c9","#b6a2de","#5ab1ef","#ffb980","#d87a80", "#8d98b3",
+                                "#e5cf0d","#97b552","#95706d","#dc69aa","#07a2a4", "#9a7fd1",
+                                "#588dd5", "#f5994e","#c05050", "#59678c", "#c9ab00","#7eb00a",
+                                "#6f5553","#c14089"
+                            ] 
+                            return colors[parseInt(Math.random() * 26)];
+                        }
 		            },
 		            emphasis: {
 		                shadowBlur: 10,
@@ -243,11 +257,12 @@ function loadWordCloud(data,cloudChart){
 		            }
 		        },
 		        data:data}]
-	}),1000);
-	
-	
+	};
+	//maskImage.onload = function(){
+		cloudChart.setOption(option);
+		
+	//}
 	cloudChart.hideLoading();
-	
 }
 
 var keywordCount;
@@ -260,6 +275,7 @@ function loadWordCount(data,wordChart){
 		ys.push(obj[i].y);
 	}
 	keywordCount = ys;
+	
 	wordChart.setOption( {
 	    title: {
 	        text: '关键词分布',
@@ -317,7 +333,8 @@ function loadWordCount(data,wordChart){
 	        {
 	            name:'文献数(篇)',
 	            type:'bar',
-	            data:ys
+	            data:ys,
+	            barCategoryGap:"40%"
 	        }
 	    ]
 	});

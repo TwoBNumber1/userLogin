@@ -132,6 +132,7 @@ function loadUserChart(data,userChart){
 
 function loadWordEcharts(data,name){
 	debugger;
+	wordChart.showLoading();
 	var info = "";
 	if( name != ""){
 		info = "学科-> "+name;
@@ -139,7 +140,7 @@ function loadWordEcharts(data,name){
 	var obj = jQuery.parseJSON(data.ret);
 	var ys = [];
 	var xs = [];
-	wordChart.hideLoading();
+	
 	for( var i=0; i<obj.key.length; i++){
 		xs.push(obj.key[i]);
 		var item = {};
@@ -148,7 +149,6 @@ function loadWordEcharts(data,name){
 		ys.push(item);
 	}
 	
-	wordChart.hideLoading();
 	wordChart.setOption( {
 	    title: {
 	        text: '相关词 Top 5 \n'+info,
@@ -195,6 +195,7 @@ function loadWordEcharts(data,name){
 	        }
 	    ]
 	});
+	wordChart.hideLoading();
 }
 
 
@@ -282,21 +283,19 @@ function loadPublishEcharts(data){
         	            	 }
         	            },
         	            dataView: {readOnly: false},
-        	            restore: {},
         	            saveAsImage: {}
-        	        
         	        }
         	    },
         	   dataZoom : [
         		   {
         	        show : true,
         	        realtime : true,
-        	        start : 100-Percentage(16,obj.foreign.length),
+        	        start : 100-Percentage(13,obj.foreign.length),
         	        end : 100
         		   },
         	    {
         	    	type:"inside",
-        	    	start : 100-Percentage(16,obj.foreign.length),
+        	    	start : 100-Percentage(13,obj.foreign.length),
            	        end : 100
         	    }
         	   ],
@@ -504,7 +503,7 @@ function loadMediaChart(data,mediaChart){
 	    	mediaChart.hideLoading();    //隐藏加载动画
     }else{
     	mediaChart.hideLoading(); 
-		toastr.warning("Failed!");
+		toastr.warning("MediaChart Failed!");
     	
     }
 }

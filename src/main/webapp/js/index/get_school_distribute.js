@@ -261,7 +261,7 @@ function loadDistributeMap(){
                },
                itemStyle: {
                    normal: {
-                       color:' rgb(99, 198, 174)',
+                       color:'rgb(99, 198, 174)',
                        shadowBlur: 10,
                        shadowColor: '#333'
                    }

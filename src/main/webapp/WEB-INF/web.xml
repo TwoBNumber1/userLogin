@@ -43,6 +43,10 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
+	<listener>
+		<listener-class>com.sy.listener.ThreadDestroyListener</listener-class>
+	</listener>
+	
 	<!-- 配置shirofilter 通过代理来配置，对象由spring容器来创建的，但是交由servlet容器来管理 -->
 	<!-- shiro过虑器，DelegatingFilterProxy通过代理模式将spring容器中的bean和filter关联起来 -->
   <!--   <filter>

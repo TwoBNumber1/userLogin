@@ -35,7 +35,6 @@
 <style type="text/css">
 	td{vertical-align:middle }
 	#loading{
-		display:none;
 		width:40%;
 		margin:auto;
 		text-align:center;
@@ -85,7 +84,7 @@
     	<div class="arrow"></div>
     </div>
     
-    <div  style="width:100%;height:100px"></div>
+    <div  style="width:100%;height:85px"></div>
     
     <div class="container" style="width:92%">
     
@@ -153,7 +152,7 @@
                             <thead>
 									<tr>
 	                                	<th class="nosort" style="width :">期刊名称</th>
-	                                	<th class="nosort" style="width :22%">选择学科</th>
+	                                	<th class="nosort" style="width :22%">学科</th>
 	                                    <th align="right" style="width :10%">发文量</th>
 	                                    <th align="right" style="width :10%"
 	                                    data-tipso="该作者所发表的文献被其它文献引用次数"
@@ -298,11 +297,14 @@
 									</tr>
 							</thead>
                             </table>
+                            
                             </div>
+                            
                         </div>
                         <!-- 高被引学科 End -->
                     </div>
-                    <div  id="loading"><img src="<%=path %>/img/gif/loading.gif"></div>
+                    <div  style="width:100%;height:85px"></div>
+                    <div id="loading"><img src="<%=path %>/img/gif/loading.gif"></div>
                 </div>
 			</div>
       </div>
@@ -314,20 +316,7 @@
 		
 	  </div>
 	  </div>
- 	<div class="col-md-6">
-          <h3>Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed.</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa. Nullam condimentum mauris et rhoncus sagittis. Sed eu metus in diam tincidunt egestas non at odio. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-          <div class="divider"></div>
-          <a href="#" class="button solid-color">BUTTON</a>
-          <a href="#" class="button extra-color">BUTTON</a>
-    </div>
-   <div class="col-md-6">
-          <h3>Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed.</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa. Nullam condimentum mauris et rhoncus sagittis. Sed eu metus in diam tincidunt egestas non at odio. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-          <div class="divider"></div>
-          <a href="#" class="button solid-color">BUTTON</a>
-          <a href="#" class="button extra-color">BUTTON</a>
-        </div>
+ 	
         
     <div class="shadow"></div>
     <footer>
@@ -355,25 +344,23 @@
       </div>  
     </footer>
 </body>
- <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=cudRWYxjcLLBjz37p40zRRTn4124YeQw&callback=initialize"></script>
-    
-	<script src="<%=path %>/js/jquery-1.8.3.min.js"></script>
+  	<script src="<%=path %>/js/jquery-1.10.2.min.js"></script>
+    <script src="<%=path %>/js/plugins/layer/layer.js"></script>
+	
     <script src="<%=path %>/js/bootstrap.min.js"></script>
     <script src="<%=path %>/js/scripts.js"></script>
     <script src="<%=path %>/js/unslider.min.js"></script>
     <script src="<%=path %>/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="<%=path %>/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="<%=path %>/js/plugins/layer/layer.js"></script>
     <script src="<%=path %>/js/hplus.min.js?v=4.0.0"></script>
-    <script type="text/javascript" src="<%=path %>/js/contabs.min.js"></script>
+    <script src="<%=path %>/js/contabs.min.js"></script>
     <script src="<%=path %>/js/plugins/pace/pace.min.js"></script>
-    <script src="<%=path %>/js/data/main.operate.js"></script>
-    <script src="<%=path %>/js/plugins/toastr/toastr.min.js"></script>
+    <%-- <script src="<%=path %>/js/plugins/toastr/toastr.min.js"></script> --%>
     <script src="<%=path %>/js/echarts/echarts.js"></script>
-    <script src="<%=path %>/js/index/index_operate.js"></script>
-    <script src="<%=path %>/js/index/get_ref_data.js"></script>
-        <script src="<%=path %>/js/echarts/bmap.min.js"></script>
-    <script src="<%=path %>/js/index/get_school_distribute.js"></script>
+    <script src="<%=path %>/js/echarts/bmap.min.js"></script>
+     <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=cudRWYxjcLLBjz37p40zRRTn4124YeQw&callback=initialize"></script>
+  
+    
     <!-- tipso -->
     <script src="<%=path %>/js/plugins/tooltip/tipso.min.js"></script>
     <!-- dataTables -->
@@ -381,6 +368,11 @@
    	<!-- Sweet alert -->
     <script src="<%=path %>/js/plugins/sweetalert/sweetalert.min.js"></script>
     <script src="<%=path %>/js/horsey/jquery-ui.min.js"></script>
+    <!-- 处理逻辑 -->
+    <script src="<%=path %>/js/index/get_school_distribute.js"></script>
+    <script src="<%=path %>/js/index/index_operate.js"></script>
+    <script src="<%=path %>/js/index/get_ref_data.js"></script>
+     <script src="<%=path %>/js/data/util.js"></script>
 	<script type="text/javascript"> var ctx = "<%=path%>";
     </script>
 </html>

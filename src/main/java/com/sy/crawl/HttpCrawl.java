@@ -1,40 +1,24 @@
 package com.sy.crawl;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URLEncoder;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.logging.Level;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.gargoylesoftware.htmlunit.CookieManager;
-import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
-import com.gargoylesoftware.htmlunit.ProxyConfig;
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlInput;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.sy.util.ConvertUtil;
 import com.sy.util.HttpUtil;
 
@@ -112,19 +96,19 @@ public class HttpCrawl {
 		setIndexGetHeader(httpGet);
 		CloseableHttpResponse response = null;
 		//post请求不成功则反复执行
-		boolean flag = true;
-		do{
+		//boolean flag = true;
+	
 			//执行本次Get请求
 			Logger.info("连接中....");
 			response = httpClient.execute(httpGet);
 			System.out.println(url);
 			Logger.info("连接是否成功： " + response.getStatusLine());
-			if(HttpStatus.SC_OK != response.getStatusLine().getStatusCode()) {
-				//连接没有成功
-				httpGet.abort();
-				flag = false;
-			}
-		}while( !flag );
+		if(HttpStatus.SC_OK != response.getStatusLine().getStatusCode()) {
+			//连接没有成功
+			httpGet.abort();
+			//flag = false;
+		}
+		
 		response.close();
 		//Cookie获取成功 跳出循环
 		HttpPost httpPost = new HttpPost(INDEX_AJAX_URL+resultType);
@@ -143,28 +127,28 @@ public class HttpCrawl {
 		String result = "";
 		//post请求不成功则反复执行
 		
-		do{
-			//执行本次post请求
-			Logger.info("连接中...");
-			response = httpClient.execute(httpPost);
-			Logger.info("连接是否成功： " + response.getStatusLine());
-			if(HttpStatus.SC_OK != response.getStatusLine().getStatusCode()) {
-				//连接没有成功
-				httpPost.abort();
-				flag = false;
-			}
-		}while( !flag );
-		
-			//response 200成功才会跳出循环 
-			HttpEntity entity =  response.getEntity();
+	
+		//执行本次post请求
+		Logger.info("连接中...");
+		CloseableHttpResponse response2 = httpClient.execute(httpPost);
+		Logger.info("连接是否成功： " + response2.getStatusLine());
+		if(HttpStatus.SC_OK != response2.getStatusLine().getStatusCode()) {
+			//连接没有成功
+			httpPost.abort();
+			//flag = false;
+		}else {
+			//response 200成功
+			HttpEntity entity =  response2.getEntity();
 			String temp =EntityUtils.toString(entity,"utf-8");
 			if( (temp != null) && (temp.length()>0) ) {
 				result = ConvertUtil.getIndexAnalysisJson(temp, resultType);
 				Logger.info(result);
 			}
+		}
 		
 		//通过连接池来关闭repsonse
 		connectionManager.close(response);
+		connectionManager.close(response2);
 		return result;
 	}
 

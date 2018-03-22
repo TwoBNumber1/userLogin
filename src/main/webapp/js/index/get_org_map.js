@@ -81,7 +81,7 @@ function loadOrganChart(organChart,str){
      	        show : true,
      	        realtime : true,
      	        start :0,
-     	        end : Percentage(9,obj.length)
+     	        end : Percentage(5,obj.length)
      		   },
 	     	   {
 	     	    	type:"inside",
@@ -134,7 +134,6 @@ function loadOrganChart(organChart,str){
 
 
 function getOrgMap(){
-	
 
 	var address = [];
 	for( var i=0; i<orgMap.length; i++ ){
@@ -182,7 +181,7 @@ function loadOrganMap(geoCoordMap){
 	       title: {
 	           text: '发文机构分布',
 	           subtext: 'data from cnki.net',
-	           sublink: 'kns.cnki.net',
+	           sublink: '../../kns.cnki.net',
 	           left: 'center'
 	       },
 	       tooltip : {
@@ -316,7 +315,7 @@ function loadOrganMap(geoCoordMap){
 	               },
 	               itemStyle: {
 	                   normal: {
-	                       color: 'purple'
+	                       color: 'rgb(99, 198, 174)'
 	                   }
 	               }
 	           },
@@ -324,7 +323,7 @@ function loadOrganMap(geoCoordMap){
 	               name: 'Top 5',
 	               type: 'effectScatter',
 	               coordinateSystem: 'bmap',
-	               data: convertData(orgMap.slice(0, 6)),
+	               data: convertData(orgMap.slice(0, 5)),
 	               symbolSize: function (val) {
 	                   return val[2] / 100;
 	               },
@@ -342,7 +341,7 @@ function loadOrganMap(geoCoordMap){
 	               },
 	               itemStyle: {
 	                   normal: {
-	                       color: 'purple',
+	                       color:'rgb(99, 198, 174)',
 	                       shadowBlur: 10,
 	                       shadowColor: '#333'
 	                   }

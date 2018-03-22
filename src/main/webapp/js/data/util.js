@@ -57,5 +57,10 @@ function deal_with_chart(chart){
     }  
 }
 
+function str_is_null(str){
+	return str == ''? true:str == null?true: typeof(str) == 'undefined'?true:false;
+	
+}
+
 
 

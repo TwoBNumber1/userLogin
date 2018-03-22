@@ -29,13 +29,21 @@ $(function(){
 	})
 	keyword = getUrlParam('keyword');
 	$("#search").val(keyword);
-	getIndexData(keyword,'GetAttention','Academic');
-	setTimeout('getWordCount();',1000)
-	debugger;
-	setTimeout('getAttentionArticle();',2500);
-	setTimeout('getSubject();',4000);
-	setTimeout('getOrgan();',6000);
+	
+	initResultPage();
 });
+
+
+
+function initResultPage(){
+	getIndexData(keyword,'GetAttention','Academic');
+	getWordCount();
+	debugger;
+	getAttentionArticle();
+	getSubject();
+	getOrgan();
+	
+}
 
 
 var all_flag = {};
@@ -49,7 +57,10 @@ $("#searchBtn").on("click",function(){
 	console.log("本次搜索关键词"+$("#search").val());
 	keyword = $("#search").val();
 	//为空直接return 
-	if(keyword == null || keyword === "") return;
+	if ( str_is_null(keyword) ){
+		layer.msg('输入关键词再进行搜索。', {icon: 3});
+		return;
+	} 
 	publishChart.showLoading();
 	getIndexData(keyword,'GetAttention','Academic');
 	wordChart.showLoading();
@@ -59,24 +70,44 @@ $("#searchBtn").on("click",function(){
 	getOrgan();
 });
 
+
+
+
 /**
  * 监听键盘输出
  * @returns
  */
-$("#search").bind("keyup",function(){
-	 //关键词提示
-	debugger;
-		$.ajax({
-			url:ctx+"/search/prefix?prefix="+$("#search").val().trim(),
-			type:'GET',
-			success:function(ret){
-				var array = ret.substring(1,ret.length-1).split(",");
-				debugger;
-				$("#search").autocomplete({
-					source:array
-				})
-			}
-		});
+$("#search").bind("keyup",function(event){
+	//回车键就执行搜索操作
+	if( event.keyCode == "13" ){
+		$("#searchBtn").click();
+		return;
+	}
+	//输入字符则查找词典
+	var timeStamp = new Date().getTime();
+	$("#search").autocomplete({
+		minLength:0,
+		source:function(request,response){
+			$.ajax({
+				url:ctx+"/search/prefix?prefix="+$("#search").val().trim(),
+				type:"GET",
+				success:function( data ){
+					var array = [];
+					if(data.length <= 2)	
+						array.push("No results..");
+					else	
+						array = jQuery.parseJSON(data);
+					response( $.map( array ,function( item ){
+						debugger;
+						return {
+							value:item.content
+						}
+					}));//response
+				}//success
+			});//ajax
+		}
+	});
+	console.log("操作共耗时："+(new Date().getTime()-timeStamp)+"ms");
 })
 
 

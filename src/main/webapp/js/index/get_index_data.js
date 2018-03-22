@@ -87,6 +87,7 @@ function getUserData(userChart){
 /*
  * 获取关键词数据
  */
+var back;
 function getWordCount(){
 
 		$.ajax({
@@ -103,6 +104,7 @@ function getWordCount(){
 				debugger;
 				if(ret.status === 0 && ret.data != null){
 					//加载关键词条形图
+					back = ret.data;
 					//没有编码，无多余信息信息
 					loadWordEcharts(ret.data,"");
 				}else{
@@ -160,6 +162,8 @@ function getAttentionArticle(){
 			}else{
 				$("#attention_table").empty().html("<h2>暂无数据</h2>");
 				toastr.error("Failed!");
+				alert("GetAttentionArticle" + ret.info);
+				getAttentionArticle();
 			}
 		}
 	});
