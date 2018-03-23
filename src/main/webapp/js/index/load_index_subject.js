@@ -1,10 +1,11 @@
 var subjectChart = echarts.init(document.getElementById('subjectCount'),"wonderland");
-subjectChart.showLoading();
-
 var orgChart = echarts.init(document.getElementById('orgCount'),"wonderland");
-orgChart.showLoading();
+
 
 function getSubject(){
+	deal_with_chart(subjectChart);
+	subjectChart = echarts.init(document.getElementById('subjectCount'),"wonderland");
+	subjectChart.showLoading();
 	$.ajax({
 		type:'GET',
 		url: ctx+'/data/getIndexData',
@@ -24,6 +25,9 @@ function getSubject(){
 }
 
 function getOrgan(){
+	deal_with_chart(orgChart);
+	orgChart = echarts.init(document.getElementById('orgCount'),"wonderland");
+	orgChart.showLoading();
 	$.ajax({
 		type:'GET',
 		url: ctx+'/data/getIndexData',
@@ -35,13 +39,15 @@ function getOrgan(){
 		success: function(ret){
 			debugger;
 			if(ret.status === 0 && ret.data != null){
-					loadOrgan(ret.data);
+			
+				loadOrgan(ret.data);
 			}
 		}
 	});
 }
 
 function loadOrgan(data){
+
 	//隐藏加载按钮
 	$("#orgCount").find("a").css("display","none");
 	debugger;
@@ -54,12 +60,9 @@ function loadOrgan(data){
     if (obj != null && obj != undefined && obj != 'undefined') {
     		debugger;
 	    	for(var i=0; i<obj.key.length; i++){
-	    	/*	param.name = obj.show[i][0];
-	    		param.value = obj.show[i][1];*/
 	    		xs.push(obj.key[i]);
 	    		ys.push(obj.cnt[i]);
 	    	}
-	    	
 	    	orgChart.setOption({        //加载数据图表
         	   title: {
         	        text: '机构分布',
@@ -68,9 +71,6 @@ function loadOrgan(data){
         	   stillShowZeroSum:false,
         	   legend:{
         		   data:["发文数"],
-        		   formatter: function (name) {
-        		        return echarts.format.truncateText(name, 100, '14px Microsoft Yahei', '…');
-        		    },
         		    tooltip: {
         		        show: true
         		    }
@@ -78,15 +78,19 @@ function loadOrgan(data){
         	   toolbox: {
         	        show: true,
         	        feature: {
-        	            myTool1:{
-        	            	show:true,
-        	            	title:"更新数据",
-        	            	 icon: 'path://M432.45,595.444c0,2.177-4.661,6.82-11.305,6.82c-6.475,0-11.306-4.567-11.306-6.82s4.852-6.812,11.306-6.812C427.841,588.632,432.452,593.191,432.45,595.444L432.45,595.444z M421.155,589.876c-3.009,0-5.448,2.495-5.448,5.572s2.439,5.572,5.448,5.572c3.01,0,5.449-2.495,5.449-5.572C426.604,592.371,424.165,589.876,421.155,589.876L421.155,589.876z M421.146,591.891c-1.916,0-3.47,1.589-3.47,3.549c0,1.959,1.554,3.548,3.47,3.548s3.469-1.589,3.469-3.548C424.614,593.479,423.062,591.891,421.146,591.891L421.146,591.891zM421.146,591.891',
-        	            	 onclick:function(){
-        	            		 orgChart.showLoading();
-        	            		 getOrgan();
-        	            	 }
-        	            },
+        	        	myTool1:{
+         	            	show:true,
+         	            	title:"更新数据",
+         	            	 icon: 'path://M50.104,88.326c-7.857,0-15.78-2.388-22.601-7.349c-8.302-6.039-13.746-14.941-15.33-25.067 c-1.582-10.115,0.879-20.24,6.929-28.51C30.803,11.406,53.225,6.948,70.148,17.252c1.626,0.989,2.142,3.11,1.151,4.737 c-0.99,1.626-3.11,2.143-4.737,1.151c-13.889-8.454-32.292-4.796-41.896,8.33c-4.96,6.781-6.978,15.082-5.681,23.374 c1.299,8.303,5.764,15.604,12.574,20.557c14.053,10.224,33.828,7.143,44.081-6.872c3.094-4.229,5.094-9.188,5.783-14.341 c0.252-1.888,1.983-3.209,3.874-2.96c1.888,0.252,3.213,1.987,2.96,3.874c-0.842,6.291-3.28,12.342-7.053,17.498 C73.69,82.873,61.973,88.326,50.104,88.326z',
+          	            	 onclick:function(){
+         	            		 orgChart.showLoading();
+         	            		 getOrgan();
+         	            	 }
+         	            },
+	         	           magicType: {
+	       	                type: ['line']
+	       	            },
+        	            restore:{},
         	            dataView: {readOnly: false},//数据视图
         	            saveAsImage: {}//保存为图片
         	        }
@@ -135,10 +139,10 @@ function loadOrgan(data){
     }else{
     	//加载数据失败
     	orgChart.hideLoading();
+    	layer.msg("机构分布加载失败！",{icon:2});
     	$("#orgCount").find("a").bind("click",function(event){
     		getOrgan();
-    	});
-    	$("#orgCount").find("a").css("display","block");
+    	}).css("display","block");
 		toastr.warning("Failed! Retry !");
     }
 }
@@ -149,7 +153,7 @@ function loadSubject(data){
 	debugger;
 	var obj = jQuery.parseJSON(data.ret);
 	//var code 
-	subjectChart.hideLoading();
+	
 	sub_data = [];
 	for( var i=0; i<obj.show.length; i++ ){
 		var param = {};
@@ -183,9 +187,9 @@ function loadSubject(data){
 	        	 myTool1:{
  	            	show:true,
  	            	title:"更新数据",
- 	            	 icon: 'path://M432.45,595.444c0,2.177-4.661,6.82-11.305,6.82c-6.475,0-11.306-4.567-11.306-6.82s4.852-6.812,11.306-6.812C427.841,588.632,432.452,593.191,432.45,595.444L432.45,595.444z M421.155,589.876c-3.009,0-5.448,2.495-5.448,5.572s2.439,5.572,5.448,5.572c3.01,0,5.449-2.495,5.449-5.572C426.604,592.371,424.165,589.876,421.155,589.876L421.155,589.876z M421.146,591.891c-1.916,0-3.47,1.589-3.47,3.549c0,1.959,1.554,3.548,3.47,3.548s3.469-1.589,3.469-3.548C424.614,593.479,423.062,591.891,421.146,591.891L421.146,591.891zM421.146,591.891',
- 	            	 onclick:function(){
- 	            		 subChart.showLoading();
+ 	            	 icon: 'path://M50.104,88.326c-7.857,0-15.78-2.388-22.601-7.349c-8.302-6.039-13.746-14.941-15.33-25.067 c-1.582-10.115,0.879-20.24,6.929-28.51C30.803,11.406,53.225,6.948,70.148,17.252c1.626,0.989,2.142,3.11,1.151,4.737 c-0.99,1.626-3.11,2.143-4.737,1.151c-13.889-8.454-32.292-4.796-41.896,8.33c-4.96,6.781-6.978,15.082-5.681,23.374 c1.299,8.303,5.764,15.604,12.574,20.557c14.053,10.224,33.828,7.143,44.081-6.872c3.094-4.229,5.094-9.188,5.783-14.341 c0.252-1.888,1.983-3.209,3.874-2.96c1.888,0.252,3.213,1.987,2.96,3.874c-0.842,6.291-3.28,12.342-7.053,17.498 C73.69,82.873,61.973,88.326,50.104,88.326z',
+ 	            	  onclick:function(){
+ 	            		 subjectChart.showLoading();
  	            		 getSubject();
  	            	 }
  	            },
@@ -213,6 +217,7 @@ function loadSubject(data){
 		        }
 	     ]
 	});
+	subjectChart.hideLoading();
 }
 
 subjectChart.on('click', function (params) {
@@ -224,7 +229,6 @@ subjectChart.on('click', function (params) {
     	//获取对应下标
     	for( var i=0; i<10; i++){
     		if( name === sub_data[i].name ) {
-    			
     			console.log(sub_code[i]);
     			updateChart(sub_code[i],name);
     			break;
@@ -236,10 +240,12 @@ subjectChart.on('click', function (params) {
     }
 });
 
-
-
-
-
+/**
+ * 根据code 和 name 重新加载
+ * @param code
+ * @param name
+ * @returns
+ */
 function updateChart(code,name){
 	wordChart.showLoading();
 	$.ajax({
@@ -259,7 +265,7 @@ function updateChart(code,name){
 				loadWordEcharts(ret.data,name);
 			}else{
 				wordChart.hideLoading();
-				toastr.error("FAILED：" + ret.info);
+				toastr.error("更新wordChart FAILED：" + ret.info);
 			}
 		}
 	});

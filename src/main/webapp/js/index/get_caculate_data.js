@@ -1,4 +1,7 @@
 function getMatrixData(keyword,groupName){
+	deal_with_chart(matrixChart);
+	matrixChart = echarts.init(document.getElementById("matrix"),"wonderland");
+	matrixChart.showLoading();
 	$.ajax({
 		type:'POST',
 		url: ctx+'/data/caculate',
@@ -12,8 +15,6 @@ function getMatrixData(keyword,groupName){
 			if(ret.status === 0 && ret.data != null){
 				//%u 解码
 				// 显示标题，图例和空的坐标轴
-				deal_with_chart(matrixChart);
-				matrixChart = echarts.init(document.getElementById("matrix"),"wonderland");
 				var str = unescape(ret.data.ret);
 				loadMatrix(str);
 			}else{
@@ -28,6 +29,12 @@ function getMatrixData(keyword,groupName){
 
 
 function getCaculateData(keyword,groupName){
+	//%u 解码
+	var wordChart = echarts.init(document.getElementById('wordAllCount'),"wonderland");
+	wordChart.showLoading();
+	// 显示标题，图例和空的坐标轴
+	var cloudChart = echarts.init(document.getElementById('wordCloud'),'wonderland');
+	cloudChart.showLoading();
 	$.ajax({
 		type:'POST',
 		url: ctx+'/data/caculate',
@@ -40,19 +47,12 @@ function getCaculateData(keyword,groupName){
 		success: function(ret){
 			debugger;
 			if(ret.status === 0 && ret.data != null){
-				//%u 解码
-				var wordChart = echarts.init(document.getElementById('wordAllCount'),"wonderland");
-				wordChart.showLoading();
-				// 显示标题，图例和空的坐标轴
-				var cloudChart = echarts.init(document.getElementById('wordCloud'),'wonderland');
-				cloudChart.showLoading();
 				var str = unescape(ret.data.ret);
 				loadWordCount(str,wordChart);
-				getMatrixData(keyword,"关键词");
 				loadWordCloud(str,cloudChart);
 			}else{
 				layer.msg("计量数据获取失败，重新加载中....");
-				getCaculateData(keyword,"关键词");
+				//getCaculateData(keyword,"关键词");
 			}
 		},
 		error:function(){
@@ -83,7 +83,9 @@ function loadMatrix(str){
 		var row = {};
 		row.name = obj.XTitles[i] ;
 		row.value = keywordCount[i];
-		row.symbolSize = parseInt( Percentage(row.value,getSum(keywordCount)) ) * 5;
+		var temp = parseInt( Percentage(row.value,getSum(keywordCount)) ) * 3;
+		row.symbolSize = temp < 10? temp+35:temp<30?temp+25:temp<50?temp+15:temp+10;
+	
 	/*	row.tooltip = {};
 		row.tooltip.formatter = row.name  + "：" + keywordCount[i];*/
 		data.push(row);
@@ -113,9 +115,7 @@ function loadMatrix(str){
 			  links.push(link);
 		  }
 	  }
-	  debugger;
-	  
-	  
+	debugger;
 	categories.sort(); //先排序
 	var res = [categories[0]];
 	for(var i = 1; i < categories.length; i++){
@@ -124,15 +124,13 @@ function loadMatrix(str){
 		}
 	}
     	  
-	matrixChart.hideLoading();
 	var option = {
-			  
-		       title:{
-		        text: "关键词共现网络",
-		        subtext: "<数据来自中国知网>",
-		        top: "top",
-		        left: "center"
-		    },
+			 title:{
+			        text: "关键词共现网络",
+			        subtext: "<数据来自中国知网>",
+			        top: "top",
+			        left: "center"
+			    },
 		      tooltip: {
 		    	  trigger:'item'
 		    	  
@@ -158,7 +156,7 @@ function loadMatrix(str){
 		        }
 		    },
 		      animationDuration: 1500,
-		      animationEasingUpdate: 'quinticInOut',
+		      animationEasingUpdate: 'quinticOut',
 		      series: [{
 		          name: '关键词共现网络',
 		          type: 'graph',
@@ -199,8 +197,8 @@ function loadMatrix(str){
 		          }
 		      }]
 		  };
-	
 	matrixChart.setOption(option);
+	matrixChart.hideLoading();
 	debugger;
 }
 
@@ -216,7 +214,6 @@ function loadWordCloud(data,cloudChart){
 	debugger;
 	var obj = jQuery.parseJSON(data);
 	var data = [];
-	cloudChart.hideLoading();
 
 	for(var i=0; i<obj.length; i++){
 		data.push({name:obj[i].name,value:obj[i].y});
@@ -259,8 +256,7 @@ function loadWordCloud(data,cloudChart){
 		        data:data}]
 	};
 	//maskImage.onload = function(){
-		cloudChart.setOption(option);
-		
+	cloudChart.setOption(option);
 	//}
 	cloudChart.hideLoading();
 }
@@ -275,7 +271,7 @@ function loadWordCount(data,wordChart){
 		ys.push(obj[i].y);
 	}
 	keywordCount = ys;
-	
+	getMatrixData(keyword,"关键词");
 	wordChart.setOption( {
 	    title: {
 	        text: '关键词分布',
@@ -296,9 +292,24 @@ function loadWordCount(data,wordChart){
 	    toolbox: {
 	        show: true,
 	        feature: {
-	            dataView: {readOnly: false},
+	       	 	myTool1:{
+	             	show:true,
+	             	title:"更新数据",
+	             	 icon: 'path://M50.104,88.326c-7.857,0-15.78-2.388-22.601-7.349c-8.302-6.039-13.746-14.941-15.33-25.067 c-1.582-10.115,0.879-20.24,6.929-28.51C30.803,11.406,53.225,6.948,70.148,17.252c1.626,0.989,2.142,3.11,1.151,4.737 c-0.99,1.626-3.11,2.143-4.737,1.151c-13.889-8.454-32.292-4.796-41.896,8.33c-4.96,6.781-6.978,15.082-5.681,23.374 c1.299,8.303,5.764,15.604,12.574,20.557c14.053,10.224,33.828,7.143,44.081-6.872c3.094-4.229,5.094-9.188,5.783-14.341 c0.252-1.888,1.983-3.209,3.874-2.96c1.888,0.252,3.213,1.987,2.96,3.874c-0.842,6.291-3.28,12.342-7.053,17.498 C73.69,82.873,61.973,88.326,50.104,88.326z',
+	             	 onclick:function(){
+	             		 wordChart.showLoading();
+	             		 keyword = $("#search").val().trim();
+	             		 if( str_is_null(keyword) ){
+	             			 layer.msg("请先输入关键词再更新数据。",{icon:3});
+	             			 return;
+	             		 }
+	             		 getCaculateData(keyword,"关键词");
+	             	 }
+
+	            },
 	            magicType: {show: true, type: ['line']},
 	            restore: {},
+	            dataView: {readOnly: false},
 	            saveAsImage: {show:true}
 	        }
 	    },
@@ -311,7 +322,6 @@ function loadWordCount(data,wordChart){
 	    },
 	    xAxis: [
 	        {
-
 	            data: xs,
 	            axisLabel: {  
 	            	   interval:0,  
@@ -329,7 +339,6 @@ function loadWordCount(data,wordChart){
 	        }
 	    ],
 	    series: [
-	        
 	        {
 	            name:'文献数(篇)',
 	            type:'bar',

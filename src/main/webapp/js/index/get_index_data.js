@@ -194,7 +194,14 @@ function getIndexData(keyword,type,numType){
 				//getWordCount();
 			}else{
 				publishChart.hideLoading();
-				toastr.warning("Failed!");
+				toastr.warning("Failed!"+ret.info);
+				//显示重新加载按钮
+				$("#publishCount").find("button").css("display","block")
+				.bind("click",function(event){
+					publishChart.showLoading();
+					getIndexData(keyword,'GetAttention','Academic');
+				});
+				//绑定事件
 			}
 		}
 	});

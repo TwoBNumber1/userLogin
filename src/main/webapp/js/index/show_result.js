@@ -55,12 +55,13 @@ $("#searchBtn").on("click",function(){
 
 	all_flag = {};
 	console.log("本次搜索关键词"+$("#search").val());
-	keyword = $("#search").val();
+	
 	//为空直接return 
-	if ( str_is_null(keyword) ){
+	if ( str_is_null( $("#search").val().trim() ) ){
 		layer.msg('输入关键词再进行搜索。', {icon: 3});
 		return;
 	} 
+	keyword = $("#search").val().trim();
 	publishChart.showLoading();
 	getIndexData(keyword,'GetAttention','Academic');
 	wordChart.showLoading();
@@ -80,6 +81,12 @@ $("#searchBtn").on("click",function(){
 $("#search").bind("keyup",function(event){
 	//回车键就执行搜索操作
 	if( event.keyCode == "13" ){
+		//为空直接return 
+		if ( str_is_null( $("#search").val().trim() ) ){
+			layer.msg('输入关键词再进行搜索。', {icon: 3});
+			return;
+		} 
+		keyword = $("#search").val().trim();
 		$("#searchBtn").click();
 		return;
 	}
@@ -121,9 +128,9 @@ $("#all-tab a").click(function(e){
 	$(this).tab('show');
 	if( href === "#caculate-data" ){
 		getCaculateData(keyword,"关键词");
-		setTimeout('getMatrixData("'+keyword+'","关键词")',3000);
+		//setTimeout('getMatrixData("'+keyword+'","关键词")',3000);
 	}else if( href === "#source-distribute"){
-		getResourceType(keyword,"资源类型")
+		initSourcePage(keyword);
 	}
 });
 

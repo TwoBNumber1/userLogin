@@ -44,6 +44,7 @@
 	  
 	}
 	.loadbtn{
+		display:none;
 	    margin: auto;
 	    text-align: center;
 	    position: absolute;
@@ -54,10 +55,13 @@
 	 	backgroud-color:#f8f9f9
 	}
 	
-	.button{
-		display:display;
-		margin:auto;
-		text-align:center;
+	.index-button{
+		display:none;
+	    margin: auto;
+	    text-align: center;
+	    position: absolute;
+	    top: 40%;
+	    left: 40%;
 	}
 </style>
 </head>
@@ -149,22 +153,30 @@
 						           <div id="count-content"class="tab-content">
 						               <div id="publish-content" class="tab-pane active">
 						                   <div class="panel-body">
-						                   	<div class="" id="publishCount" style="height:550px;"></div>
+						                   	<div class="" id="publishCount" style="height:550px;">
+						                   	  	<button class="button extra-color index-button">点击重新加载</button>
+						                   	</div>
 						                   </div>
 						               </div>
 						               <div id="user-content" class="tab-pane">
 						                   <div class="panel-body">
-						                   	<div class="" id="userCount" style="height:550px;"></div>
+						                   	<div class="" id="userCount" style="height:550px;">
+						                   		<button class="button extra-color index-button">点击重新加载</button>
+						                   	</div>
 						                   </div>
 						               </div>
 						                    <div id="cited-content" class="tab-pane">
 						                   <div class="panel-body">
-						                   	<div class="" id="citedCount" style="height:550px;"></div>
+						                   	<div class="" id="citedCount" style="height:550px;">
+						                   	  	<button class="button extra-color index-button">点击重新加载</button>
+						                   	</div>
 						                   </div>
 						               </div>
 						               <div id="media-content" class="tab-pane">
 						                   <div class="panel-body">
-						                   	<div class="" id="mediaCount" style="height:550px;"></div>
+						                   	<div class="" id="mediaCount" style="height:550px;">
+						                   		  	<button class="button extra-color index-button">点击重新加载</button>
+						                   	</div>
 						                   </div>
 						               </div>
 						           </div>
@@ -229,41 +241,33 @@
 					<!-- 资源分布 begin -->
 					<div id="source-distribute" class="tab-pane">
 						<div class="panel-body">
-						<div class="text-inter">
-							<div class="container">
-							 <a id="button1" class="button solid-color">资源类型</a>
-							 <a id="button2" class="button solid-color">研究层次</a>
-							 <a id="button3" class="button solid-color">学科分布</a>
-							 <a id="button4" class="button solid-color">文献来源</a>
-									<div class="row">
-										<div class="col-sm-6" id="resource_type" style="height:400px;border:1px solid #ccc;padding:10px;"></div>
-										<div class="col-sm-6" id="research_level" style="height:400px;border:1px solid #ccc;padding:10px;"></div>
-									</div>
+
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-6" id="resource_type" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+								<div class="col-sm-6" id="docu_source" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
 							</div>
 						</div>
-							
-							<div class="container">
-								<div class="row">
-									<div class="col-sm-6" id="sub_distribute" style="height:450px;border:1px solid #ccc;padding:10px;"></div>
-									<div class="col-sm-6" id="docu_source" style="height:450px;border:1px solid #ccc;padding:10px;"></div>
-							
-								</div>
+							<div style="height:50px" ></div>
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-6" id="research_level" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+								<div class="col-sm-6" id="sub_distribute" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+								
 							</div>
-
-						
-								<div class="container">
-									<a id="buttonOrg" class="button solid-color">机构分布</a>
-									<div class="row">
+						</div>
+						<div style="height:50px" ></div>
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-4" id="org_bar" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
+								<div class="col-sm-8" id="org_distribute" style="height:600px;border:1px solid #ccc;padding:10px;">
+										 <a style="margin:auto;text-align:center"
+										 id="buttonMap" class="button solid-color loadbtn">点击加载机构地图分布</a>
 								
-										<div class="col-sm-4" id="org_bar" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
-										<div class="col-sm-8" id="org_distribute" style="height:600px;border:1px solid #ccc;padding:10px;">
-												 <a style="margin:auto;text-align:center"
-												 id="buttonMap" class="button solid-color loadbtn">点击加载地图分布</a>
-										
-										</div>
-								
-									</div>
 								</div>
+						
+							</div>
+						</div>
 						
 							<div class="text-inter">
 								<div class="container">

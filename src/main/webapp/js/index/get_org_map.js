@@ -1,11 +1,5 @@
 
 
-$("#buttonOrg").bind("click",function(){
-	debugger;
-	getOrganData($("#search").val().trim(),"机构");
-	
-})
-
 $("#buttonMap").bind("click",function(){
 	debugger;
 	getOrgMap();
@@ -14,7 +8,9 @@ $("#buttonMap").bind("click",function(){
 
 var organChart;
 function getOrganData(keyword,groupName){
-
+		deal_with_chart(organChart);
+		organChart = echarts.init(document.getElementById('org_bar'),"wonderland");
+		organChart.showLoading();
 		$.ajax({
 			type:'POST',
 			url: ctx+'/data/caculate',
@@ -24,13 +20,12 @@ function getOrganData(keyword,groupName){
 				"urlName":"GroupTrend.aspx"
 			},
 			success: function(ret){
-				var str = unescape(ret.data.ret);
-				deal_with_chart(organChart);
-				organChart = echarts.init(document.getElementById('org_bar'),"wonderland");
-				organChart.showLoading();
-				loadOrganChart(organChart,str)
-				debugger;
-			
+				if( ret.status == 0 ){
+					var str = unescape(ret.data.ret);
+					loadOrganChart(organChart,str)
+				}else{
+					layer.msg("机构分布Error:" +ret.info);
+				}
 			},
 			error:function(){
 			}
@@ -55,6 +50,9 @@ function loadOrganChart(organChart,str){
 		        x:'left',
 		        subtext:"机构的文献发表量分布"
 		    },
+		    grid:{
+		    	bottom:80
+		    },
 		    toolbox: {
     	        show: true,
     	        feature: {
@@ -70,8 +68,8 @@ function loadOrganChart(organChart,str){
     	            magicType: {
     	                type: ['line']
     	            },
-    	            dataView: {readOnly: false},
     	            restore: {},
+    	            dataView: {readOnly: false},
     	            saveAsImage: {}
     	        
     	        }
@@ -134,7 +132,10 @@ function loadOrganChart(organChart,str){
 
 
 function getOrgMap(){
-
+	
+	var myChart = echarts.init(document.getElementById('org_distribute'));
+	$("#buttonMap").css("display","none");
+	myChart.showLoading();
 	var address = [];
 	for( var i=0; i<orgMap.length; i++ ){
 		address.push(orgMap[i].name)
@@ -148,15 +149,18 @@ function getOrgMap(){
 		success:function(ret){
 			debugger;
 			geoCoordMap = jQuery.parseJSON(ret);
-			loadOrganMap(geoCoordMap);
+			loadOrganMap(myChart,geoCoordMap);
 		}
 	});
 }
 
 
-function loadOrganMap(geoCoordMap){
+function loadOrganMap(myChart,geoCoordMap){
+	
 	debugger;
-	 var convertData = function (orgMap) {
+	var temp = parseInt(orgMap[0].y/10);
+	var mark= temp > 0 ? (temp+"").length : 0;
+	var convertData = function (orgMap) {
 		 debugger;
 	       var res = [];
 	       var count = 0;
@@ -175,7 +179,6 @@ function loadOrganMap(geoCoordMap){
 	       }
 	       return res;
 	   };
-
 	   debugger;
 	   option = {
 	       title: {
@@ -298,10 +301,17 @@ function loadOrganMap(geoCoordMap){
 	               coordinateSystem: 'bmap',
 	               data: convertData(orgMap),
 	               symbolSize: function (val) {
-	            	   switch(val%10){
-	            	   
+	            	   debugger;
+	            	   switch(mark){
+	            	   		case 0: return val[2] * 3;
+	            	   		case 1:return val[2] / 2;
+	            	   		case 2:return val[2] / 5;
+	            	   		case 3:return val[2] / 50;
+	            	   		case 4:return val[2] / 400;
+	            	   		case 5:return val[2] / 10000;
+	            	   		default :
+	            	   			return val[2]/20000;
 	            	   }
-	                   return val[2] / 50;
 	               },
 	               label: {
 	                   normal: {
@@ -325,7 +335,18 @@ function loadOrganMap(geoCoordMap){
 	               coordinateSystem: 'bmap',
 	               data: convertData(orgMap.slice(0, 5)),
 	               symbolSize: function (val) {
-	                   return val[2] / 100;
+	            	   debugger;
+	            	   switch(mark){
+	            	   		case 0: return val[2] * 2;
+	            	   		case 1:return val[2] / 2;
+	            	   		case 2:return val[2] / 5;
+	            	   		case 3:return val[2] / 75;
+	            	   		case 4:return val[2] / 500;
+	            	   		case 5:return val[2] / 10000;
+	            	   		default :
+	            	   			return val[2]/20000;
+	            	   }
+	                   
 	               },
 	               showEffectOn: 'render',
 	               rippleEffect: {
@@ -350,8 +371,7 @@ function loadOrganMap(geoCoordMap){
 	           }
 	       ]
 	   };
-	   var myChart = echarts.init(document.getElementById('org_distribute'));
-	   $("#buttonMap").css("display","none");
+	   myChart.hideLoading();
 	   myChart.setOption(option);
 		
 }

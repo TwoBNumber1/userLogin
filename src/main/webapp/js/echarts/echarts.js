@@ -20852,7 +20852,7 @@ var loadingDefault = function (api, opts) {
     opts = opts || {};
     defaults(opts, {
         text: 'loading',
-        color: '#c23531',
+        color: '#63c6ae',
         textColor: '#000',
         maskColor: 'rgba(255, 255, 255, 0.8)',
         zlevel: 0
@@ -71165,7 +71165,7 @@ DataView.defaultOption = {
     textColor: '#000',
     textareaColor: '#fff',
     textareaBorderColor: '#333',
-    buttonColor: '#c23531',
+    buttonColor: '#63c6ae',
     buttonTextColor: '#fff'
 };
 

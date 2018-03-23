@@ -80,7 +80,10 @@ public class DataController {
 			if(result != null && result.length()>0) {
 				response = new AjaxResponse(0, "成功获取数据");
 				response.addDataItem("ret",result);
-			}else {
+			}else if(result.contains("error")) {
+				response = new AjaxResponse(-1, result);
+			}
+			else{
 				response = new AjaxResponse(-1, "失败：计量数据返回空");
 			}
 		} catch (Exception e) {
