@@ -1,6 +1,14 @@
+
+
+var caculate_flag = 0;
+var matrixChart;
+var scatterChart;
 function getMatrixData(keyword,groupName){
 	deal_with_chart(matrixChart);
+	deal_with_chart(scatterChart);
+	scatterChart = echarts.init(document.getElementById("scatter"),'wonderland');
 	matrixChart = echarts.init(document.getElementById("matrix"),"wonderland");
+	scatterChart.showLoading();
 	matrixChart.showLoading();
 	$.ajax({
 		type:'POST',
@@ -17,8 +25,10 @@ function getMatrixData(keyword,groupName){
 				// 显示标题，图例和空的坐标轴
 				var str = unescape(ret.data.ret);
 				loadMatrix(str);
+				
 			}else{
-				layer.msg("getMatrixData status is -1");
+				layer.msg("getMatrixData status is -1 will Retry",{icon:3});
+				getMatrixData(keyword,"关键词");
 			}
 		},
 		error:function(){
@@ -27,13 +37,17 @@ function getMatrixData(keyword,groupName){
 	});
 }
 
+var cloudChart;
+var wordAllChart;
 
 function getCaculateData(keyword,groupName){
+	deal_with_chart(wordAllChart);
+	deal_with_chart(cloudChart);
 	//%u 解码
-	var wordChart = echarts.init(document.getElementById('wordAllCount'),"wonderland");
-	wordChart.showLoading();
+	wordAllChart = echarts.init(document.getElementById('wordAllCount'),"wonderland");
+	wordAllChart.showLoading();
 	// 显示标题，图例和空的坐标轴
-	var cloudChart = echarts.init(document.getElementById('wordCloud'),'wonderland');
+	cloudChart = echarts.init(document.getElementById('wordCloud'),'wonderland');
 	cloudChart.showLoading();
 	$.ajax({
 		type:'POST',
@@ -46,33 +60,62 @@ function getCaculateData(keyword,groupName){
 		},
 		success: function(ret){
 			debugger;
+			console.log("getCaculateData" + ret.data +" " + ret.status);
 			if(ret.status === 0 && ret.data != null){
+				caculate_flag = 1;
 				var str = unescape(ret.data.ret);
-				loadWordCount(str,wordChart);
+				loadWordCount(str,wordAllChart);
 				loadWordCloud(str,cloudChart);
 			}else{
 				layer.msg("计量数据获取失败，重新加载中....");
-				//getCaculateData(keyword,"关键词");
+				getCaculateData(keyword,"关键词");
 			}
 		},
 		error:function(){
-			layer.msg("wordChart Failed...");
+			layer.msg("wordAllChart Failed...");
 		}
 	});
 }
 
-/*var wordChart = echarts.init(document.getElementById('wordCount'),"wonderland");
-wordChart.showLoading();
-// 显示标题，图例和空的坐标轴
-var matrixChart = echarts.init(document.getElementById('matrix'),'vintage');
-matrixChart.showLoading();
+$("#cross").bind("click",function(event){
+	layer.msg("加载年度交叉分析....");
+	getYearCrossData();
+})
 
-var cloudChart = echarts.init(document.getElementById('wordCloud'),'vintage');
-cloudChart.showLoading();
-*/
-var matrixChart;
+var yearChart;
+
+function getYearCrossData(){
+	deal_with_chart(yearChart);
+	yearChart = echarts.init(document.getElementById('yearCross'),'wonderland');
+	yearChart.showLoading();
+	
+	$.ajax({
+		type:"POST",
+		url: ctx+'/data/caculate',
+		dataType: 'json',
+		async:true,
+		data:{"keyword":keyword,
+			"groupName":"关键词",
+			"urlName":"GroupYearCross.ashx"
+		},
+		success:function( ret ){
+			debugger;
+			if( ret.status == 0 ){
+				var str = unescape(ret.data.ret);
+				loadYearChart(str,yearChart);
+			}else{
+				layer.msg("年度交叉分析出错...",{icon:3});
+			}
+		}
+		
+	});
+}
+
 
 function loadMatrix(str){
+	
+	var scatter = [];
+	scatter[0] = [];
 	
 	debugger;
 	var obj = jQuery.parseJSON(str);
@@ -84,7 +127,7 @@ function loadMatrix(str){
 		row.name = obj.XTitles[i] ;
 		row.value = keywordCount[i];
 		var temp = parseInt( Percentage(row.value,getSum(keywordCount)) ) * 3;
-		row.symbolSize = temp < 10? temp+35:temp<30?temp+25:temp<50?temp+15:temp+10;
+		row.symbolSize = temp < 10? temp+25:temp<20?temp+15:temp<50?temp+10:temp+10;
 	
 	/*	row.tooltip = {};
 		row.tooltip.formatter = row.name  + "：" + keywordCount[i];*/
@@ -113,8 +156,12 @@ function loadMatrix(str){
 			  link.target = j;
 			  link.value = obj.matrixValue[i][j];
 			  links.push(link);
+			  scatter[0].push(
+				  [obj.XTitles[i],obj.XTitles[j],link.value]
+			  );
 		  }
 	  }
+	
 	debugger;
 	categories.sort(); //先排序
 	var res = [categories[0]];
@@ -123,7 +170,7 @@ function loadMatrix(str){
 			res.push(categories[i]);
 		}
 	}
-    	  
+    console.log(scatter);	  
 	var option = {
 			 title:{
 			        text: "关键词共现网络",
@@ -199,13 +246,65 @@ function loadMatrix(str){
 		  };
 	matrixChart.setOption(option);
 	matrixChart.hideLoading();
-	debugger;
+	loadMatrixScatter();
 }
 
+function loadMatrixScatter(){
+	debugger;
+	var data = [[
+	     ["Java", "J2EE", 88],
+         ["Java", "JSP", 155],
+         ["Java", "MVC", 84],
+         ["Java", "XML", 219],
+         ["JAVA", "数据库", 202]
+	      
+	]];
 
+		var scatterOption = {
 
-var keywordCount = [];
+		    xAxis: {
+		      type:"category"
+		    },
+		    yAxis: {
+		      type:"category"
+		    },
+		    series: [{
 
+		        data: data[0],
+		        type: 'scatter',
+		        symbolSize: function (data) {
+		        	debugger;
+		            return Math.sqrt(data[2]);
+		        },
+		        label: {
+		            emphasis: {
+		                show: true,
+		                formatter: function (param) {
+		                	debugger;
+		                    return param.data[0]+"与"+param.data[1]+"共现次数："+param.data[2];
+		                },
+		                position: 'top'
+		            }
+		        },
+		        itemStyle: {
+		            normal: {
+		                shadowBlur: 10,
+		                shadowColor: 'rgba(120, 36, 50, 0.5)',
+		                shadowOffsetY: 5,
+		                color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+		                    offset: 0,
+		                    color: 'rgb(251, 118, 123)'
+		                }, {
+		                    offset: 1,
+		                    color: 'rgb(204, 46, 72)'
+		                }])
+		            }
+		        }
+		    }]
+		};
+	scatterChart.setOption(scatterOption);
+	scatter.hideLoading();
+}
 
 function loadWordCloud(data,cloudChart){
 
@@ -220,13 +319,12 @@ function loadWordCloud(data,cloudChart){
 	}
 	
 	var option =  {
-	 
-		 title:{
-		        text:"词云图",
-		        link:'https://github.com/ecomfe/echarts-wordcloud',
-		        subtext: '数据来自 cnki.net',
-		        sublink:'http://kns.cnki.net',
-		    },
+		title:{
+			text:"词云图",
+			link:'https://github.com/ecomfe/echarts-wordcloud',
+			subtext: '数据来自 cnki.net',
+			sublink:'http://kns.cnki.net',
+		},
 		tooltip: {},
 		series: [{
 		        type: 'wordCloud',
@@ -255,14 +353,13 @@ function loadWordCloud(data,cloudChart){
 		        },
 		        data:data}]
 	};
-	//maskImage.onload = function(){
+	//设置图标 隐藏loading
 	cloudChart.setOption(option);
-	//}
 	cloudChart.hideLoading();
 }
 
 var keywordCount;
-function loadWordCount(data,wordChart){
+function loadWordCount(data,wordAllChart){
 	var obj = jQuery.parseJSON(data);
 	var ys = []; 
 	var xs = [];
@@ -272,7 +369,7 @@ function loadWordCount(data,wordChart){
 	}
 	keywordCount = ys;
 	getMatrixData(keyword,"关键词");
-	wordChart.setOption( {
+	wordAllChart.setOption( {
 	    title: {
 	        text: '关键词分布',
 	        subtext: '与<'+keyword+'>相关的关键词分布'
@@ -297,7 +394,7 @@ function loadWordCount(data,wordChart){
 	             	title:"更新数据",
 	             	 icon: 'path://M50.104,88.326c-7.857,0-15.78-2.388-22.601-7.349c-8.302-6.039-13.746-14.941-15.33-25.067 c-1.582-10.115,0.879-20.24,6.929-28.51C30.803,11.406,53.225,6.948,70.148,17.252c1.626,0.989,2.142,3.11,1.151,4.737 c-0.99,1.626-3.11,2.143-4.737,1.151c-13.889-8.454-32.292-4.796-41.896,8.33c-4.96,6.781-6.978,15.082-5.681,23.374 c1.299,8.303,5.764,15.604,12.574,20.557c14.053,10.224,33.828,7.143,44.081-6.872c3.094-4.229,5.094-9.188,5.783-14.341 c0.252-1.888,1.983-3.209,3.874-2.96c1.888,0.252,3.213,1.987,2.96,3.874c-0.842,6.291-3.28,12.342-7.053,17.498 C73.69,82.873,61.973,88.326,50.104,88.326z',
 	             	 onclick:function(){
-	             		 wordChart.showLoading();
+	             		 wordAllChart.showLoading();
 	             		 keyword = $("#search").val().trim();
 	             		 if( str_is_null(keyword) ){
 	             			 layer.msg("请先输入关键词再更新数据。",{icon:3});
@@ -347,11 +444,78 @@ function loadWordCount(data,wordChart){
 	        }
 	    ]
 	});
-	wordChart.hideLoading();
+	wordAllChart.hideLoading();
 }
 
 
-
+function loadYearChart(data,yearChart){
+	
+	var obj = jQuery.parseJSON(data);
+	var series = [];
+	var length = obj.series.length;
+	var legends = [];
+	for( var i=0; i<length; i++ ){
+		var name = obj.series[i].name;
+		legends.push( name );
+		series.push(
+		  {
+	            name: name,
+	            type: 'bar',
+	            stack: '总量',
+	            label: {
+	                normal: {
+	                    show: true,
+	                    position: 'insideRight'
+	                }
+	            },
+	            data:obj.series[i].data
+	        }
+		);
+	}
+	option = {
+		    tooltip : {
+		        trigger: 'axis',
+		        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+		            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+		        }
+		    },
+		    legend: {
+		        data:legends,
+		        left:50
+		    },
+		    grid: {
+		        left: '5%',
+		        right: '5%',
+		        bottom: '3%',
+		        containLabel: true
+		    },
+		    toolbox:{
+		    	show:true,
+		    	feature:{
+		    		magicType: {
+		    			type: ['line']
+		    		},
+		    		restore:{},
+		    		saveAsImage:{}
+		    	},
+		    	right:10
+		    },
+		    
+		    xAxis:  {
+		         type: 'category',
+		        data:obj.categories 
+		     
+		    },
+		    yAxis: {
+		          type: 'value'
+		    },
+		    barCategoryGap:"50%",
+		    series: series
+		};
+	yearChart.setOption(option);
+	yearChart.hideLoading();
+	
+}
 
 
 

@@ -121,16 +121,21 @@ $("#search").bind("keyup",function(event){
 $("#all-tab a").click(function(e){
 	debugger;
 	e.preventDefault();
-	if( deal_with_undefined($(this).parent().attr("class")).indexOf("active") != -1 ){
+	if( deal_with_undefined($(this).parent().attr("class")).indexOf("active") != -1 )
 		return;
-	}
-	var href = $(this).attr('href');
+	
 	$(this).tab('show');
+	var href = $(this).attr('href');
 	if( href === "#caculate-data" ){
+		if( caculate_flag === 1 && keyword == $("#search").val().trim() ) return;
 		getCaculateData(keyword,"关键词");
 		//setTimeout('getMatrixData("'+keyword+'","关键词")',3000);
 	}else if( href === "#source-distribute"){
+		if( source_flag === 1 && keyword == $("#search").val().trim() ) return;
 		initSourcePage(keyword);
+	}else if(href === "#index-data"){
+		if( all_flag.userflag && keyword == $("#search").val().trim() ) return;
+		initResultPage();
 	}
 });
 

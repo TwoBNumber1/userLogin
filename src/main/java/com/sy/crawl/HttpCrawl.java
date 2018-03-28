@@ -177,22 +177,17 @@ public class HttpCrawl {
 		Logger.info("连接中...");
 		response =  httpClient.execute(httpGet);
 		Logger.info("本次连接是否成功 ： "+response.getStatusLine());
-		if(HttpStatus.SC_OK != response.getStatusLine().getStatusCode() &&
-				result.indexOf("<!DOCTYPE html PUBLIC") == -1) {
-			//不成功
-			return "error:" + response.getStatusLine();
+		if(HttpStatus.SC_OK != response.getStatusLine().getStatusCode() /*||
+				result.indexOf("<!DOCTYPE html PUBLIC") == -1*/) {
+			HttpEntity entity =  response.getEntity();
+			
+			Logger.info("error 获取到的结果：" + EntityUtils.toString(entity,"utf-8") );
+			return "Cookie error: " + response.getStatusLine();
 		}else {
 			HttpEntity entity =  response.getEntity();
-			result = EntityUtils.toString(entity,"utf-8");
-			Logger.info("成功获取到的结果：" + result );
+			Logger.info("cookie sunccess 成功获取到的结果：" + EntityUtils.toString(entity,"utf-8") );
 		}
 
-		
-		/*HttpEntity entity =  response.getEntity();
-		String temp = EntityUtils.toString(entity,"utf-8");
-		Logger.info("成功获取到返回结果 : " + temp);
-		*/
-		//成功后跳出循环
 		HttpPost httpPost = new HttpPost(CACULATE_AJAX_URL+urlName);
 		Logger.info(CACULATE_AJAX_URL+urlName);
 		HttpUtil.setRequestConfig(httpPost);
@@ -216,7 +211,8 @@ public class HttpCrawl {
 		response2 = httpClient.execute(httpPost);
 		Logger.info("本次连接是否成功 ： "+response2.getStatusLine());
 			
-		if(HttpStatus.SC_OK != response2.getStatusLine().getStatusCode() && result.indexOf("<!DOCTYPE html PUBLIC") == -1) {
+		if(HttpStatus.SC_OK != response2.getStatusLine().getStatusCode() || result.indexOf("<!DOCTYPE html PUBLIC") != -1) {
+			result = "error " + response2.getStatusLine();
 			Logger.info("error " + response2.getStatusLine());
 		}else {
 			HttpEntity entity =  response2.getEntity();

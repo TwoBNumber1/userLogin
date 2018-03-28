@@ -229,10 +229,23 @@
 										
 									</div>
 							</div>
+							<!-- 年度交叉分析 -->
+								<div class="container">
+								<button id="cross" class="button extra-color">加载年度交叉</button>
+								<div class="row">
+									<div class="col-sm-12" id="yearCross" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
+								</div>
+							</div>
+							
 							<!-- 关系共现网络 -->
 							<div class="container">
 								<div class="row">
 									<div class="col-sm-12" id="matrix" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
+								</div>
+							</div>
+								<div class="container">
+								<div class="row">
+									<div class="col-sm-12" id="scatter" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
 								</div>
 							</div>
 						</div>
@@ -263,17 +276,19 @@
 								<div class="col-sm-8" id="org_distribute" style="height:600px;border:1px solid #ccc;padding:10px;">
 										 <a style="margin:auto;text-align:center"
 										 id="buttonMap" class="button solid-color loadbtn">点击加载机构地图分布</a>
-								
 								</div>
-						
 							</div>
 						</div>
-						
+						<div style="height:50px" ></div>
 							<div class="text-inter">
 								<div class="container">
 									<div class="row">
 										<div class="col-sm-4" id="fund_bar" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
-										<div class="col-sm-8" id="fund_distribute" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
+										<div class="col-sm-8" id="fund_distribute" style="height:600px;border:1px solid #ccc;padding:10px;">
+												 <a style="margin:auto;text-align:center"
+										 id="fundMap" class="button solid-color loadbtn">点击加载基金地图分布</a>
+								
+										</div>
 								
 									</div>
 								</div>

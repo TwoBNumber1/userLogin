@@ -3,13 +3,14 @@ var resourceChart;
 var researchChart;
 var subChart;
 var sourceChart;
-
+var source_flag = 0;
 function initSourcePage(){
 	getResourceType(keyword,"资源类型");
 	getDocuSource(keyword,"文献来源");
 	getSubDistribute(keyword,"学科");
 	getResearchLevel(keyword,"研究层次");
 	getOrganData(keyword,"机构");
+	getFundData(keyword,"基金");
 }
 
 function getDocuSource(keyword,groupName){
@@ -28,7 +29,8 @@ function getDocuSource(keyword,groupName){
 		success: function(ret){
 			if(ret.status == 0){
 				var  str = unescape(ret.data.ret);
-				loadSubDistribute("文献来源",sourceChart,str)
+				loadSubDistribute("文献来源",sourceChart,str);
+				source_flag = 1;
 				debugger;
 			}else{
 				console.log(ret.info);
