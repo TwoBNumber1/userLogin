@@ -12,8 +12,13 @@ $(function(){
 			})
 		}
 	})
-	getReferData("AUTH","#tab-auth");
-	loadDistributeMap();
+	
+	getReferData("AUTH","tab-auth");
+	//不是总览页面不执行加载地图操作
+	if( window.location.href.indexOf( "page/ref" ) === -1 ){
+		loadDistributeMap();
+	}
+
 })
 
 
@@ -29,9 +34,14 @@ $("#ref-tab a").click(function(e){
 	$(this).tab("show");
 	if( $(href).find("table").find("tbody").length > 0 ) return;
 	showLoading();
-	getReferData(href.split('-')[1].toUpperCase(),href);
+	var s_href = href.substring(1);
+	//初始化
+	ref_loading[s_href] = 1;
+	
+	getReferData(href.split('-')[1].toUpperCase(),s_href);
 });
 
+var DataTable;
 function getReferData(type,href){
 	$.ajax({
 		type:"GET",
@@ -42,11 +52,12 @@ function getReferData(type,href){
 			if(ret.status === 0 && ret.data != null){
 				var str = ret.data.ret;
 				console.log("获取被引数据");
-				var table = $(href).find("table");
+				var table = $("#"+href).find("table");
 		
 				table.prepend(str);
-				//table.prepend('<tfoot style="align:center">更多...</tfoot>');
-				table.DataTable({
+				table.prepend('<tfoot style="align:center"><a href="page/ref">>>>更多</a></tfoot>');
+				//获取该实例
+				DataTable = table.DataTable({
 					//规定排序列
 					paging:false,
 					searching:false,
@@ -58,9 +69,11 @@ function getReferData(type,href){
 					}]
 				});
 				hideLoading();
+				//表示该标签页下的加载完毕 可以出发滚动加载事件了
+				ref_loading[href] = 0;
 			}else{
 				//错误信息 ret.info会有。
-				layer.msg(href+"获取失败："+ret.info+" 正在重新加载..");
+				layer.msg(href+" 获取失败："+ret.info+" 正在重新加载..");
 				getReferData(type,href);
 			}
 		},
@@ -74,7 +87,6 @@ function getReferData(type,href){
 function showLoading(){
 	$("#loading").css("display","block");
 }
-
 function hideLoading(){
 	$("#loading").css("display","none");
 }

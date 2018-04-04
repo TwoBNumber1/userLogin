@@ -61,30 +61,11 @@
 		</header>
 		<div style="padding-top:40px"></div>
     <div class="banner">
-    <ul>
-          <li style="background-image: url('<%=path %>/img/02.jpg');">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-6 col-md-offset-3">
-                <div class="hero-title">
-                  	输入想搜索的文献关键词
-                </div>
-              <input class="hero-content" name="topSearch" id ="topSearch" value="" 
-              autocomplete="off" 
-              style="width:500px"/>
-              <a href="#" class="hero-btn" >SEARCH IT!</a>
-              </div>
-            </div>
-          </div>
-        </li>
-     
-    </ul>
+ 
 </div>
-    <div class="container">
-    	<div class="arrow"></div>
-    </div>
+
     
-    <div  style="width:100%;height:85px"></div>
+    <div  style="width:100%;height:50px"></div>
     
     <div class="container" style="width:92%">
     
@@ -305,19 +286,10 @@
                     </div>
                     <div  style="width:100%;height:85px"></div>
                     <div id="loading"><img src="<%=path %>/img/gif/loading.gif"></div>
-                    <a href="page/ref">>>>更多</a>
                 </div>
 			</div>
       </div>
-      <div class="container" style="width:92%">
-    
-      <!-- 院校分布  -->
-	  <div class="col-md-12">
-	  	<div  id="school_distribute" style="height:600px;"></div>
-		
-	  </div>
-	  </div>
- 	
+      <div class="container" style="width:92%"></div>
         
     <div class="shadow"></div>
     <footer>
@@ -347,32 +319,22 @@
 </body>
   	<script src="<%=path %>/js/jquery-1.10.2.min.js"></script>
     <script src="<%=path %>/js/plugins/layer/layer.js"></script>
-	
     <script src="<%=path %>/js/bootstrap.min.js"></script>
     <script src="<%=path %>/js/scripts.js"></script>
     <script src="<%=path %>/js/unslider.min.js"></script>
     <script src="<%=path %>/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="<%=path %>/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="<%=path %>/js/hplus.min.js?v=4.0.0"></script>
-    <script src="<%=path %>/js/contabs.min.js"></script>
-    <script src="<%=path %>/js/plugins/pace/pace.min.js"></script>
-    <%-- <script src="<%=path %>/js/plugins/toastr/toastr.min.js"></script> --%>
-    <script src="<%=path %>/js/echarts/echarts.js"></script>
-    <script src="<%=path %>/js/echarts/bmap.min.js"></script>
-     <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=cudRWYxjcLLBjz37p40zRRTn4124YeQw&callback=initialize"></script>
-  
-    
+
+
     <!-- tipso -->
     <script src="<%=path %>/js/plugins/tooltip/tipso.min.js"></script>
     <!-- dataTables -->
     <script src="<%=path %>/js/plugins/dataTables/jquery.dataTables.min.js"></script>
-   	<!-- Sweet alert -->
-    <script src="<%=path %>/js/plugins/sweetalert/sweetalert.min.js"></script>
     <script src="<%=path %>/js/horsey/jquery-ui.min.js"></script>
-    <!-- 处理逻辑 -->
-    <script src="<%=path %>/js/index/get_school_distribute.js"></script>
-    <script src="<%=path %>/js/index/index_operate.js"></script>
+	<!-- 处理逻辑部分  -->
     <script src="<%=path %>/js/index/get_ref_data.js"></script>
+    <script src="<%=path %>/js/index/get_ref_data_all.js"></script>
+    
      <script src="<%=path %>/js/data/util.js"></script>
 	<script type="text/javascript"> var ctx = "<%=path%>";
     </script>

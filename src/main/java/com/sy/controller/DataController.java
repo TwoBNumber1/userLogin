@@ -60,6 +60,44 @@ public class DataController {
 		return response.toString();
 	}
 
+
+	/**
+	 * 获取高被引数据
+	 * @param type 分组类型
+	 * @return json对象
+	 */
+	@RequestMapping(value="/getMoreRef",produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String getRefHome(String type,int page) {
+		
+		String result = "";
+		AjaxResponse response = null;
+		Logger.info("Get more Reference data --->[type:"+type+"]"+"[page="+page+"]");
+		Long start = System.currentTimeMillis();
+		try {
+			result =  httpCrawl.getReferenceData(type,page);
+			//获取数据出错
+			if(result.contains("error")) {
+				response = new AjaxResponse(-1, "Failed: "+result);
+			}else {
+				response = new AjaxResponse(0, "get reference data, type is "+type);
+				response.addDataItem("ret", result);
+			}
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			response = new AjaxResponse(-1, "Failed: "+e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			response = new AjaxResponse(-1, "Failed: "+e.getMessage());
+			e.printStackTrace();
+		}
+		Logger.info("操作耗时："+(System.currentTimeMillis()-start)+"ms");
+		return response.toString();
+	}
+	
+	
+	
 	/**
 	 * 获取计量可视化的数据
 	 * @param keyword 关键词

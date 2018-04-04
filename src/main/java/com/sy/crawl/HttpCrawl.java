@@ -41,9 +41,48 @@ public class HttpCrawl {
 	
 	//Reference URL 常量
 	private static final String REFERENCE_URL = "http://ref.cnki.net/REF/HighRef/Search?isPage=True&type=";
-	//http连接池
+
+	//Reference URL 常量
+	private static final String REFERENCE_URL_ALL = "http://ref.cnki.net/REF/HighRef/Search";
+		//http连接池
 	@Autowired
 	HttpConnectionManager connectionManager;
+	
+	
+	/**
+	 * 获取被引统计数据(首页)
+	 * @param type QIKN 期刊 AUTH 作者 ...s
+	 * @return 
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
+	 */
+	public String getReferenceData(String type,int page) throws ClientProtocolException, IOException {
+		
+		String result = "";
+		HttpPost httpPost = new HttpPost(REFERENCE_URL_ALL+"?isPage=true&pIdx="+page+"&pSize=20&type="+type+"&orderField=&subjectCode=");
+		HttpUtil.setRequestConfig(httpPost);
+		//新建httpCLient对象
+		CloseableHttpClient httpClient = connectionManager.getHttpClient();
+		CloseableHttpResponse response = null;
+		//执行psot请求
+		//StringEntity strEntity = new StringEntity();
+		//Logger.info(strEntity.toString());
+		//将参数插入请求体
+		//httpPost.setEntity(strEntity);
+		
+		response = httpClient.execute(httpPost);
+		//请求成功
+		Logger.info("type:"+type+" 获取被引数据请求是否成功:"+response.getStatusLine().getStatusCode());
+		if(HttpStatus.SC_OK == response.getStatusLine().getStatusCode()) {
+			HttpEntity entity = response.getEntity();
+			String temp = EntityUtils.toString(entity,"utf-8");
+			Document doc = Jsoup.parse(temp);
+			result = doc.getElementById("subPager").html();
+		}else {
+			result = "error "+response.getStatusLine().toString();
+		}
+		return result;
+	}
 	
 	/**
 	 * 获取被引统计数据(首页)
@@ -68,6 +107,9 @@ public class HttpCrawl {
 			HttpEntity entity = response.getEntity();
 			String temp = EntityUtils.toString(entity,"utf-8");
 			Document doc = Jsoup.parse(temp);
+			if( doc.toString().indexOf("table") == -1 ) {
+				return  "error : Acceptation Null";
+			}
 			result = doc.getElementById("subPager").html();
 		}else {
 			result = "error "+response.getStatusLine().toString();

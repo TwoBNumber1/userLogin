@@ -25,6 +25,12 @@ public class PageController {
 		return "data/index_data";
 	}
 	
+	@RequestMapping("/ref")
+	public String returnReferencePage() {
+		System.out.println("entring in High Reference Page.");
+		return "data/show_ref_table";
+	}
+	
 	
 	/**
 	 * 跳转到主页
