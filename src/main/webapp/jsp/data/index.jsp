@@ -52,6 +52,7 @@
             <ul class="clearfix">
                 <li><a href="#" class="active">首页</a></li>
                 <li><a href="index3">历史查询</a></li>
+                 <li><a href="page/ref">高被引数据</a></li>
                 <li><a href="#" class="last">关于我们</a></li>
             </ul>
         </nav>

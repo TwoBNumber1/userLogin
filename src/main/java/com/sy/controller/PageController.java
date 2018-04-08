@@ -58,5 +58,12 @@ public class PageController {
 
 			return "data/wordDistribute";
 		}
+		
+		
+		@RequestMapping(value = "/testSearch")
+		public String toSearch(){
+
+			return "data/test_search";
+		}
 	
 }

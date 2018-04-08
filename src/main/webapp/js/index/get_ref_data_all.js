@@ -5,7 +5,7 @@
 var ref_loading = {};
 //监听滚动条是否已经到达底部
 $(window).scroll(debounce(function(){
-		
+		debugger;
 			//实际要调用的方法
 			var currentPanel;
 			$(".tab-pane").each(function(e){
@@ -57,6 +57,7 @@ function debounce(fn,delay){
 			return false;
 		}
 	});
+	debugger;
 	//第一次加载
 	var href = currentPanel.attr("id");
 	if( typeof(ref_loading[href]) == 'undefined'){

@@ -43,6 +43,15 @@ public class KeywordController implements ServletConfigAware {
 		//写入临时文件
 		File tempFile = new File(localPath+"\\com\\sy\\controller\\tempwords.txt");
 		try {
+			
+			List<String> lines = Files.readLines(tempFile, Charsets.UTF_8);
+			Logger.info(lines.size()+"");
+			StringBuilder builder = new StringBuilder();
+			for (String string : lines) {
+				builder.append(string+"\t");
+			
+			}
+			Logger.info(builder.toString());
 			Files.append(keyword+"\r\n", tempFile, Charsets.UTF_8);
 			response = new AjaxResponse(0, "push success.");
 		} catch (IOException e) {

@@ -50,8 +50,9 @@
 		    <div class="logo col-md-3"><h2 class="logo-text"><i class="fa fa-area-chart"></i>数据可视化分析</h2></div>
 		    <nav class="clearfix">
             <ul class="clearfix">
-                <li><a href="#" class="active">首页</a></li>
+                <li><a href="../">首页</a></li>
                 <li><a href="index3">历史查询</a></li>
+                 <li><a href="#" class="active">高被引数据</a></li>
                 <li><a href="#" class="last">关于我们</a></li>
             </ul>
         </nav>
