@@ -13,8 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">  
     <title>index - 中国知网文献数据分析 </title>
     <link href="<%=path %>/css/tipso.min.css" rel="stylesheet">
-    <link href="<%=path %>/css/demo/reset.css" rel="stylesheet">
-        <link href="<%=path %>/css/demo/htmleaf-demo.css" rel="stylesheet">
     <!-- Bootstrap -->
     <link href="<%=path %>/css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet">
@@ -41,103 +39,36 @@
 		margin:auto;
 		text-align:center;
 	}
-
 </style>
 </head>
   <body>
-  
-  	<header class="cd-main-header animate-search">
-		<div class="cd-logo"><a href="#0">
-				<h2 class="logo-text"><i class="fa fa-area-chart"></i>数据可视化分析</h2>
-				</a></div>
-
-		<nav class="cd-main-nav-wrapper">
-			<a href="#search" class="cd-search-trigger cd-text-replace">Search</a>
-			
-			<ul class="cd-main-nav">
-				<li><a href="#0">Products</a></li>
-				<li><a href="#0">Store</a></li>
-				<li><a href="#0">Blog</a></li>
-				<li><a href="#0">Contact</a></li>
-			</ul> <!-- .cd-main-nav -->
-		</nav> <!-- .cd-main-nav-wrapper -->
-
-		<a href="#0" class="cd-nav-trigger cd-text-replace">Menu<span></span></a>
-	</header>
-  
-		<!-- <header class="clearfix cd-main-header animate-search" style="
+		<header class="clearfix" style="
 		    position:  fixed;
 		    width: 100%;
 		    z-index: 9999;">
 		    <div class="logo col-md-3"><h2 class="logo-text"><i class="fa fa-area-chart"></i>数据可视化分析</h2></div>
-		    <nav class="clearfix cd-main-nav-wrapper">
+		    <nav class="clearfix">
             <ul class="clearfix">
                 <li><a href="#" class="active">首页</a></li>
                 <li><a href="index3">历史查询</a></li>
                  <li><a href="page/ref">高被引数据</a></li>
                 <li><a href="#" class="last">关于我们</a></li>
             </ul>
-            <a href="#search" class="cd-search-trigger cd-text-replace">Search</a>
         </nav>
         <div class="pullcontainer">
         <a href="#" id="pull"><i class="fa fa-bars fa-2x"></i></a>
-        </div>     
-		</header> -->
-			<div id="search" class="cd-main-search">
-		<form>
-			<input type="search" placeholder="Search...">
-
-			<div class="cd-select">
-				<span>in</span>
-				<select name="select-category">
-					<option value="all-categories">all Categories</option>
-					<option value="category1">Category 1</option>
-					<option value="category2">Category 2</option>
-					<option value="category3">Category 3</option>
-				</select>
-				<span class="selected-value">all Categories</span>
-			</div>
-		</form>
-
-		<div class="cd-search-suggestions">
-			<div class="news">
-				<h3>News</h3>
-				<ul>
-					<li>
-						<h4><a class="cd-nowrap" href="#0">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></h4>
-						<time datetime="2016-01-12">Feb 03, 2016</time>
-					</li>
-
-					<li>
-						<h4><a class="cd-nowrap" href="#0">Incidunt voluptatem adipisci voluptates fugit beatae culpa eum, distinctio, assumenda est ad</a></h4>
-						<time datetime="2016-01-12">Jan 28, 2016</time>
-					</li>
-
-					<li>
-	
-						<h4><a class="cd-nowrap" href="#0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, esse.</a></h4>
-						<time datetime="2016-01-12">Jan 12, 2016</time>
-					</li>
-				</ul>
-			</div> <!-- .news -->
-
-			<div class="quick-links">
-				<h3>Quick Links</h3>
-				<ul>
-					<li><a href="#0">Find a store</a></li>
-					<li><a href="#0">Accessories</a></li>
-					<li><a href="#0">Warranty info</a></li>
-					<li><a href="#0">Support</a></li>
-					<li><a href="#0">Contact us</a></li>
-				</ul>
-			</div> <!-- .quick-links -->
-		</div> <!-- .cd-search-suggestions -->
-
-		<a href="#0" class="close cd-text-replace">Close Form</a>
-	</div> <!-- .cd-main-search -->
-		
-		
-
+        </div>
+        		<div class="search">
+			  <svg class="search-svg" viewBox="0 0 320 70"
+			       data-init="M160,3 L160,3 a27,27 0 0,1 0,54 L160,57 a27,27 0 0,1 0,-54 M197,67 181.21,51.21"
+			       data-mid="M160,3 L160,3 a27,27 0 0,1 0,54 L160,57 a27,27 0 0,1 0,-54 M179.5,49.5 179.5,49.5"
+			       data-active="M27,3 L293,3 a27,27 0 0,1 0,54 L27,57 a27,27 0 0,1 0,-54 M179.5,49.5 179.5,49.5">
+			    <path class="search-svg__path" d="M160,3 L160,3 a27,27 0 0,1 0,54 L160,57 a27,27 0 0,1 0,-54 M197,67 181.21,51.21" />
+			  </svg>
+			  <input type="text" class="search-input" />
+			  <div class="search-close"></div>
+			</div> 
+		</header>
 		<div style="padding-top:40px"></div>
     <div class="banner">
     <ul>
@@ -164,6 +95,22 @@
     </div>
     
     <div  style="width:100%;height:85px"></div>
+    
+    <div class="container" style="width:92%">
+    
+      <!-- 被引表格  -->
+		<div class="col-md-12">
+		<!-- 选项卡 -->
+		<div class="tabs-container">
+                 
+                   
+                    </div>
+                    <div  style="width:100%;height:85px"></div>
+                    <div id="loading"><img src="<%=path %>/img/gif/loading.gif"></div>
+                    <a href="page/ref">>>>更多</a>
+                </div>
+			</div>
+      </div>
       <div class="container" style="width:92%">
     
       <!-- 院校分布  -->
@@ -176,28 +123,7 @@
         
     <div class="shadow"></div>
     <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-2">
-            <h2>INFUSION</h2>
-          </div>
-          <div class="col-md-5">
-            <p>Nam mi enim, auctor non ultricies a, fringilla eu risus. Praesent vitae lorem et elit tincidunt accumsan suscipit eu libero. Maecenas diam est, venenatis vitae dui in, vestibulum mollis arcu. Donec eu nibh tincidunt, dapibus sem eu, aliquam dolor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum consectetur commodo eros, vitae laoreet lectus aliq</p>
-          </div>
-          <div class="col-md-3">
-            <p>aliquam dolor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum consectetur commodo eros, vitae laoreet lectus aliq</p>
-          </div>
-          <div class="col-md-2">
-            <ul class="footer-links">
-              <li><a href="#">List One</a></li>
-              <li><a href="#">Page Two</a></li>
-              <li><a href="#">Design</a></li>
-              <li><a href="#">Work</a></li>
-              <li><a href="#">Contact Me</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>  
+ 
     </footer>
 </body>
   	<script src="<%=path %>/js/jquery-1.10.2.min.js"></script>
@@ -228,8 +154,41 @@
     <script src="<%=path %>/js/index/get_school_distribute.js"></script>
     <script src="<%=path %>/js/index/index_operate.js"></script>
      <script src="<%=path %>/js/data/util.js"></script>
-     <script src="<%=path %>/js/plugins/main.js"></script>
-       <script src="<%=path %>/js/plugins/modernizr.js"></script>
-	<script type="text/javascript"> var ctx = "<%=path%>";
-    </script>
+     	<script src='<%=path %>/js/min/stopExecutionOnTimeout.js?t=1'></script>
+	<script src='<%=path %>/js/min/snap.svg-min.js'></script>
+	<script type="text/javascript"> var ctx = "<%=path%>";</script>
+		<script>
+	$(document).ready(function () {
+	    var $search = $('.search'), $input = $('.search-input'), $close = $('.search-close'), $svg = $('.search-svg'), $path = $('.search-svg__path')[0], initD = $svg.data('init'), midD = $svg.data('mid'), finalD = $svg.data('active'), backDelay = 400, midAnim = 200, bigAnim = 400, animating = false;
+	    $(document).on('click', '.search:not(.active)', function () {
+	        if (animating)
+	            return;
+	        animating = true;
+	        $search.addClass('active');
+	        Snap($path).animate({ 'path': midD }, midAnim, mina.backin, function () {
+	            Snap($path).animate({ 'path': finalD }, bigAnim, mina.easeinout, function () {
+	                $input.addClass('visible');
+	                $input.focus();
+	                $close.addClass('visible');
+	                animating = false;
+	            });
+	        });
+	    });
+	    $(document).on('click', '.search-close', function () {
+	        if (animating)
+	            return;
+	        animating = true;
+	        $input.removeClass('visible');
+	        $close.removeClass('visible');
+	        $search.removeClass('active');
+	        setTimeout(function () {
+	            Snap($path).animate({ 'path': midD }, bigAnim, mina.easeinout, function () {
+	                Snap($path).animate({ 'path': initD }, midAnim, mina.easeinout, function () {
+	                    animating = false;
+	                });
+	            });
+	        }, backDelay);
+	    });
+	});
+	</script>
 </html>

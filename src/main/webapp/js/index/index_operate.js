@@ -10,16 +10,29 @@ $("a[class='hero-btn']").on("click",function(){
 		return;
 	} 
 	window.location.href="data/getData?keyword="+keyword;
-	$.ajax({
-		url:ctx+"/search/push?keyword="+$("#topSearch").val().trim(),
-		type:'GET',
-		success:function(ret){
-			var obj = jQuery.parseJSON(ret);
-			if(obj.status == 0 ){
-				console.log(obj.info + " "+ keyword );
-			}
+	//记录此次关键词
+	record_keyword(keyword);
+});
+
+
+$(".search-input").bind("keyup",function(event){
+	//回车
+	if( event.keyCode == "13" ){
+		var keyword = $(".search-input").val().trim();
+		if ( str_is_null(keyword) ){
+			layer.msg('输入关键词再进行搜索。', {icon: 3});
+			return;
 		}
-	});
+		window.location.href=ctx + "/data/getData?keyword="+keyword;
+		//记录此次关键词
+		record_keyword(keyword);
+		return;
+	}
+	//esc
+	if( event.keyCode == '27' ){
+		$(".search-close").click();
+	}
+	
 });
 
 /**
@@ -59,6 +72,10 @@ $("#topSearch").bind("keyup",function(event){
 	});
 	console.log("输入框操作共耗时："+(new Date().getTime()-timeStamp)+"ms");
 })
+
+
+
+
 
 
 	

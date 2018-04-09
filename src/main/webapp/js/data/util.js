@@ -62,5 +62,71 @@ function str_is_null(str){
 	
 }
 
+function set_search_btn(){
+  var $search = $('.search'), $input = $('.search-input'), $close = $('.search-close'), $svg = $('.search-svg'), $path = $('.search-svg__path')[0], initD = $svg.data('init'), midD = $svg.data('mid'), finalD = $svg.data('active'), backDelay = 400, midAnim = 200, bigAnim = 400, animating = false;
+   $(document).on('click', '.search:not(.active)', function () {
+        if (animating)
+            return;
+        animating = true;
+        $search.addClass('active');
+        Snap($path).animate({ 'path': midD }, midAnim, mina.backin, function () {
+            Snap($path).animate({ 'path': finalD }, bigAnim, mina.easeinout, function () {
+                $input.addClass('visible');
+                $input.focus();
+                $close.addClass('visible');
+                animating = false;
+            });
+        });
+    });
+    $(document).on('click', '.search-close', function () {
+        if (animating)
+            return;
+        animating = true;
+        $input.removeClass('visible');
+        $close.removeClass('visible');
+        $search.removeClass('active');
+        setTimeout(function () {
+            Snap($path).animate({ 'path': midD }, bigAnim, mina.easeinout, function () {
+                Snap($path).animate({ 'path': initD }, midAnim, mina.easeinout, function () {
+                    animating = false;
+                });
+            });
+        }, backDelay);
+    });
+}
+
+function record_keyword(keyword){
+	$.ajax({
+		url:ctx+"/search/push?keyword="+$("#topSearch").val().trim(),
+		type:'GET',
+		success:function(ret){
+			var obj = jQuery.parseJSON(ret);
+			if(obj.status == 0 ){
+				console.log(obj.info + ":"+ keyword );
+			}
+		}
+	});
+}
+
+$(".search-input").bind("keyup",function(event){
+	//回车
+	if( event.keyCode == "13" ){
+		var keyword = $(".search-input").val().trim();
+		if ( str_is_null(keyword) ){
+			layer.msg('输入关键词再进行搜索。', {icon: 3});
+			return;
+		}
+		window.location.href=ctx+"/data/getData?keyword="+keyword;
+		//记录此次关键词
+		record_keyword(keyword);
+		return;
+	}
+	//esc
+	if( event.keyCode == '27' ){
+		$(".search-close").click();
+	}
+	
+});
+
 
 

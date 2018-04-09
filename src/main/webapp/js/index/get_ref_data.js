@@ -12,13 +12,15 @@ $(function(){
 			})
 		}
 	})
-	
+	debugger;
+	set_search_btn();
 	getReferData("AUTH","tab-auth");
 	//不是总览页面不执行加载地图操作
 	if( window.location.href.indexOf( "page/ref" ) === -1 ){
 		loadDistributeMap();
 	}
-
+	
+	
 })
 
 
@@ -70,7 +72,10 @@ function getReferData(type,href){
 				});
 				hideLoading();
 				//表示该标签页下的加载完毕 可以出发滚动加载事件了
-				ref_loading[href] = 0;
+				//不是总览页面不执行加载地图操作
+				if( window.location.href.indexOf( "page/ref" ) != -1 ){
+					ref_loading[href] = 0;
+				}
 			}else{
 				//错误信息 ret.info会有。
 				layer.msg(href+" 获取失败："+ret.info+" 正在重新加载..");

@@ -131,8 +131,10 @@ $("#all-tab a").click(function(e){
 		getCaculateData(keyword,"关键词");
 		//setTimeout('getMatrixData("'+keyword+'","关键词")',3000);
 	}else if( href === "#source-distribute"){
+		
 		if( source_flag === 1 && keyword == $("#search").val().trim() ) return;
-		initSourcePage(keyword);
+		else if( typeof(source_flag) == 'undefined' ) initSourcePage(keyword);
+		else initSourcePage(keyword);
 	}else if(href === "#index-data"){
 		if( all_flag.userflag && keyword == $("#search").val().trim() ) return;
 		initResultPage();

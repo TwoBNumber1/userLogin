@@ -3,6 +3,11 @@
  * 
  */
 var ref_loading = {};
+
+$(document).ready(function(){
+	//初始化按钮
+	set_search_btn();
+});
 //监听滚动条是否已经到达底部
 $(window).scroll(debounce(function(){
 		debugger;

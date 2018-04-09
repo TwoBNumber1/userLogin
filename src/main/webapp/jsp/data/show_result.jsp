@@ -358,7 +358,6 @@
     <script src="<%=path %>/js/index/get_caculate_data.js"></script>
     <script src="<%=path %>/js/index/load_index_subject.js"></script>
 	<script type="text/javascript"> var ctx = "<%=path%>";
-	
     </script>
 
 </body>

@@ -56,7 +56,7 @@ function getSubDistribute(keyword,groupName){
 			"urlName":"GroupTrend.aspx"
 		},
 		success: function(ret){
-			if( ret.status == 0 ){
+			if( ret.status == 0 && ret.data.ret.indexOf("HTTP") == -1 ){
 				var str = unescape(ret.data.ret);
 				loadSubDistribute("学科",subChart,str)
 				debugger;
@@ -85,7 +85,7 @@ function getResearchLevel(keyword,groupName){
 			"urlName":"GroupTrend.aspx"
 		},
 		success: function(ret){
-			if(ret.status == 0){
+			if(ret.status == 0 && ret.data.ret.indexOf("HTTP") == -1){
 				var str = unescape(ret.data.ret);
 				loadResearchLevel(researchChart,str)
 				debugger;
@@ -113,16 +113,18 @@ function getResourceType(keyword,groupName){
 			"urlName":"GroupTrend.aspx"
 		},
 		success: function(ret){
-			if(ret.status == 0){
+			if(ret.status == 0 && ret.data.ret.indexOf("HTTP") == -1){
 				var str = unescape(ret.data.ret);
 				loadResourceType(resourceChart,str)
 				debugger;
 			}else{
-				layer.msg("来源类型"+ret.info);
-				resourceChart.hideLoading();
+				layer.msg("来源类型"+ret.info,{icon:1,time:5000});
+				getResourceType(keyword,groupName);
 			}
 		},
 		error:function(){
+			layer.msg("来源类型"+ret.info,{icon:1,time:5000});
+			getResourceType(keyword,groupName);
 		}
 	});
 }
@@ -130,6 +132,7 @@ function getResourceType(keyword,groupName){
 function loadResourceType(resourceChart,str){
 	debugger;
 	resourceChart.showLoading();
+
 	var obj = jQuery.parseJSON(str);
 	var data = [];
 	var xs = [];
@@ -152,11 +155,7 @@ function loadResourceType(resourceChart,str){
 		    toolbox:{
     	    	show:true,
     	    	feature:{
-	    	    	magicType:{
-	    	    		type:["line","bar"]
-	    	    	},
 	    	    	dataView:{readOnly:false},
-	    	    	restore:{},
 	    	    	saveAsImage:{}
     	    	}
     	    },
@@ -196,9 +195,129 @@ function loadResourceType(resourceChart,str){
 		    ]
 	});
 	resourceChart.hideLoading();
+	resourceChart.on('click',function(params){
+		debugger;
+	    if( params.data.selected ){
+	    	//console.log(params);
+	    	console.log("点击");
+	    	compareAnalysis(params.data);
+	    	//刷新文献数据 关键词数据
+	    }else{//未选中
+	    	console.log("取消点击");
+	    }
+	});
 }
 
+var is_iframe_exists = 0;
+var compareX = [];
+var compareY = [];
+var LayerIndex;
+function compareAnalysis(data){
+	//表明当前页面中没有比较分析的子页面
+	if( is_iframe_exists === 0){
+		//开启一个子页面
+		
 
+	LayerIndex = layer.open({
+			type:1,
+			title:"比较分析",
+			shade:0,//操作遮罩层
+			offset:[0,0],
+			resize:false,//不允许拉伸
+			maxmin:false,
+			scrollbar:false,//不允许滚动条
+			area:['1200px','400px'],
+			content:"<div id='compare-chart' style='width:1200px;height:350px;padding:10px'></div>",
+			end:function(){//销毁该层的回调函数
+				//标记成未打开窗口
+				is_iframe_exists = 0;
+				//清空数据
+				compareX = [];
+				compareY = [];
+			}
+			
+		});
+		//标记成已加载
+		is_iframe_exists = 1;
+	}
+
+	var compareChart = echarts.init(document.getElementById("compare-chart"),"wonderland");
+	compareX.push(data.name);
+	compareY.push(data.value);
+	var option={
+			 title : {
+			        text: "比较分析",
+			        x:'left',
+			        subtext:'关键词<'+keyword+'>数据的比对关系'
+			    },
+			    grid:{
+			    	bottom:80
+			    },
+			    toolbox: {
+	    	        show: true,
+	    	        feature: {
+	    	            magicType: {
+	    	                type: ['line']
+	    	            },
+	    	            restore: {},
+	    	            dataView: {readOnly: false},
+	    	            saveAsImage: {}
+	    	        }
+	    	    },
+			    dataZoom : [
+	     		   {
+	     	        show : true,
+	     	        realtime : true,
+	     	        start :0,
+	     	        end : 100
+	     		   },
+		     	   {
+		     	    	type:"inside",
+		     	    	start : 0,
+		        	        end : 100
+		     	   }
+	     	   ],
+	     	  xAxis: {
+	     		  type:"category",
+	     		  data:compareX,
+	              axisLabel: {  
+		           	   interval:0,  
+		           	   rotate:-20  
+	           	} 
+	          },
+	          yAxis:[{
+	              type: 'value',
+	              scale: true,
+	              name: '文献量(篇)',
+	              nameLocation:"center",
+		               nameGap:60,
+		               min: 0.000000001, //如果使用0，会出现你之前的情况，必须大于0的，使用0.000000001无限接近0
+		               axisLabel: {
+		            	   formatter: function(value, index) {
+			  	                 if (index === 0) { //因为最小值不是0，重新转化为0
+			  	                     value = Math.floor(value);
+			  	                 }
+			  	                 return value;
+		            	   }
+		               },
+	          }],
+	         
+	     	    tooltip: {
+	     	        trigger: 'axis',
+	     	        axisPointer: {
+	     	            type: 'shadow'
+	     	        }
+	     	    },
+				    series: [{
+				        name: "文献数",
+				        type: 'bar',
+				        data:compareY,
+				        barCategoryGap:"40%"
+				    }]
+		}
+	compareChart.setOption(option);
+	debugger;
+}
 
 function loadResearchLevel(researchChart,str){
 	debugger;
@@ -361,4 +480,5 @@ function loadSubDistribute(discribe,chart,str){
 	});
 	chart.hideLoading();
 }
+
 

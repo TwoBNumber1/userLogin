@@ -218,27 +218,29 @@ function loadSubject(data){
 	     ]
 	});
 	subjectChart.hideLoading();
+	//echarts的绑定时间必须紧跟在setoption方法之后  尤其是在可能有清空图表的操作的情况下
+	//这种情况就必须要 每加载一次图表 绑定一次点击事件
+	subjectChart.on('click', function (params) {
+	    //点击被选中
+		debugger;
+	    if( params.data.selected ){
+	    	//console.log(params);
+	    	var name = params.data.name;
+	    	//获取对应下标
+	    	for( var i=0; i<10; i++){
+	    		if( name === sub_data[i].name ) {
+	    			console.log(sub_code[i]);
+	    			updateChart(sub_code[i],name);
+	    			break;
+	    		}
+	    	}
+	    	//刷新文献数据 关键词数据
+	    }else{//未选中
+	    	loadWordEcharts(back,"");
+	    }
+	});
 }
 
-subjectChart.on('click', function (params) {
-    //点击被选中
-	debugger;
-    if( params.data.selected ){
-    	//console.log(params);
-    	var name = params.data.name;
-    	//获取对应下标
-    	for( var i=0; i<10; i++){
-    		if( name === sub_data[i].name ) {
-    			console.log(sub_code[i]);
-    			updateChart(sub_code[i],name);
-    			break;
-    		}
-    	}
-    	//刷新文献数据 关键词数据
-    }else{//未选中
-    	loadWordEcharts(back,"");
-    }
-});
 
 /**
  * 根据code 和 name 重新加载
