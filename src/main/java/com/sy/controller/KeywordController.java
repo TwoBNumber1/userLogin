@@ -40,8 +40,9 @@ public class KeywordController implements ServletConfigAware {
 	@ResponseBody
 	public String pushSearchWord(String keyword) {
 		AjaxResponse response = null;
-		//写入临时文件
-		File tempFile = new File(localPath+"\\com\\sy\\controller\\tempwords.txt");
+		//写入临时文件  分隔符不写，Linux下跑不通
+		File tempFile = new File(localPath+"com"+File.separator+"sy"+File.separator+"controller"
+		+File.separator+"tempwords.txt");
 		try {
 			
 			List<String> lines = Files.readLines(tempFile, Charsets.UTF_8);
@@ -90,7 +91,7 @@ public class KeywordController implements ServletConfigAware {
 		   try {
 			   kac = new KeywordsAutocomplete("ch");
 			   Logger.info("加载词典到内存，文件路径 : "+localPath);
-			   kac.load(localPath+"\\com\\sy\\controller\\words.txt");
+			   kac.load(localPath+"com"+File.separator+"sy"+File.separator+"controller"+File.separator+"words.txt");
 			   //kac.showDict();
 			   System.out.println(kac.search("j"));
 			   System.out.println("size is :" + kac.size());
@@ -100,6 +101,5 @@ public class KeywordController implements ServletConfigAware {
 			// TODO Auto-generated catch block
 			Logger.error(e.getMessage());
 		}
-
 	}
 }

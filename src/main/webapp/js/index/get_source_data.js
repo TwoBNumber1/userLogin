@@ -13,6 +13,12 @@ function initSourcePage(){
 	getFundData(keyword,"基金");
 }
 
+/**
+ * 文献来源
+ * @param keyword 关键词
+ * @param groupName 暂时写死 文献来源
+ * @returns
+ */
 function getDocuSource(keyword,groupName){
 	//清空chart
 	deal_with_chart(sourceChart);
@@ -29,7 +35,7 @@ function getDocuSource(keyword,groupName){
 		success: function(ret){
 			if(ret.status == 0){
 				var  str = unescape(ret.data.ret);
-				loadSubDistribute("文献来源",sourceChart,str);
+				loadCharts("文献来源",sourceChart,str);
 				source_flag = 1;
 				debugger;
 			}else{
@@ -43,6 +49,12 @@ function getDocuSource(keyword,groupName){
 		}
 	});
 }
+/**
+ * 学科分布 
+ * @param keyword
+ * @param groupName 写死 学科
+ * @returns
+ */
 function getSubDistribute(keyword,groupName){
 	deal_with_chart(subChart);
 	subChart = echarts.init(document.getElementById('sub_distribute'),"wonderland");
@@ -58,7 +70,7 @@ function getSubDistribute(keyword,groupName){
 		success: function(ret){
 			if( ret.status == 0 && ret.data.ret.indexOf("HTTP") == -1 ){
 				var str = unescape(ret.data.ret);
-				loadSubDistribute("学科",subChart,str)
+				loadCharts("学科",subChart,str)
 				debugger;
 			}else{
 				console.log("学科分布"+ret.info);
@@ -208,6 +220,10 @@ function loadResourceType(resourceChart,str){
 	});
 }
 
+/**
+ * 这么多全局变量，我感觉我要死了已经
+ * 其实存在echarts里跟全局没啥区别 都是初始化容器再存进去
+ */
 var is_iframe_exists = 0;
 var compareX = [];
 var compareY = [];
@@ -216,8 +232,6 @@ function compareAnalysis(data){
 	//表明当前页面中没有比较分析的子页面
 	if( is_iframe_exists === 0){
 		//开启一个子页面
-		
-
 	LayerIndex = layer.open({
 			type:1,
 			title:"比较分析",
@@ -242,6 +256,10 @@ function compareAnalysis(data){
 	}
 
 	var compareChart = echarts.init(document.getElementById("compare-chart"),"wonderland");
+	//如果数组中已经有了该数据
+	if( array_contains(compareX,data.name) ){
+		return;
+	}
 	compareX.push(data.name);
 	compareY.push(data.value);
 	var option={
@@ -314,7 +332,7 @@ function compareAnalysis(data){
 				        data:compareY,
 				        barCategoryGap:"40%"
 				    }]
-		}
+		};
 	compareChart.setOption(option);
 	debugger;
 }
@@ -383,15 +401,39 @@ function loadResearchLevel(researchChart,str){
 	researchChart.hideLoading();
 }
 
-
-function loadSubDistribute(discribe,chart,str){
+/**
+ * 加载学科分布图表
+ * @param discribe 信息
+ * @param chart 加载的容器图表
+ * @param str 数据
+ * @returns
+ */
+//比较分析时候用到的数据
+//学科分布属性数据
+var subject_fieldValue = [];
+var subject_field;
+//文献来源属性数据
+var docu_fieldValue = [];
+var docu_field;
+function loadCharts(discribe,chart,str){
 	debugger;
 	var obj = jQuery.parseJSON(str);
 	var xs = [];
 	var ys = [];
+	//push 属性名称
+	 if(discribe.indexOf("学科") != -1)
+		 subject_field = obj[0].c_field;
+	 else
+		 docu_field = obj[0].c_field;
+	
 	for( var i=0; i<obj.length; i++ ){
 		xs.push(obj[i].name);
 		ys.push(obj[i].y);
+		//push属性值
+		 if(discribe.indexOf("学科") != -1)
+			 subject_fieldValue[obj[i].name] = obj[i].c_fieldValue;
+		 else
+			 docu_fieldValue[obj[i].name] = obj[i].c_fieldValue;
 	}
 	
 	chart.setOption({
@@ -473,12 +515,163 @@ function loadSubDistribute(discribe,chart,str){
      	    },
 			    series: [{
 			        name: "文献数",
+			        selectedMode:true,
+			        selected:"multiple",
 			        type: 'bar',
 			        data:ys,
 			        barCategoryGap:"40%"
 			    }]
 	});
 	chart.hideLoading();
+	//绑定点击事件
+	 if(discribe.indexOf("学科") != -1)
+		 chart.on('click',function(params){
+				debugger;
+			  //似乎bar图没有取消点击？？
+				//直接跳进
+				console.log(subject_fieldValue[params.name]);
+				console.log(subject_field);
+				compareAnalysisLineChart(docu_fieldValue[params.name],
+		    			docu_field,
+		    			keyword,
+		    			discribe
+		    	);
+			});
+	 else
+		 chart.on('click',function(params){
+				debugger;
+		    	console.log("点击");
+		    	console.log(docu_fieldValue[params.name]);
+		    	console.log(docu_field);
+		    	compareAnalysisLineChart(docu_fieldValue[params.name],
+		    			docu_field,
+		    			keyword,
+		    			discribe,
+		    			params.name);
+			});
+}
+/**
+ * 加载比较分析的折线图
+ * @returns
+ */
+var fieldValueArray = [];
+var is_open_exists = 0;
+var compareData = [];
+function compareAnalysisLineChart(fieldValue,field,keyword,groupName,name){
+	
+  	//打开一个窗口
+	if( array_contains(fieldValueArray,name) ){
+		return;
+	}
+	//compareAnalysis(params.data);
+	
+	if( is_open_exists == 0 ){
+		layer.open({
+			type:1,
+			title:"比较分析 - Line",
+			shade:0,//操作遮罩层
+			offset:[0,0],
+			resize:false,//不允许拉伸
+			maxmin:false,
+			scrollbar:false,//不允许滚动条
+			area:['1200px','400px'],
+			content:"<div id='compare-chart2' style='width:1200px;height:350px;padding:10px'></div>",
+			end:function(){//销毁该层的回调函数
+				//标记成未打开窗口
+				is_open_exists = 0;
+				//清空数据
+				compareData = [];
+			}
+		});
+	}
+	$.ajax({
+		type:'POST',
+		url: ctx+'/data/detail',
+		dataType: 'json',
+		data:{"keyword":keyword,
+			"groupName":groupName,
+			"urlName":"GroupTrendDetail.aspx",
+			"field":field,
+			"fieldValue":fieldValue
+		},
+		success: function(ret){
+			if(ret.status == 0){
+				debugger;
+				var obj = jQuery.parseJSON(ret.data.ret);
+				var temp = [];
+				for( var i=0,length = obj.length; i<length; i++ ){
+					temp.push([obj[i].name,obj[i].y]);
+				}
+				//将data name push进数组
+				fieldValueArray.push(name);
+				compareData.push(temp);
+				var compareChart = echarts.init(document.getElementById("compare-chart2"),"wonderland");
+				compareChart.showLoading();
+				loadCompareChart(compareData,compareChart);
+			}else{
+			
+			}
+		
+		},
+		error:function(){
+		}
+	});
 }
 
+function loadCompareChart(compareData,chart){
+	option = {
+		    title: {
+		        text: '折线图堆叠'
+		    },
+		    tooltip: {
+		        trigger: 'axis'
+		    },
+		    legend: {
+		        data:['邮件营销','联盟广告']
+		    },
+		    grid: {
+		        left: '3%',
+		        right: '4%',
+		        bottom: '3%',
+		        containLabel: true
+		    },
+		    toolbox: {
+		        feature: {
+		            saveAsImage: {}
+		        }
+		    },
+		    xAxis: {
+		        type: 'category',
+		        boundaryGap: false,
+		        //data: ['周一','周二','周三','周四','周五','周六','周日']
+		    },
+		    yAxis: {
+		        type: 'value'
+		    },
+		    series: [
+		        {
+		            name:'邮件营销',
+		            type:'line',
+		            stack: '总量',
+		            data:[["周一",120], ["周二",132],["周三", 101], 
+		            ["周四",134], ["周五",90], ["周六",230], ["周日",210]]
+		        },
+		        {
+		            name:'联盟广告',
+		            type:'line',
+		            stack: '总量',
+		            data:
+		            [["周一",220], ["周二",182],["周三", 191], 
+		            ["周四",234], ["周五",290], ["周六",330], ["周日",310]]
+		        }
+		        
+		       
+		    ]
+		};
+
+	chart.setOption(option);
+	//隐藏loading动画
+	chart.hideLoading();
+	debugger;
+}
 

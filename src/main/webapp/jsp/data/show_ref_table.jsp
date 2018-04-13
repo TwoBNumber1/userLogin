@@ -347,7 +347,8 @@
     <script src="<%=path %>/js/index/get_ref_data.js"></script>
     <script src="<%=path %>/js/index/get_ref_data_all.js"></script>
     <!-- 工具部分 -->
-         	<script src='<%=path %>/js/min/stopExecutionOnTimeout.js?t=1'></script>
+    
+    <script src='<%=path %>/js/min/stopExecutionOnTimeout.js?t=1'></script>
 	<script src='<%=path %>/js/min/snap.svg-min.js'></script>
      <script src="<%=path %>/js/data/util.js"></script>
 	<script type="text/javascript"> var ctx = "<%=path%>";

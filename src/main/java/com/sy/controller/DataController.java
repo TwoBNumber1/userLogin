@@ -36,7 +36,7 @@ public class DataController {
 		
 		String result = "";
 		AjaxResponse response = null;
-		Logger.info("获取被引数据--->[type:"+type+"]");
+		Logger.info("[获取被引数据（首页，无页码）]--->[type:"+type+"]");
 		Long start = System.currentTimeMillis();
 		try {
 			result =  httpCrawl.getReferenceData(type);
@@ -56,7 +56,7 @@ public class DataController {
 			response = new AjaxResponse(-1, "Failed: "+e.getMessage());
 			e.printStackTrace();
 		}
-		Logger.info("操作耗时："+(System.currentTimeMillis()-start)+"ms");
+		Logger.info("[操作耗时]："+(System.currentTimeMillis()-start)+"ms");
 		return response.toString();
 	}
 
@@ -72,7 +72,7 @@ public class DataController {
 		
 		String result = "";
 		AjaxResponse response = null;
-		Logger.info("Get more Reference data --->[type:"+type+"]"+"[page="+page+"]");
+		Logger.info("[Get more Reference data] --->[type:"+type+"]"+"[page="+page+"]");
 		Long start = System.currentTimeMillis();
 		try {
 			result =  httpCrawl.getReferenceData(type,page);
@@ -92,7 +92,7 @@ public class DataController {
 			response = new AjaxResponse(-1, "Failed: "+e.getMessage());
 			e.printStackTrace();
 		}
-		Logger.info("操作耗时："+(System.currentTimeMillis()-start)+"ms");
+		Logger.info("[操作耗时]："+(System.currentTimeMillis()-start)+"ms");
 		return response.toString();
 	}
 	
@@ -107,14 +107,49 @@ public class DataController {
 	 */
 	@RequestMapping("/caculate")
 	@ResponseBody
-	public String caculate(String keyword,String groupName,String urlName) {
+	public String calculate(String keyword,String groupName,String urlName) {
 		
 		String result = "";
 		AjaxResponse response = null;
-		Logger.info("执行计量分析 -->[keyword:"+keyword+"] [groupName:"+groupName+"] [urlName:"+urlName+"].");
+		Logger.info("[执行计量分析方法] -->[keyword:"+keyword+"] [groupName:"+groupName+"] [urlName:"+urlName+"].");
 		Long start = System.currentTimeMillis();
 		try {
 			result = httpCrawl.getCaculateData(keyword,groupName,urlName);
+			if(result != null && result.length()>0) {
+				response = new AjaxResponse(0, "成功获取数据");
+				response.addDataItem("ret",result);
+			}else if(result.contains("error")) {
+				response = new AjaxResponse(-1, result);
+			}
+			else{
+				response = new AjaxResponse(-1, "失败：计量数据返回空");
+			}
+		} catch (Exception e) {
+			response = new AjaxResponse(-1, "失败："+e.getMessage());
+			
+		}
+		Logger.info("[操作耗时]："+(System.currentTimeMillis()-start)+"ms");
+		return response.toString();
+	}
+	
+
+	/**
+	 * 获取计量可视化的数据
+	 * @param keyword 关键词
+	 * @param groupName 分组统计关键词
+	 * @param urlName 对应请求名称
+	 * @return json对象
+	 */
+	@RequestMapping("/detail")
+	@ResponseBody
+	public String detail(String keyword,String groupName,String urlName,String fieldValue,
+			String field) {
+		Logger.info("[获取更多细节数据...]");
+		String result = "";
+		AjaxResponse response = null;
+		Long start = System.currentTimeMillis();
+		try {
+			result = httpCrawl.getDetailData(keyword,groupName,urlName, fieldValue, field);
 			if(result != null && result.length()>0) {
 				response = new AjaxResponse(0, "成功获取数据");
 				response.addDataItem("ret",result);
@@ -132,7 +167,6 @@ public class DataController {
 		return response.toString();
 	}
 	
-
 	//正常访问文献发表量页面
 	@RequestMapping(value = "/docuPublication")
 	public String toDocu(String dataType,String keyword){
@@ -164,12 +198,13 @@ public class DataController {
 		String result = "";
 		try {
 
-			Logger.info("-------------Controller keyword");
-			Logger.info("  -=- "+topSearch+"  -=- "+resultType+"  -=- "+numType);
+			Logger.info("getIndexData Method.");
+			Logger.info(" [keyword:"+topSearch+"] -=- [resultType:"+resultType+"] -=- [numType:"+numType+"]");
 			result = httpCrawl.getIndexData(topSearch, resultType,numType);
 			if(result != null && result.length()>0) {
 				response = new AjaxResponse(0, "获取数据成功");
 				response.addDataItem("ret", result);
+				Logger.info("[result:"+result+"]");
 			}else if(result.contains("error")) {
 				response = new AjaxResponse(-1, result);
 			}

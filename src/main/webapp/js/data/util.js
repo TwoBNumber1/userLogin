@@ -125,8 +125,23 @@ $(".search-input").bind("keyup",function(event){
 	if( event.keyCode == '27' ){
 		$(".search-close").click();
 	}
-	
 });
+
+/**
+ * 判断array数组中是否存在obj
+ * @param array
+ * @param obj
+ * @returns 存在:true 不存在:false
+ */
+function array_contains(array,obj){
+	for( var i=0; i<array.length; i++ ){//
+		//如果要保证数据类型也相同  用恒等号=== 如果要求基本内容相同 ==就可以
+		if( array[i] === obj ){
+			return true;
+		}
+	}
+	return false;
+}
 
 
 

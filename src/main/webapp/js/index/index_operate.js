@@ -1,6 +1,6 @@
 
 /*
- * a标签绑定跳转
+ * 绑定index界面的 search it a标签跳转
  * */
 $("a[class='hero-btn']").on("click",function(){
 	//search();
@@ -10,11 +10,31 @@ $("a[class='hero-btn']").on("click",function(){
 		return;
 	} 
 	window.location.href="data/getData?keyword="+keyword;
-	//记录此次关键词
+	//记录此次搜索关键词
 	record_keyword(keyword);
 });
 
+/**
+ * 绑定滚动事件  当滚动条下拉至没有搜索框时  header处的搜索框出现
+ * @returns
+ */
+$(window).scroll(function(){
+	var window = $(this);
+	var clientHeight = window.height();
+	var contentHeight = $(document).height();
+	var scrollTop = window.scrollTop();
+	if( scrollTop/(contentHeight-clientHeight) >= 0.25 ){
+		$(".search").css("display","block");//显示搜索框
+	}else{
+		$(".search").css("display","none");//隐藏搜索框
+	}
+});
 
+/**
+ * 绑定headerz中搜索框的escape和enter键
+ * @param event
+ * @returns
+ */
 $(".search-input").bind("keyup",function(event){
 	//回车
 	if( event.keyCode == "13" ){
@@ -32,7 +52,7 @@ $(".search-input").bind("keyup",function(event){
 	if( event.keyCode == '27' ){
 		$(".search-close").click();
 	}
-	
+	//autocomplete视情况再加....
 });
 
 /**
@@ -72,11 +92,5 @@ $("#topSearch").bind("keyup",function(event){
 	});
 	console.log("输入框操作共耗时："+(new Date().getTime()-timeStamp)+"ms");
 })
-
-
-
-
-
-
 	
 	

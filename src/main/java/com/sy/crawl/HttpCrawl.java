@@ -34,9 +34,7 @@ public class HttpCrawl {
 	private static final String INDEX_AJAX_URL = "http://kns.cnki.net/kns/CnkiIndex/AjaxService/AjaxService.aspx/";
 	//CaculateURL常量
 	private static final String CACULATE_SEARCH_URL = "http://kns.cnki.net/kns/request/SearchHandler.ashx?action=&NaviCode=*&ua=1.11&formDefaultResult=&PageName=ASP.brief_default_result_aspx&DbPrefix=SCDB&DbCatalog=%e4%b8%ad%e5%9b%bd%e5%ad%a6%e6%9c%af%e6%96%87%e7%8c%ae%e7%bd%91%e7%bb%9c%e5%87%ba%e7%89%88%e6%80%bb%e5%ba%93&ConfigFile=SCDBINDEX.xml&db_opt=CJFQ%2CCJRF%2CCDFD%2CCMFD%2CCPFD%2CIPFD%2CCCND%2CCCJD&txt_1_sel=SU%24%25%3D%7C&txt_1_value1=";
-	
 	private static final String CACULATE_SEARCH_URL_TAIL = "&txt_1_special1=%25&his=0&parentdb=SCDB&__=";
-	
 	private static final String CACULATE_AJAX_URL = "http://kns.cnki.net/kns/Visualization/";
 	
 	//Reference URL 常量
@@ -44,13 +42,13 @@ public class HttpCrawl {
 
 	//Reference URL 常量
 	private static final String REFERENCE_URL_ALL = "http://ref.cnki.net/REF/HighRef/Search";
-		//http连接池
+	//httpClient连接池
 	@Autowired
 	HttpConnectionManager connectionManager;
 	
 	
 	/**
-	 * 获取被引统计数据(首页)
+	 * 获取被引统计数据 （分页）
 	 * @param type QIKN 期刊 AUTH 作者 ...s
 	 * @return 
 	 * @throws IOException 
@@ -60,19 +58,13 @@ public class HttpCrawl {
 		
 		String result = "";
 		HttpPost httpPost = new HttpPost(REFERENCE_URL_ALL+"?isPage=true&pIdx="+page+"&pSize=20&type="+type+"&orderField=&subjectCode=");
+		Logger.info("[分页获取被引数据URI]:["+httpPost.getURI()+"]");
 		HttpUtil.setRequestConfig(httpPost);
 		//新建httpCLient对象
 		CloseableHttpClient httpClient = connectionManager.getHttpClient();
-		CloseableHttpResponse response = null;
-		//执行psot请求
-		//StringEntity strEntity = new StringEntity();
-		//Logger.info(strEntity.toString());
-		//将参数插入请求体
-		//httpPost.setEntity(strEntity);
-		
-		response = httpClient.execute(httpPost);
+		CloseableHttpResponse response = httpClient.execute(httpPost);
 		//请求成功
-		Logger.info("type:"+type+" 获取被引数据请求是否成功:"+response.getStatusLine().getStatusCode());
+		Logger.info("[type:"+type+"] 分页获取被引数据请求是否成功:"+response.getStatusLine().getStatusCode());
 		if(HttpStatus.SC_OK == response.getStatusLine().getStatusCode()) {
 			HttpEntity entity = response.getEntity();
 			String temp = EntityUtils.toString(entity,"utf-8");
@@ -81,6 +73,7 @@ public class HttpCrawl {
 		}else {
 			result = "error "+response.getStatusLine().toString();
 		}
+		Logger.info("[获取到的结果]["+result+"]");
 		return result;
 	}
 	
@@ -95,14 +88,13 @@ public class HttpCrawl {
 		
 		String result = "";
 		HttpGet httpGet = new HttpGet(REFERENCE_URL+type);
+		Logger.info("[首页获取被引数据URI]:["+httpGet.getURI()+"]");
 		HttpUtil.setRequestConfig(httpGet);
 		//新建httpCLient对象
 		CloseableHttpClient httpClient = connectionManager.getHttpClient();
-		CloseableHttpResponse response = null;
-		
-		response = httpClient.execute(httpGet);
+		CloseableHttpResponse response = httpClient.execute(httpGet);
 		//请求成功
-		Logger.info("type:"+type+" 获取被引数据请求是否成功:"+response.getStatusLine().getStatusCode());
+		Logger.info("[type:"+type+"] 首页获取被引数据请求是否成功:"+response.getStatusLine().getStatusCode());
 		if(HttpStatus.SC_OK == response.getStatusLine().getStatusCode()) {
 			HttpEntity entity = response.getEntity();
 			String temp = EntityUtils.toString(entity,"utf-8");
@@ -112,8 +104,9 @@ public class HttpCrawl {
 			}
 			result = doc.getElementById("subPager").html();
 		}else {
-			result = "error "+response.getStatusLine().toString();
+			result = "error : "+response.getStatusLine().toString();
 		}
+		Logger.info("[获取到的结果]["+result+"]");
 		return result;
 	}
 	
@@ -137,14 +130,10 @@ public class HttpCrawl {
 		//设置请求头信息
 		setIndexGetHeader(httpGet);
 		CloseableHttpResponse response = null;
-		//post请求不成功则反复执行
-		//boolean flag = true;
-	
-			//执行本次Get请求
-			Logger.info("连接中....");
-			response = httpClient.execute(httpGet);
-			System.out.println(url);
-			Logger.info("连接是否成功： " + response.getStatusLine());
+		//执行本次Get请求
+		response = httpClient.execute(httpGet);
+		System.out.println(url);
+		Logger.info("[连接是否成功]: " + response.getStatusLine());
 		if(HttpStatus.SC_OK != response.getStatusLine().getStatusCode()) {
 			//连接没有成功
 			httpGet.abort();
@@ -160,20 +149,17 @@ public class HttpCrawl {
 		strEntity.setContentEncoding("utf-8");
 		//将参数插入请求体
 		httpPost.setEntity(strEntity);
-		Logger.info(ConvertUtil.getRequestBody(resultType, keyword,numType));
+		
 		//设置请求头
 		setIndexPostHeader(keyword, httpPost);
 		HttpUtil.setRequestConfig(httpPost);
-		Logger.info("index post : " + httpPost.getURI());
-		
+		Logger.info("[获取指数分析数据URI]:["+httpPost.getURI()+"]");
+		Logger.info("[指数分析请求体]"+ConvertUtil.getRequestBody(resultType, keyword,numType));
 		String result = "";
 		//post请求不成功则反复执行
-		
 	
-		//执行本次post请求
-		Logger.info("连接中...");
 		CloseableHttpResponse response2 = httpClient.execute(httpPost);
-		Logger.info("连接是否成功： " + response2.getStatusLine());
+		Logger.info("[连接是否成功]: " + response2.getStatusLine());
 		if(HttpStatus.SC_OK != response2.getStatusLine().getStatusCode()) {
 			//连接没有成功
 			httpPost.abort();
@@ -191,13 +177,14 @@ public class HttpCrawl {
 		//通过连接池来关闭repsonse
 		connectionManager.close(response);
 		connectionManager.close(response2);
+		Logger.info("[获取指数分析数据结果]:"+result);
 		return result;
 	}
 
 
 	
 	/**
-	 * 指数分析界面用到的抓取策略
+	 * 计量可视化分析界面用到的抓取策略
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
@@ -216,18 +203,17 @@ public class HttpCrawl {
 
 		//如果请求成功则打印输出响应的JSON内容
 		String result = "";
-		Logger.info("连接中...");
 		response =  httpClient.execute(httpGet);
-		Logger.info("本次连接是否成功 ： "+response.getStatusLine());
+		Logger.info("[连接是否成功]: " + response.getStatusLine());
 		if(HttpStatus.SC_OK != response.getStatusLine().getStatusCode() /*||
 				result.indexOf("<!DOCTYPE html PUBLIC") == -1*/) {
 			HttpEntity entity =  response.getEntity();
 			
-			Logger.info("error 获取到的结果：" + EntityUtils.toString(entity,"utf-8") );
+			Logger.info("[error 获取到的结果] : " + EntityUtils.toString(entity,"utf-8") );
 			return "Cookie error: " + response.getStatusLine();
 		}else {
 			HttpEntity entity =  response.getEntity();
-			Logger.info("cookie sunccess 成功获取到的结果：" + EntityUtils.toString(entity,"utf-8") );
+			Logger.info("[计量分析 cookie sunccess 成功获取到的结果：]" + EntityUtils.toString(entity,"utf-8") );
 		}
 
 		HttpPost httpPost = new HttpPost(CACULATE_AJAX_URL+urlName);
@@ -247,11 +233,85 @@ public class HttpCrawl {
 		httpPost.setEntity(strEntity);
 		CloseableHttpResponse response2 = null;
 		
+		//执行本次post请求
+		response2 = httpClient.execute(httpPost);
+		Logger.info("[连接是否成功]: " + response.getStatusLine());
+			
+		if(HttpStatus.SC_OK != response2.getStatusLine().getStatusCode() || result.indexOf("<!DOCTYPE html PUBLIC") != -1) {
+			result = "error " + response2.getStatusLine();
+		}else {
+			HttpEntity entity =  response2.getEntity();
+			result = EntityUtils.toString(entity,"utf-8");
+			Logger.info("[本次结果] : " + result);
+		}
+		
+		//清空Cooike
+		//关闭httpClient连接
+		Logger.info("[close Response]");
+		connectionManager.close(response);
+		connectionManager.close(response2);
+		return result;
+	}
+
+	
+	/**
+	 * 计量可视化界面细节数据
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	public String getDetailData(String keyword,String groupName,String urlName,String fieldValue,String field)
+			throws ClientProtocolException, IOException {
+		
+		//httpClient使用cookie保存上下文信息，以便后续的Ajax请求携带Cookie访问
+		CloseableHttpClient httpClient =  connectionManager.getHttpClient();
+		
+		HttpGet httpGet = new HttpGet(CACULATE_SEARCH_URL 
+				+ URLEncoder.encode(keyword, "UTF-8")
+				+ CACULATE_SEARCH_URL_TAIL 
+				+ URLEncoder.encode(HttpUtil.setGMCTime(), "UTF-8"));
+
+		HttpUtil.setRequestConfig(httpGet);
+		CloseableHttpResponse response = null;
+
+		//如果请求成功则打印输出响应的JSON内容
+		String result = "";
+		response =  httpClient.execute(httpGet);
+		Logger.info("本次连接是否成功 ： "+response.getStatusLine());
+		if(HttpStatus.SC_OK != response.getStatusLine().getStatusCode() /*||
+				result.indexOf("<!DOCTYPE html PUBLIC") == -1*/) {
+			HttpEntity entity =  response.getEntity();
+			
+			Logger.info("error 获取到的结果：" + EntityUtils.toString(entity,"utf-8") );
+			return "Cookie error: " + response.getStatusLine();
+		}else {
+			HttpEntity entity =  response.getEntity();
+			Logger.info("cookie sunccess 成功获取到的结果：" + EntityUtils.toString(entity,"utf-8") );
+		}
+
+		HttpPost httpPost = new HttpPost(CACULATE_AJAX_URL+urlName);
+		Logger.info(CACULATE_AJAX_URL+urlName);
+		HttpUtil.setRequestConfig(httpPost);
+		setCaculateHeader(httpPost);
+		//执行psot请求
+		StringBuilder stringEntity = new StringBuilder();
+		stringEntity.append("valueType=3&pagename=ASP.brief_default_result_aspx&dbPrefix=SCDB");
+		stringEntity.append("&groupType="+ConvertUtil.getGroupCode(groupName));
+		stringEntity.append("&field="+ConvertUtil.stringConvertToUTF8(field));
+		stringEntity.append("&fieldValue="+fieldValue);
+
+		StringEntity strEntity = new StringEntity(stringEntity.toString());
+		Logger.info("[请求参数体]："+stringEntity.toString());
+		//将字符串中的关键词参数进行编码转换，否则不识别，返回json字符串中是乱码 统计数据也是错的
+		strEntity.setContentEncoding("utf-8");
+		//将参数插入请求体
+		httpPost.setEntity(strEntity);
+		CloseableHttpResponse response2 = null;
+		
 		
 		//执行本次post请求
-		Logger.info("连接中...");
+
 		response2 = httpClient.execute(httpPost);
-		Logger.info("本次连接是否成功 ： "+response2.getStatusLine());
+		Logger.info("[本次连接是否成功 ：] "+response2.getStatusLine());
 			
 		if(HttpStatus.SC_OK != response2.getStatusLine().getStatusCode() || result.indexOf("<!DOCTYPE html PUBLIC") != -1) {
 			result = "error " + response2.getStatusLine();
@@ -259,17 +319,17 @@ public class HttpCrawl {
 		}else {
 			HttpEntity entity =  response2.getEntity();
 			result = EntityUtils.toString(entity,"utf-8");
-			Logger.info("获取到有效的返回结果 : " + result);
+			Logger.info("[获取到有效的返回结果] : " + result);
 		}
 		
 		//清空Cooike
 		//关闭httpClient连接
-		Logger.info("即将关闭本次连接的Response");
+		Logger.info("[Close Response.]");
 		connectionManager.close(response);
 		connectionManager.close(response2);
 		return result;
 	}
-
+	
 	
 	
 	

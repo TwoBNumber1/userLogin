@@ -69,6 +69,7 @@ html {
     font-size: 100%; /* 1 */
     -webkit-text-size-adjust: 100%; /* 2 */
     -ms-text-size-adjust: 100%; /* 2 */
+    height:auto;
 }
 
 html, html a {
@@ -102,6 +103,7 @@ textarea {
 body {
     margin: 0;
     font-family: 'Open Sans', sans-serif;
+    height:auto;
 }
  
 /* ==========================================================================
@@ -999,6 +1001,7 @@ svg {
   margin-top: -3.5rem;
   width: 30rem;
   height: 3rem;
+  display:none;
 }
 .search:not(.active) {
   cursor: pointer;

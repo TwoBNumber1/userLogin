@@ -160,9 +160,9 @@ function getAttentionArticle(){
 				
 				//getWordCount();
 			}else{
-				$("#attention_table").empty().html("<h2>暂无数据</h2>");
-				toastr.error("Failed!");
-				alert("GetAttentionArticle" + ret.info);
+				$("#attention_table").empty().html("<h2>Bad request retry....</h2>");
+				toastr.error("Failed! " +ret.info);
+			//	alert("GetAttentionArticle" + ret.info);
 				getAttentionArticle();
 			}
 		}
@@ -194,7 +194,7 @@ function getIndexData(keyword,type,numType){
 				//getWordCount();
 			}else{
 				publishChart.hideLoading();
-				toastr.warning("Failed!"+ret.info);
+				toastr.warning("Failed! "+ret.info);
 				//显示重新加载按钮
 				$("#publishCount").find("button").css("display","block")
 				.bind("click",function(event){
