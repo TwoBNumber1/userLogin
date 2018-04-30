@@ -178,7 +178,6 @@ function loadWordEcharts(data,name){
 	    	bottom:"1",
 	        data: xs
 	    },
-
 	    series: [
 	        {
 	        	radius: ['50%', '70%'],
@@ -196,7 +195,6 @@ function loadWordEcharts(data,name){
 	                    }
 	                }
 	            },
-	           
 	            labelLine: {
 	                normal: {
 	                    show: false

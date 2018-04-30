@@ -22,6 +22,8 @@ function getMediaData(mediaChart){
 			}else{
 				mediaChart.hideLoading();
 				toastr.error("Failed!"+ret.info);
+				//加载失败 重新加载数据
+				getMediaChart(mediaChart);
 			}
 		}
 	});
@@ -50,6 +52,8 @@ function getCitedData(citedChart){
 			}else{
 				citedChart.hideLoading();
 				toastr.error("Failed!"+ret.info);
+				//加载失败则重新加载数据
+				getCitedChart(citedChart);
 			}
 		}
 	});
@@ -79,6 +83,8 @@ function getUserData(userChart){
 			}else{
 				userChart.hideLoading();
 				toastr.error("Failed!"+ret.info);
+				//重新加载数据
+				getUserData(userChart);
 			}
 		}
 	});
@@ -110,6 +116,7 @@ function getWordCount(){
 				}else{
 					wordChart.hideLoading();
 					toastr.error("FAILED：" + ret.info);
+					getWordCount();
 				}
 			}
 		});
@@ -196,11 +203,8 @@ function getIndexData(keyword,type,numType){
 				publishChart.hideLoading();
 				toastr.warning("Failed! "+ret.info);
 				//显示重新加载按钮
-				$("#publishCount").find("button").css("display","block")
-				.bind("click",function(event){
-					publishChart.showLoading();
-					getIndexData(keyword,'GetAttention','Academic');
-				});
+				publishChart.showLoading();
+				getIndexData(keyword,'GetAttention','Academic');
 				//绑定事件
 			}
 		}

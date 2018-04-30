@@ -57,6 +57,7 @@ public class DataController {
 			e.printStackTrace();
 		}
 		Logger.info("[操作耗时]："+(System.currentTimeMillis()-start)+"ms");
+		Logger.info("[操作结果]：" + response.toString());
 		return response.toString();
 	}
 
@@ -93,6 +94,7 @@ public class DataController {
 			e.printStackTrace();
 		}
 		Logger.info("[操作耗时]："+(System.currentTimeMillis()-start)+"ms");
+		Logger.info("[操作结果]：" + response.toString());
 		return response.toString();
 	}
 	
@@ -129,6 +131,7 @@ public class DataController {
 			
 		}
 		Logger.info("[操作耗时]："+(System.currentTimeMillis()-start)+"ms");
+		Logger.info("[操作结果]：" + response.toString());
 		return response.toString();
 	}
 	
@@ -150,7 +153,7 @@ public class DataController {
 		Long start = System.currentTimeMillis();
 		try {
 			result = httpCrawl.getDetailData(keyword,groupName,urlName, fieldValue, field);
-			if(result != null && result.length()>0) {
+			if(result != null && result.length()>0 && result.length() != 2) {
 				response = new AjaxResponse(0, "成功获取数据");
 				response.addDataItem("ret",result);
 			}else if(result.contains("error")) {
@@ -163,22 +166,15 @@ public class DataController {
 			response = new AjaxResponse(-1, "失败："+e.getMessage());
 			
 		}
-		Logger.info("操作耗时："+(System.currentTimeMillis()-start)+"ms");
+		Logger.info("[操作耗时]："+(System.currentTimeMillis()-start)+"ms");
+		Logger.info("[操作结果]：" + response.toString());
 		return response.toString();
 	}
 	
-	//正常访问文献发表量页面
-	@RequestMapping(value = "/docuPublication")
-	public String toDocu(String dataType,String keyword){
-		System.out.println("请求参数" + dataType);
-		System.out.println("请求参数 keyword" +keyword);
-		return "data/docuPublication";
-	}
 	
 	//正常访问文献发表量页面
 	@RequestMapping(value = "/getData")
 	public String toWord(){
-
 		return "data/show_result";
 	}
 	

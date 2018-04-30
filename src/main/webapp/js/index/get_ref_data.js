@@ -16,9 +16,9 @@ $(function(){
 	set_search_btn();
 	getReferData("AUTH","tab-auth");
 	//不是总览页面不执行加载地图操作
-	if( window.location.href.indexOf( "page/ref" ) === -1 ){
-		loadDistributeMap();
-	}
+	/*if( window.location.href.indexOf( "page/ref" ) === -1 ){
+		//loadDistributeMap();
+	}*/
 	
 	
 })
@@ -94,5 +94,12 @@ function showLoading(){
 }
 function hideLoading(){
 	$("#loading").css("display","none");
+}
+
+function showMore(){
+	$("#more").css("display","block");
+}
+function hideMore(){
+	$("#more").css("display","none");
 }
 

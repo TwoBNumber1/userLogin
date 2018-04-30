@@ -65,15 +65,22 @@ function getFundData(keyword,groupName){
 
 var orgMap;
 var fundMap;
+
+
+var organ_field;
+var organ_fieldValue = [];
 function loadOrganChart(organChart,str){
 	organChart.showLoading();
 	var obj = jQuery.parseJSON(str);
 	orgMap = obj.slice(0,35);
 	var xs = [];
 	var ys = []
+	organ_field = obj[0].c_field;
+
 	for( var i=0; i<obj.length; i++ ){
 		xs.push(obj[i].name);
 		ys.push(obj[i].y);
+		organ_fieldValue[obj[i].name] = obj[i].c_fieldValue;
 	}
 	organChart.setOption({
 		 title : {
@@ -158,24 +165,45 @@ function loadOrganChart(organChart,str){
 	});
 	organChart.hideLoading();
 	$("#buttonMap").css("display","block");
+	organChart.on('click',function(params){
+		console.log(organ_fieldValue[params.name]);
+		console.log(organ_field);
+		debugger;
+		if( array_contains(legend,params.name) ){
+    		return;
+    	}
+    	//不包含则往里push该信息
+    	legend.push(params.name+"年度趋势");
+		compareAnalysisLineChart(organ_fieldValue[params.name],
+    			organ_field,
+    			keyword,
+    			"机构",
+    			params.name
+    	);
+});
 }
 
 var fundMap;
+var fund_field;
+var fund_fieldValue = [];
 function loadFundChart(fundChart,str){
 	
 	var obj = jQuery.parseJSON(str);
 	fundMap = obj.slice(0,35);
 	var xs = [];
-	var ys = []
+	var ys = [];
+	fund_field = obj[0].c_field;
 	for( var i=0; i<obj.length; i++ ){
 		xs.push(obj[i].name);
 		ys.push(obj[i].y);
+		
+		fund_fieldValue[obj[i].name] = obj[i].c_fieldValue;
 	}
 	fundChart.setOption({
 		 title : {
-		        text: '机构分布',
+		        text: '基金分布',
 		        x:'left',
-		        subtext:"机构的文献发表量分布"
+		        subtext:"各机构的文献发表量分布"
 		    },
 		    grid:{
 		    	bottom:80
@@ -254,6 +282,23 @@ function loadFundChart(fundChart,str){
 	});
 	fundChart.hideLoading();
 	$("#fundMap").css("display","block");
+	//绑定该面板的点击事件
+	fundChart.on('click',function(params){
+			console.log(fund_fieldValue[params.name]);
+			console.log(fund_field);
+			debugger;
+			if( array_contains(legend,params.name) ){
+	    		return;
+	    	}
+	    	//不包含则往里push该信息
+	    	legend.push(params.name+"年度趋势");
+			compareAnalysisLineChart(fund_fieldValue[params.name],
+	    			fund_field,
+	    			keyword,
+	    			"基金",
+	    			params.name
+	    	);
+	});
 }
 var orgMap;
 function getMap(id,button,map){

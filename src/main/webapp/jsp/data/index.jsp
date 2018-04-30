@@ -39,7 +39,6 @@
 		margin:auto;
 		text-align:center;
 	}
-
 </style>
 </head>
   <body>
@@ -73,7 +72,16 @@
 		</div>     
      
 		</header>
+	
 		<div style="padding-top:40px"></div>
+			<div id="top" style="background-image: url('<%=path %>/img/up.png');
+	 	 display: none;
+	 	 height:100px;
+	 	 width:100px;
+		 position: fixed;
+		 left:93%;
+		 z-index:1;
+		 bottom: 20px;"></div>
     <div class="banner">
     <ul>
           <li style="background-image: url('<%=path %>/img/02.jpg');">
@@ -317,21 +325,22 @@
                         </div>
                         <!-- 高被引学科 End -->
                     </div>
-                    <div  style="width:100%;height:85px"></div>
+                    <div  style="width:100%;height:50px"></div>
+                    <a id="more" href="page/ref" style="float:right" >>>>更多</a>
                     <div id="loading"><img src="<%=path %>/img/gif/loading.gif"></div>
-                    <a href="page/ref">>>>更多</a>
+                    <div  style="width:100%;height:50px"></div>
                 </div>
 			</div>
       </div>
       <div class="container" style="width:92%">
     
       <!-- 院校分布  -->
-	  <div class="col-md-12">
+<!-- 	  <div class="col-md-12">
 	  	<div  id="school_distribute" style="height:600px;"></div>
 		
+	  </div> -->
 	  </div>
-	  </div>
- 	
+
         
     <div class="shadow"></div>
     <footer>
@@ -373,7 +382,7 @@
     <%-- <script src="<%=path %>/js/plugins/toastr/toastr.min.js"></script> --%>
     <script src="<%=path %>/js/echarts/echarts.js"></script>
     <script src="<%=path %>/js/echarts/bmap.min.js"></script>
-     <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=cudRWYxjcLLBjz37p40zRRTn4124YeQw&callback=initialize"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=cudRWYxjcLLBjz37p40zRRTn4124YeQw&callback=initialize"></script>
   
     
     <!-- tipso -->
@@ -384,11 +393,13 @@
     <script src="<%=path %>/js/plugins/sweetalert/sweetalert.min.js"></script>
     <script src="<%=path %>/js/horsey/jquery-ui.min.js"></script>
     <!-- 处理逻辑 -->
-    <script src="<%=path %>/js/index/get_school_distribute.js"></script>
+    <%-- <script src="<%=path %>/js/index/get_school_distribute.js"></script> --%>
     <script src="<%=path %>/js/index/index_operate.js"></script>
     <script src="<%=path %>/js/index/get_ref_data.js"></script>
-     <script src="<%=path %>/js/data/util.js"></script>
+    <script src="<%=path %>/js/data/util.js"></script>
 	<script type="text/javascript"> var ctx = "<%=path%>";
+
+	
     </script>
     <!-- 搜索框 -->
    	<script src='<%=path %>/js/min/stopExecutionOnTimeout.js?t=1'></script>

@@ -62,6 +62,13 @@ $("#searchBtn").on("click",function(){
 		return;
 	} 
 	keyword = $("#search").val().trim();
+	initIndexPage();
+	initResultPage();
+	initSourcePage(keyword);
+	
+});
+
+function initIndexPage(){
 	publishChart.showLoading();
 	getIndexData(keyword,'GetAttention','Academic');
 	wordChart.showLoading();
@@ -69,8 +76,7 @@ $("#searchBtn").on("click",function(){
 	getWordCount();
 	getSubject();
 	getOrgan();
-});
-
+}
 
 
 

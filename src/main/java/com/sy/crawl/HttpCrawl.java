@@ -238,6 +238,7 @@ public class HttpCrawl {
 		Logger.info("[连接是否成功]: " + response.getStatusLine());
 			
 		if(HttpStatus.SC_OK != response2.getStatusLine().getStatusCode() || result.indexOf("<!DOCTYPE html PUBLIC") != -1) {
+			
 			result = "error " + response2.getStatusLine();
 		}else {
 			HttpEntity entity =  response2.getEntity();

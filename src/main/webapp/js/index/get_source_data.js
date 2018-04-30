@@ -4,6 +4,11 @@ var researchChart;
 var subChart;
 var sourceChart;
 var source_flag = 0;
+
+/**
+ * 加载资源分布页面
+ * @returns
+ */
 function initSourcePage(){
 	getResourceType(keyword,"资源类型");
 	getDocuSource(keyword,"文献来源");
@@ -14,7 +19,7 @@ function initSourcePage(){
 }
 
 /**
- * 文献来源
+ * 获取文献来源数据
  * @param keyword 关键词
  * @param groupName 暂时写死 文献来源
  * @returns
@@ -41,7 +46,9 @@ function getDocuSource(keyword,groupName){
 			}else{
 				console.log(ret.info);
 				layer.msg(ret.info+"文献来源",{icon:3});
-				sourceChart.hideLoading();
+				//sourceChart.hideLoading();
+				//重新加载数据
+				getDocuSource(keyword,groupName);
 			}
 		
 		},
@@ -50,7 +57,7 @@ function getDocuSource(keyword,groupName){
 	});
 }
 /**
- * 学科分布 
+ * 获取学科分布数据 
  * @param keyword
  * @param groupName 写死 学科
  * @returns
@@ -75,15 +82,22 @@ function getSubDistribute(keyword,groupName){
 			}else{
 				console.log("学科分布"+ret.info);
 				layer.msg("学科分布"+ret.info,{icon:3});
-				subChart.hideLoading();
+				//重新加载数据
+				getSubDistribute(keyword,groupName)
 			}
 		},
 		error:function(){
-			console.log("学科分布"+ret.info);
+			console.log("学科分布"+ret.info+" 正在重新加载...");
+			getSubDistribute(keyword,groupName);
 		}
 	});
 }
-
+/**
+ * 获取研究层次数据
+ * @param keyword 关键词
+ * @param groupName 分组名称
+ * @returns
+ */
 function getResearchLevel(keyword,groupName){
 	deal_with_chart(researchChart);
 	researchChart = echarts.init(document.getElementById('research_level'),"wonderland");
@@ -107,11 +121,19 @@ function getResearchLevel(keyword,groupName){
 		},
 		error:function(){
 			layer.msg("研究层次"+ret.info,{icon:3});
-			researchChart.hideLoading();
+			//重新加载
+			 getResearchLevel(keyword,groupName)
 		}
 	});
 	
 }
+
+/**
+ * 获取来源类型数据
+ * @param keyword
+ * @param groupName
+ * @returns
+ */
 function getResourceType(keyword,groupName){
 	deal_with_chart(resourceChart);
 	resourceChart = echarts.init(document.getElementById('resource_type'),"wonderland");
@@ -141,6 +163,12 @@ function getResourceType(keyword,groupName){
 	});
 }
 
+/**
+ * 根据来源类型数据和容器 加载图表
+ * @param resourceChart 容器
+ * @param str 数据
+ * @returns
+ */
 function loadResourceType(resourceChart,str){
 	debugger;
 	resourceChart.showLoading();
@@ -228,6 +256,11 @@ var is_iframe_exists = 0;
 var compareX = [];
 var compareY = [];
 var LayerIndex;
+/**
+ * 加载柱状比较分析页面
+ * @param data
+ * @returns
+ */
 function compareAnalysis(data){
 	//表明当前页面中没有比较分析的子页面
 	if( is_iframe_exists === 0){
@@ -337,13 +370,23 @@ function compareAnalysis(data){
 	debugger;
 }
 
+/**
+ * 加载研究层次图表
+ * @param researchChart  容器
+ * @param str 数据
+ * @returns
+ */
+var level_field;
+var level_fieldValue = [];
 function loadResearchLevel(researchChart,str){
 	debugger;
 	var obj = jQuery.parseJSON(str);
 	var data = [];
 	var xs = [];
+	level_field = obj[0].c_field;
 	for( var i=0; i<obj.length; i++ ){
 		xs.push(obj[i].name);
+		level_fieldValue[obj[i].name] = obj[i].c_fieldValue;
 		data.push({
 			name:obj[i].name,
 			value:obj[i].y
@@ -399,6 +442,24 @@ function loadResearchLevel(researchChart,str){
 		    ]
 	});
 	researchChart.hideLoading();
+	//给图表绑定点击事件  该图标加载比较分析折线图
+	researchChart.on('click',function(params){
+		if( params.data.selected ){
+			console.log(level_fieldValue[params.name]);
+			console.log(level_field);
+			if( array_contains(legend,params.name) ){
+	    		return;
+	    	}
+	    	//不包含则往里push该信息
+	    	legend.push(params.name+"年度趋势");
+			compareAnalysisLineChart(level_fieldValue[params.name],
+	    			level_field,
+	    			keyword,
+	    			"研究层次",
+	    			params.name
+	    	);
+		}
+	});
 }
 
 /**
@@ -423,6 +484,7 @@ function loadCharts(discribe,chart,str){
 	//push 属性名称
 	 if(discribe.indexOf("学科") != -1)
 		 subject_field = obj[0].c_field;
+	 
 	 else
 		 docu_field = obj[0].c_field;
 	
@@ -531,8 +593,13 @@ function loadCharts(discribe,chart,str){
 				//直接跳进
 				console.log(subject_fieldValue[params.name]);
 				console.log(subject_field);
+				if( array_contains(legend,params.name) ){
+		    		return;
+		    	}
+		    	//不包含则往里push该信息
+		    	legend.push(params.name+"年度趋势");
 				compareAnalysisLineChart(docu_fieldValue[params.name],
-		    			docu_field,
+						subject_field,
 		    			keyword,
 		    			discribe
 		    	);
@@ -540,9 +607,18 @@ function loadCharts(discribe,chart,str){
 	 else
 		 chart.on('click',function(params){
 				debugger;
-		    	console.log("点击");
+		    	console.log("响应点击事件 ");
 		    	console.log(docu_fieldValue[params.name]);
 		    	console.log(docu_field);
+		    	//如果已经包含该信息，就不往legend数组里push这个值
+		    	//同时也说明该窗口已经加载了这个信息的折线图，return出去 不重复加载数据
+		    	//不发送不必要的服务器请求
+		    	if( array_contains(legend,params.name) ){
+		    		return;
+		    	}
+		    	//不包含则往里push该信息
+		    	legend.push(params.name+"年度趋势");
+		    	//加载比较分析的折线图
 		    	compareAnalysisLineChart(docu_fieldValue[params.name],
 		    			docu_field,
 		    			keyword,
@@ -557,30 +633,35 @@ function loadCharts(discribe,chart,str){
 var fieldValueArray = [];
 var is_open_exists = 0;
 var compareData = [];
+var legend = [];
+var xs = [];
 function compareAnalysisLineChart(fieldValue,field,keyword,groupName,name){
-	
   	//打开一个窗口
+	debugger;
 	if( array_contains(fieldValueArray,name) ){
+		layer.msg("弹出窗中已经加载了刚才点击的数据",{icon:3,time:2000});
 		return;
 	}
-	//compareAnalysis(params.data);
-	
 	if( is_open_exists == 0 ){
+		//标记已经打开过窗口 接下来的点击操作不会再打开新的窗口
+		is_open_exists = 1;
+		//打开比较分析的窗口
 		layer.open({
 			type:1,
 			title:"比较分析 - Line",
 			shade:0,//操作遮罩层
 			offset:[0,0],
 			resize:false,//不允许拉伸
-			maxmin:false,
+			maxmin:true,
 			scrollbar:false,//不允许滚动条
-			area:['1200px','400px'],
+			area:['1000px','350x'],
 			content:"<div id='compare-chart2' style='width:1200px;height:350px;padding:10px'></div>",
 			end:function(){//销毁该层的回调函数
 				//标记成未打开窗口
 				is_open_exists = 0;
 				//清空数据
 				compareData = [];
+				legend = [];
 			}
 		});
 	}
@@ -601,24 +682,50 @@ function compareAnalysisLineChart(fieldValue,field,keyword,groupName,name){
 				var temp = [];
 				for( var i=0,length = obj.length; i<length; i++ ){
 					temp.push([obj[i].name,obj[i].y]);
+					//包含就忽略 不包含该年份就push进数组
+					if( ! array_contains(xs,obj[i].name) ){
+						xs.push(obj[i].name)
+					}
 				}
+				//年份数字排个序
+				xs.sort();
 				//将data name push进数组
 				fieldValueArray.push(name);
 				compareData.push(temp);
 				var compareChart = echarts.init(document.getElementById("compare-chart2"),"wonderland");
 				compareChart.showLoading();
-				loadCompareChart(compareData,compareChart);
+				loadCompareChart(legend,compareData,xs,compareChart);
 			}else{
-			
+				layer.msg("读取数据失败，尝试再次获取...",{icon:7,time:3000});
+				compareAnalysisLineChart(fieldValue,field,keyword,groupName,name);
 			}
 		
 		},
 		error:function(){
+			layer.msg("页面错误，详情见控制台");
 		}
 	});
 }
-
-function loadCompareChart(compareData,chart){
+/**
+ * 加载比较分析折线图
+ * @param legend 类别数组
+ * @param compareData
+ * @param xs
+ * @param chart
+ * @returns
+ */
+function loadCompareChart(legend,compareData,xs,chart){
+	debugger;
+	//组装series数组
+	var series = [];
+	for( var i =0,length=compareData.length;i<length;i++ ){
+		series.push(  {
+            name:legend[i],
+            type:'line',
+            stack: '总量',
+            data:compareData[i]
+        });
+	}
 	option = {
 		    title: {
 		        text: '折线图堆叠'
@@ -627,7 +734,7 @@ function loadCompareChart(compareData,chart){
 		        trigger: 'axis'
 		    },
 		    legend: {
-		        data:['邮件营销','联盟广告']
+		        data:legend
 		    },
 		    grid: {
 		        left: '3%',
@@ -643,30 +750,12 @@ function loadCompareChart(compareData,chart){
 		    xAxis: {
 		        type: 'category',
 		        boundaryGap: false,
-		        //data: ['周一','周二','周三','周四','周五','周六','周日']
+		        data: xs
 		    },
 		    yAxis: {
 		        type: 'value'
 		    },
-		    series: [
-		        {
-		            name:'邮件营销',
-		            type:'line',
-		            stack: '总量',
-		            data:[["周一",120], ["周二",132],["周三", 101], 
-		            ["周四",134], ["周五",90], ["周六",230], ["周日",210]]
-		        },
-		        {
-		            name:'联盟广告',
-		            type:'line',
-		            stack: '总量',
-		            data:
-		            [["周一",220], ["周二",182],["周三", 191], 
-		            ["周四",234], ["周五",290], ["周六",330], ["周日",310]]
-		        }
-		        
-		       
-		    ]
+		    series: series
 		};
 
 	chart.setOption(option);
@@ -674,4 +763,3 @@ function loadCompareChart(compareData,chart){
 	chart.hideLoading();
 	debugger;
 }
-

@@ -2,13 +2,11 @@
 
 var caculate_flag = 0;
 var matrixChart;
-var scatterChart;
+
 function getMatrixData(keyword,groupName){
 	deal_with_chart(matrixChart);
-	deal_with_chart(scatterChart);
-	scatterChart = echarts.init(document.getElementById("scatter"),'wonderland');
+
 	matrixChart = echarts.init(document.getElementById("matrix"),"wonderland");
-	scatterChart.showLoading();
 	matrixChart.showLoading();
 	$.ajax({
 		type:'POST',
@@ -41,6 +39,8 @@ var cloudChart;
 var wordAllChart;
 
 function getCaculateData(keyword,groupName){
+	//加载年度交叉分析
+	getYearCrossData();
 	deal_with_chart(wordAllChart);
 	deal_with_chart(cloudChart);
 	//%u 解码
@@ -77,14 +77,16 @@ function getCaculateData(keyword,groupName){
 	});
 }
 
-$("#cross").bind("click",function(event){
+//测试数据用
+/*$("#cross").bind("click",function(event){
 	layer.msg("加载年度交叉分析....");
 	getYearCrossData();
-})
+})*/
 
 var yearChart;
 
 function getYearCrossData(){
+	
 	deal_with_chart(yearChart);
 	yearChart = echarts.init(document.getElementById('yearCross'),'wonderland');
 	yearChart.showLoading();
@@ -105,6 +107,8 @@ function getYearCrossData(){
 				loadYearChart(str,yearChart);
 			}else{
 				layer.msg("年度交叉分析出错...",{icon:3});
+				//出错重新加载
+				getYearCrossData();
 			}
 		}
 		
@@ -180,7 +184,6 @@ function loadMatrix(str){
 			    },
 		      tooltip: {
 		    	  trigger:'item'
-		    	  
 		      },
 		      legend: [{
 		         
@@ -247,63 +250,6 @@ function loadMatrix(str){
 	matrixChart.setOption(option);
 	matrixChart.hideLoading();
 	loadMatrixScatter();
-}
-
-function loadMatrixScatter(){
-	debugger;
-	var data = [[
-	     ["Java", "J2EE", 88],
-         ["Java", "JSP", 155],
-         ["Java", "MVC", 84],
-         ["Java", "XML", 219],
-         ["JAVA", "数据库", 202]
-	      
-	]];
-
-		var scatterOption = {
-
-		    xAxis: {
-		      type:"category"
-		    },
-		    yAxis: {
-		      type:"category"
-		    },
-		    series: [{
-
-		        data: data[0],
-		        type: 'scatter',
-		        symbolSize: function (data) {
-		        	debugger;
-		            return Math.sqrt(data[2]);
-		        },
-		        label: {
-		            emphasis: {
-		                show: true,
-		                formatter: function (param) {
-		                	debugger;
-		                    return param.data[0]+"与"+param.data[1]+"共现次数："+param.data[2];
-		                },
-		                position: 'top'
-		            }
-		        },
-		        itemStyle: {
-		            normal: {
-		                shadowBlur: 10,
-		                shadowColor: 'rgba(120, 36, 50, 0.5)',
-		                shadowOffsetY: 5,
-		                color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
-		                    offset: 0,
-		                    color: 'rgb(251, 118, 123)'
-		                }, {
-		                    offset: 1,
-		                    color: 'rgb(204, 46, 72)'
-		                }])
-		            }
-		        }
-		    }]
-		};
-	scatterChart.setOption(scatterOption);
-	scatter.hideLoading();
 }
 
 function loadWordCloud(data,cloudChart){
@@ -473,6 +419,12 @@ function loadYearChart(data,yearChart){
 		);
 	}
 	option = {
+			 title:{
+			        text: "年度关键词交叉分析",
+			        subtext: "<数据来自中国知网>",
+			        top: "top",
+			        left: "center"
+			    },
 		    tooltip : {
 		        trigger: 'axis',
 		        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
@@ -481,7 +433,8 @@ function loadYearChart(data,yearChart){
 		    },
 		    legend: {
 		        data:legends,
-		        left:50
+		        left:50,
+		        top:50
 		    },
 		    grid: {
 		        left: '5%',

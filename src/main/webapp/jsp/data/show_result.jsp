@@ -87,6 +87,14 @@
         </div>     
 	</header>
 	<div style="padding-top:65px"></div>
+	<div id="top" style="background-image: url('<%=path %>/img/up.png');
+	 	 display: none;
+	 	 height:100px;
+	 	 width:100px;
+		 position: fixed;
+		 left:93%;
+		 z-index:1;
+		 bottom: 20px;"></div>
 	<div class="text-inter" style="border-top:solid 1px #e3e3e3">
 		<div class="container">
 			<div class="row">
@@ -231,7 +239,7 @@
 							</div>
 							<!-- 年度交叉分析 -->
 								<div class="container">
-								<button id="cross" class="button extra-color">加载年度交叉</button>
+								
 								<div class="row">
 									<div class="col-sm-12" id="yearCross" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
 								</div>
@@ -243,11 +251,11 @@
 									<div class="col-sm-12" id="matrix" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
 								</div>
 							</div>
-								<div class="container">
+								<!-- <div class="container">
 								<div class="row">
 									<div class="col-sm-12" id="scatter" style="height:600px;border:1px solid #ccc;padding:10px;"></div>
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 					<!-- 计量分析 End -->

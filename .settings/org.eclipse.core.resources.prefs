@@ -8,6 +8,7 @@ encoding//src/main/java/com/sy/controller/words.txt=UTF-8
 encoding//src/main/java/com/sy/crawl/HttpConnectionManager.java=UTF-8
 encoding//src/main/java/com/sy/crawl/HttpCrawl.java=UTF-8
 encoding//src/main/java/com/sy/gt/GeetestLib.java=UTF-8
+encoding//src/main/java/com/sy/listener/ThreadDestroyListener.java=UTF-8
 encoding//src/main/java/com/sy/realm/UserRealm.java=UTF-8
 encoding//src/main/java/com/sy/util/ConvertUtil.java=UTF-8
 encoding//src/main/java/struct/KeywordsAutocompleteTest.java=UTF-8

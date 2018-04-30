@@ -3,6 +3,21 @@ function getSum(a){
 	return eval(a.join("+"));
 }
 
+$(function(){
+  $("#top").click(function() {
+      $("html,body").animate({scrollTop:0}, 500);
+  }); 
+  window.onscroll=function(){
+		  var clientHeight=document.documentElement.clientHeight||document.body.clientHeight;
+		  var topH=document.documentElement.scrollTop||document.body.scrollTop;
+		  if(topH/clientHeight > 0.30){
+			  $("#top").css("display","block");
+		  }else{
+			  $("#top").css("display","none");
+		  }
+	  }
+})
+
 /*根据name获取当前Url中的参数*/
 function getUrlParam(name){
 
@@ -142,6 +157,10 @@ function array_contains(array,obj){
 	}
 	return false;
 }
+
+/**
+ * 回到顶部
+ */
 
 
 

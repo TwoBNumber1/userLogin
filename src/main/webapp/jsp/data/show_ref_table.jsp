@@ -71,6 +71,14 @@
 			  <div class="search-close"></div>
 			</div>   
 		</header>
+		<div id="top" style="background-image: url('<%=path %>/img/up.png');
+	 	 display: none;
+	 	 height:100px;
+	 	 width:100px;
+		 position: fixed;
+		 left:93%;
+		 z-index:1;
+		 bottom: 20px;"></div>
 		<div style="padding-top:40px"></div>
     <div class="banner">
  
