@@ -7,7 +7,7 @@
 	<!-- 查询用户和密码进行登录 -->
 	<select id="findByUsername" resultType="User" parameterType="String">
 	
-		select * from user where name = #{username}
+		select * from user_account where name = #{username}
 			
 	</select>
 	
