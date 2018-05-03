@@ -12,7 +12,7 @@ public class ThreadDestroyListener implements ServletContextListener {
 		// TODO Auto-generated method stub
 
 		for( final Thread th : Thread.getAllStackTraces().keySet() ) {
-			System.out.println("Ïß³Ì"+ th.getName() );
+			System.out.println("thread-name :"+ th.getName() );
 			
 		}
 	}

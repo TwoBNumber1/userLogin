@@ -226,23 +226,33 @@ function loadPublishEcharts(data){
     //grow
     var growY = [];
     var growY2 = [];
+    var flag = true;
+    if( obj.foreign.length == 0 ){
+		 	flag = false;
+	    }
 
     if (obj != null && obj != undefined && obj != 'undefined') {
-	    	
-    		growY2.push( [ obj.foreign[0][0]+"" , 0 ]);
-	    	for( var i=1; i<obj.foreign.length; i++){
-	    		xs.push( obj.foreign[i][0] );
-	    		var y = [];
-	    		y.push( obj.foreign[i][0]+"" );
-	    		y.push( obj.foreign[i][1] );
-	    		ys2.push(y);
-	    		var item = [];
-	    		item.push( obj.foreign[i][0]+"" );
-	    		item.push( year_to_year(obj.foreign[i][1],obj.foreign[i-1][1]) );
-	    		growY2.push( item );
-	    	}
+    		//可能为空
+    		if( flag ){
+	    	 	growY2.push( [ obj.foreign[0][0]+"" , 0 ]);
+		    	for( var i=1; i<obj.foreign.length; i++){
+		    		xs.push( obj.foreign[i][0] );
+		    		var y = [];
+		    		y.push( obj.foreign[i][0]+"" );
+		    		y.push( obj.foreign[i][1] );
+		    		ys2.push(y);
+		    		var item = [];
+		    		item.push( obj.foreign[i][0]+"" );
+		    		item.push( year_to_year(obj.foreign[i][1],obj.foreign[i-1][1]) );
+		    		growY2.push( item );
+		    	}
+    		}
 	    	growY.push ( [ obj.key[0][0]+"" , 0 ] );
 	    	for(var i=1; i<obj.key.length; i++){
+	    		//如果没有外文发文量  就在中文发文量里把X轴的坐标push进数组
+	    		if( !flag ){
+	    			xs.push( obj.key[i][0] );
+	    		}
 	    		var y = [];
 	    		y.push( obj.key[i][0]+"" );
 	    		y.push( obj.key[i][1] );
@@ -259,7 +269,54 @@ function loadPublishEcharts(data){
 	        		growY.push( year_to_year(ys[i],ys[i-1]) );
 	        	}
 	        }*/
-	    	
+	    	var publish_series = [];
+	    	var publish_legend = [];
+	    	debugger;
+	    	if( flag ){
+	    		publish_legend.push("中文发文量","外文发文量","中文发文同比增长率","外文发文同比增长率");
+	    		publish_series.push({
+	                   // 根据名字对应到相应的系列
+	                   name: '中文发文量',
+	                   type: 'bar',
+	                   yAxisIndex:0,
+	                   data: ys
+	               },
+	               {
+	                   // 根据名字对应到相应的系列
+	                   name: '外文发文量',
+	                   type: 'bar',
+	                   yAxisIndex:0,
+	                   data: ys2
+	               },
+	               {
+	            	   name:'中文发文同比增长率',
+	            	   type:'line',
+	            	   yAxisIndex:1,
+	            	   data:growY
+	               },
+	               {
+	            	   name:'外文发文同比增长率',
+	            	   type:'line',
+	            	   yAxisIndex:1,
+	            	   data:growY2
+	               }
+	               );
+	    	}else{
+	    		publish_legend.push("中文发文量","中文发文同比增长率");
+	    		publish_series.push({
+	                   // 根据名字对应到相应的系列
+	                   name: '中文发文量',
+	                   type: 'bar',
+	                   yAxisIndex:0,
+	                   data: ys
+	               },
+	               {
+	            	   name:'中文发文同比增长率',
+	            	   type:'line',
+	            	   yAxisIndex:1,
+	            	   data:growY
+	               });
+	    	}
 	    	publishChart.setOption({        //加载数据图表
         	   title: {
         	        text: '相关词文献发文量',
@@ -267,7 +324,7 @@ function loadPublishEcharts(data){
         	    },
         	    stillShowZeroSum:false,
         	   legend:{
-        		   data:["中文发文量","外文发文量","中文发文同比增长率","外文发文同比增长率"],
+        		   data:publish_legend,
         		   formatter: function (name) {
         		        return echarts.format.truncateText(name, 100, '14px Microsoft Yahei', '…');
         		    },
@@ -347,33 +404,7 @@ function loadPublishEcharts(data){
 		   	                formatter: '{value} %'
 	   	           }
                }],
-               series: [{
-                   // 根据名字对应到相应的系列
-                   name: '中文发文量',
-                   type: 'bar',
-                   yAxisIndex:0,
-                   data: ys
-               },
-               {
-                   // 根据名字对应到相应的系列
-                   name: '外文发文量',
-                   type: 'bar',
-                   yAxisIndex:0,
-                   data: ys2
-               },
-               {
-            	   name:'中文发文同比增长率',
-            	   type:'line',
-            	   yAxisIndex:1,
-            	   data:growY
-               },
-               {
-            	   name:'外文发文同比增长率',
-            	   type:'line',
-            	   yAxisIndex:1,
-            	   data:growY2
-               }
-               ]
+               series: publish_series
            });
 	    	publishChart.hideLoading();    //隐藏加载动画
     }else{

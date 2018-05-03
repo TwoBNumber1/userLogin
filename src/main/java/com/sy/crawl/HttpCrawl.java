@@ -240,7 +240,10 @@ public class HttpCrawl {
 		if(HttpStatus.SC_OK != response2.getStatusLine().getStatusCode() || result.indexOf("<!DOCTYPE html PUBLIC") != -1) {
 			
 			result = "error " + response2.getStatusLine();
-		}else {
+		}else if(  result.length() <3 ) {
+			result = "error the data is null.";
+		}
+		else {
 			HttpEntity entity =  response2.getEntity();
 			result = EntityUtils.toString(entity,"utf-8");
 			Logger.info("[本次结果] : " + result);
@@ -317,6 +320,9 @@ public class HttpCrawl {
 		if(HttpStatus.SC_OK != response2.getStatusLine().getStatusCode() || result.indexOf("<!DOCTYPE html PUBLIC") != -1) {
 			result = "error " + response2.getStatusLine();
 			Logger.info("error " + response2.getStatusLine());
+		}else if(  result.length() <3 ) {
+			result = "error the data is null.";
+			Logger.info("[获取到无效的返回结果] : " + result);
 		}else {
 			HttpEntity entity =  response2.getEntity();
 			result = EntityUtils.toString(entity,"utf-8");

@@ -21,7 +21,6 @@ public class UserServiceImpl implements UserService{
 		
 		User user = userDao.findByUsername(username);
 		if(user != null ){
-		
 			return user;
 		}
 		return null;

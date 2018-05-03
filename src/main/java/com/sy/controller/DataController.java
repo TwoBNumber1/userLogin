@@ -229,7 +229,7 @@ public class DataController {
 			if(result != null && result.length()>0) {
 				response = new AjaxResponse(0, "成功获取数据");
 				response.addDataItem("ret",result);
-			}else if(result.contains("error")) {
+			}else if(result.contains("error") ) {
 				response = new AjaxResponse(-1, result);
 			}
 			else {
