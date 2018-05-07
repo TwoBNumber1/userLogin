@@ -65,5 +65,11 @@ public class PageController {
 
 			return "data/test_search";
 		}
+		
+		@RequestMapping(value = "/register")
+		public String toRegister(){
+
+			return "register";
+		}
 	
 }

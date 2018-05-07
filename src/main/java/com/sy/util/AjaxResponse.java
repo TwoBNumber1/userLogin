@@ -43,7 +43,7 @@ public class AjaxResponse {
 	
 	public String toString() {
 		if (data.isEmpty()) {
-			data = null;
+			data.put("info", null);
 		}
 		return gson.toJson(this);
 	}

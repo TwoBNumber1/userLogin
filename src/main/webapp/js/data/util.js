@@ -1,12 +1,26 @@
 function getSum(a){
-	
 	return eval(a.join("+"));
 }
 
 $(function(){
+  //显示搜索框的地方
   $("#top").click(function() {
       $("html,body").animate({scrollTop:0}, 500);
   }); 
+  var userInfo = getUser();
+  if( userInfo != "no Login" ){
+		//隐藏菜单按钮
+		$("#after_login").css("display","block").append(userInfo);
+		//显示登录按钮
+		$("#login").css("display","none");
+	
+  }else{
+		//隐藏菜单按钮
+		$("#after_login").css("display","none");
+		//显示登录按钮
+		$("#login").css("display","block");
+	
+  }
   window.onscroll=function(){
 		  var clientHeight=document.documentElement.clientHeight||document.body.clientHeight;
 		  var topH=document.documentElement.scrollTop||document.body.scrollTop;
@@ -15,7 +29,137 @@ $(function(){
 		  }else{
 			  $("#top").css("display","none");
 		  }
+  }
+  //注销按钮绑定代码
+  $("#logout").bind("click",function(){
+	  $.ajax({
+		  type:"GET",
+			url: ctx+'/user/outLogin',
+			dataType: 'json',
+			success: function(ret){
+				if( ret.status == 0 ){
+					layer.msg("注销成功！",{icon:1,time:2000});
+					//隐藏菜单按钮
+					$("#after_login").css("display","none");
+					//显示登录按钮
+					$("#login").css("display","block");
+				
+				}else{
+					layer.msg("注销失败！",{icon:1,time:2000});
+				}
+				
+			},
+			error:function(){
+				layer.msg("注销失败",{icon:2,time:2000})
+			}
+		  
+	  });
+  })
+  //登录和注册框绑定事件
+  $("#login_button").bind("click",function(){
+	  debugger;
+	  var password = $("#password").val().trim();
+	  if(password.length<6){
+		  layer.msg("密码长度小于6，请重新输入",{icon:2,time:2000});
+		  return;
 	  }
+	  
+	  $.ajax({
+		  type:"POST",
+			url: ctx+'/user/login',
+			dataType: 'json',
+			data:{"username":$("#username").val().trim(),
+				"password":$("#password").val().trim(),
+			},
+			success: function(ret){
+				if( ret.status == 0 ){
+					//layer.setTop(layer1);
+					toastr.success(ret.info);
+					$("#modal-form").modal('hide');
+					//隐藏登录按钮
+					$("#login").css("display","none");
+					//显示菜单按钮
+					$("#after_login").css("display","block")
+				}else{
+					layer.msg(ret.info,{icon:2,time:2000});
+					toastr.error(ret.info);
+				}
+				
+			},
+			error:function(){
+				layer.msg("登录失败",{icon:2,time:2000})
+			}
+		  
+	  });
+  });
+  //历史记录功能绑定代码
+  $("#history").bind("click",function(){
+	  //打开一个新窗口
+	  LayerIndex = layer.open({
+			type:1,
+			title:"历史记录",
+			shade:0,//操作遮罩层
+			offset:'auto',
+			resize:false,//不允许拉伸
+			maxmin:false,
+			scrollbar:false,//不允许滚动条
+			area:['400px','500px'],
+			content:'   <table align="center" id= "dataTable"'+
+                'class="table table-striped table-bordered table-hover dataTables-example dataTable">'+
+            '<thead>'+
+					'<tr>'+
+                    	'<th>关键词</th>'+
+                    	'<th>上次搜索日期</th>'+
+                    	'<th class="nosort">操作</th>'+
+					'</tr>'+
+			'</thead>'+
+			'<tbody id="history_table"></tbody>'+
+            '</table>',
+            success:function(layero){
+            	layer.setTop(layero);
+            	 $.ajax({
+           		  type:"POST",
+           		  url:ctx+'/user/getRecords',
+           		  dataType:'json',
+           		  data:{username:getUser()},
+           		  success:function(ret){
+           			  if( ret.status == 0 ){
+           				  debugger;
+           				  var array = jQuery.parseJSON(ret.data.data);
+           				  for( var i=0;i<array.length;i++ ){
+           					  var content = array[i].split(",");
+           					  $("#history_table").append("<tr><td>"+content[0]+"</td>"+
+           							"<td>"+content[1]+"</td>"+
+           							"<td><a href='"+ctx+"/data/getData?keyword="+content[0]+"'>点击跳转</a></td>" +
+           									"</tr>");
+           				  }
+           				DataTable = $("#dataTable").DataTable({
+        					//规定排序列
+        					paging:false,
+        					searching:false,
+        					info:false,
+        					columnDefs:[{
+        						targets:'nosort',
+        						orderable:false
+        					}]
+        				});
+           				 
+           			  }
+           		  }
+           		  
+           	  });
+            },
+			end:function(){//销毁该层的回调函数
+				//标记成未打开窗口
+				
+			}
+			
+		});
+	 
+	  
+  })
+  
+  
 })
 
 /*根据name获取当前Url中的参数*/
@@ -161,6 +305,21 @@ function array_contains(array,obj){
 /**
  * 回到顶部
  */
+
+function getUser(){
+	$.ajax({
+		url:ctx+"/user/getInfo",
+		type:'GET',
+		success:function(ret){
+			var obj = jQuery.parseJSON(ret);
+			if(obj.status == 0 ){
+				return obj.info;
+			}else{
+				return "no Login";
+			}
+		}
+	});
+}
 
 
 

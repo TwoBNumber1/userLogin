@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+	<%@ page import="com.sy.entity.User"%>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://"
@@ -20,11 +21,10 @@
     <link href="<%=path %>/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link rel="stylesheet" href="<%=path %>/css/styles.css">
     <link rel="stylesheet" href="<%=path %>/css/queries.css">
-
 	<link href='<%=path %>/css/horsey/jquery-ui.css' rel='stylesheet' type='text/css' />
 
 </head>
-    <link href=" <%=path %>/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+  
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -69,8 +69,29 @@
 		  </svg>
 		  <input type="text" class="search-input" />
 		  <div class="search-close"></div>
+		  
 		</div>     
-     
+         <a id="login" data-toggle="modal" class="btn btn-primary" 
+            style="  float: right;
+				    margin-top: 18px;
+				    margin-right: 20px;"
+            href="#modal-form">登录</a>
+         <a id="after_login" style="width:5%;
+          	 height:5%;
+          	 float:right;
+          	 padding-top:25px;
+          	 display:none" data-toggle="dropdown">
+                     <i class="fa fa-sign-out"></i> 
+         </a>
+          	
+            <ul style="left:90%"class="dropdown-menu" role="menu">
+		        <li>
+		            <a id="history">历史记录</a>
+		        </li>
+		        <li>
+		            <a id="logout">注销</a>
+		        </li>
+        	</ul>
 		</header>
 	
 		<div style="padding-top:40px"></div>
@@ -94,7 +115,7 @@
               <input class="hero-content" name="topSearch" id ="topSearch" value="" 
               autocomplete="off" 
               style="width:500px"/>
-              <a href="#" class="hero-btn" >SEARCH IT!</a>
+              <a class="hero-btn" >SEARCH IT!</a>
               </div>
             </div>
           </div>
@@ -102,6 +123,8 @@
      
     </ul>
 </div>
+
+
     <div class="container">
     	<div class="arrow"></div>
     </div>
@@ -332,15 +355,6 @@
                 </div>
 			</div>
       </div>
-      <div class="container" style="width:92%">
-    
-      <!-- 院校分布  -->
-<!-- 	  <div class="col-md-12">
-	  	<div  id="school_distribute" style="height:600px;"></div>
-		
-	  </div> -->
-	  </div>
-
         
     <div class="shadow"></div>
     <footer>
@@ -367,10 +381,52 @@
         </div>
       </div>  
     </footer>
+    
+   <div id="modal-form" class="modal fade" aria-hidden="true" style="display: none;
+    		position:absolute;
+    		top:25%;
+    		left:50%
+    		transform: translateX(-50%) translateY(-50%);">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6 b-r">
+                            <h3 class="m-t-none m-b">登录</h3>
+
+                            <p>欢迎登录本站(⊙o⊙)</p>
+
+                            <form role="form">
+                                <div class="form-group">
+                                    <label>用户名：</label>
+                                    <input id="username" type="text" placeholder="请输入用户名" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>密码：</label>
+                                    <input id="password"type="password" placeholder="请输入密码" class="form-control">
+                                </div>
+                                <div>
+                                    <button id="login_button" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="button"><strong>登录</strong>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4>还不是会员？</h4>
+                            <p>您可以注册一个账户</p>
+                            <p class="text-center">
+                                <a href="page/register"><i class="fa fa-sign-in big-icon"></i></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </div>
 </body>
   	<script src="<%=path %>/js/jquery-1.10.2.min.js"></script>
     <script src="<%=path %>/js/plugins/layer/layer.js"></script>
-	
+	 <script src="<%=path %>/js/plugins/toastr/toastr.js"></script>
     <script src="<%=path %>/js/bootstrap.min.js"></script>
     <script src="<%=path %>/js/scripts.js"></script>
     <script src="<%=path %>/js/unslider.min.js"></script>
@@ -379,18 +435,13 @@
     <script src="<%=path %>/js/hplus.min.js?v=4.0.0"></script>
     <script src="<%=path %>/js/contabs.min.js"></script>
     <script src="<%=path %>/js/plugins/pace/pace.min.js"></script>
-    <%-- <script src="<%=path %>/js/plugins/toastr/toastr.min.js"></script> --%>
     <script src="<%=path %>/js/echarts/echarts.js"></script>
-    <script src="<%=path %>/js/echarts/bmap.min.js"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=cudRWYxjcLLBjz37p40zRRTn4124YeQw&callback=initialize"></script>
-  
     
     <!-- tipso -->
     <script src="<%=path %>/js/plugins/tooltip/tipso.min.js"></script>
     <!-- dataTables -->
     <script src="<%=path %>/js/plugins/dataTables/jquery.dataTables.min.js"></script>
-   	<!-- Sweet alert -->
-    <script src="<%=path %>/js/plugins/sweetalert/sweetalert.min.js"></script>
+
     <script src="<%=path %>/js/horsey/jquery-ui.min.js"></script>
     <!-- 处理逻辑 -->
     <%-- <script src="<%=path %>/js/index/get_school_distribute.js"></script> --%>
@@ -402,6 +453,7 @@
 	
     </script>
     <!-- 搜索框 -->
+    
    	<script src='<%=path %>/js/min/stopExecutionOnTimeout.js?t=1'></script>
 	<script src='<%=path %>/js/min/snap.svg-min.js'></script>
 </html>

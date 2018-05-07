@@ -31,6 +31,8 @@ $(function(){
 	$("#search").val(keyword);
 	
 	initResultPage();
+	
+	clock = setInterval("console.log('周期刷新');initIndexPage();initResultPage();initSourcePage(keyword);",50000);
 });
 
 

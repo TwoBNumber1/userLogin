@@ -6,6 +6,7 @@ $("a[class='hero-btn']").on("click",function(){
 	//search();
 	var keyword = $("#topSearch").val().trim();
 	if ( str_is_null(keyword) ){
+		debugger;
 		layer.msg('输入关键词再进行搜索。', {icon: 3});
 		return;
 	} 

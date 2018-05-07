@@ -3,8 +3,6 @@ package com.sy.listener;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import com.sy.crawl.HttpConnectionManager;
-
 public class ThreadDestroyListener implements ServletContextListener {
 
 	@Override

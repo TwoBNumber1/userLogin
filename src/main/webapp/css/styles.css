@@ -996,10 +996,10 @@ svg {
 .search {
   position: absolute;
   top: 100%;
-  left: 90%;
+  left: 95%;
   margin-left: -16rem;
   margin-top: -3.5rem;
-  width: 30rem;
+  width: 15rem;
   height: 3rem;
   display:none;
 }
@@ -1023,9 +1023,9 @@ svg {
 .search-input {
   position: relative;
   top:0rem;
-  width: 25rem;
+  width: 15rem;
   height: 6rem;
-  padding:0.2rem 0 3.5rem 8.9rem;
+  padding:0.2rem 0 3.5rem 1.5rem;
   background: transparent;
   outline: none;
   border: none;
@@ -1044,7 +1044,7 @@ svg {
 .search-close {
   position: absolute;
   top: -0.1rem;
-  right: 8.4rem;
+  right: 1rem;
   width: 2rem;
   height: 2rem;
   cursor: pointer;

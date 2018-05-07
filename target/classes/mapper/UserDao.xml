@@ -5,19 +5,50 @@
 <mapper namespace="com.sy.dao.UserDao">
 	<!-- 目的：为DAO接口方法提供sql语句配置 -->
 	<!-- 查询用户和密码进行登录 -->
-	<select id="findByUsername" resultType="User" parameterType="String">
 	
-		select * from user where name = #{username}
+	 <resultMap id="userMap" type="com.sy.entity.User" >
+		<result column="user_id" property="id" jdbcType="INTEGER" />
+    	<result column="user_name" property="username" jdbcType="VARCHAR" />
+		<result column="user_password" property="password" jdbcType="VARCHAR" />
+  	</resultMap>
+	<select id="findByUsername" resultMap="userMap" parameterType="String">
+	
+		select * from user_account where user_name = #{username}
 			
 	</select>
 	
 	<!-- 增加用户名和密码进行注册  parameterType="com.sy.entity.User"-->
- 	<insert id="registerByUsernameAndPassword" > 
+ 	<insert id="registerByUsernameAndPassword"> 
 	    
  	    insert into user_account (user_name,user_password) 
  	    values 
  	    (#{username},#{password}) 
-	
  	</insert> 
+ 
+ 	<select id="findHistoryByUsername" parameterType="String" resultType="String">
+ 		select user_history_word from user_history where user_name = #{username}
+ 	</select>
+ 	
+ 	<insert id="addHistoryByUsername"> 
+ 	    insert into user_history (user_name,user_history_word) 
+ 	    values 
+ 	    (#{0},#{1})
+ 	</insert>
+ 	
+ 	<select id="findIntervalByUsername" parameterType="String" resultType="String">
+ 		select user_interval_time from user_interval where user_name = #{username}
+ 	</select>
+ 	
+ 	<insert id="addIntervalByUsername"> 
+ 	    insert into user_interval (user_name,user_interval_time) 
+ 	    values 
+ 	    (#{0},#{1})
+ 	</insert>
+ 	
+ 	<update id="updateIntervalTimeByUsername" >
+ 		update user_interval
+ 		set user_interval_time = #{1}
+ 		where user_name = #{0}
+ 	</update>
 	
 </mapper>	

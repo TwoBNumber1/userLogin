@@ -19,9 +19,8 @@
     <meta name="description" content="Anaylsis - Register">
 
     <link rel="shortcut icon" href="<%=path%>/img/favicon.ico">
-     <link href="<%=path%>/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+  <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet">
     <link href="<%=path%>/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
-    <link href="<%=path%>/css/plugins/iCheck/custom.css" rel="stylesheet">
     <link href="<%=path%>/css/animate.min.css" rel="stylesheet">
     <link href="<%=path%>/css/style.min.css?v=4.0.0" rel="stylesheet"><base target="_blank">
     <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
@@ -32,49 +31,134 @@
 
     <div class="middle-box text-center loginscreen   animated fadeInDown">
         <div class="col-sm-16">
+          <div style="height:50px"></div>
             <div>
 
-                <h1 class="logo-name">H+</h1>
+                <h1 class="logo-name">实时数据可视化分析平台</h1>
 
             </div>
-            <h3>欢迎注册 H+</h3>
-            <p>创建一个H+新账户</p>
+            <div style="height:50px"></div>
+            <h3>欢迎注册本平台</h3>
+            <p>创建一个新账户</p>
              <form class="m-t" role="form" action="login.html">
                  <div class="form-group">
-                    <input type="text" name="username" class="form-control" placeholder="请输入用户名" required="">
+                    <input type="text" id="register_username" class="form-control" placeholder="请输入用户名" required="">
                 </div>
                 <div class="form-group">
-                    <input type="password" id="password" name="password" class="form-control" placeholder="请输入密码" required="">
+                    <input type="password" id="register_password" name="password" class="form-control" placeholder="请输入密码" required="">
                 	<span id="tip"></span>
                 </div>
                 <div class="form-group">
                     <input type="password" id="repassword" name="repassword" class="form-control" placeholder="请再次输入密码" required="">
                		<span id="tip"></span>
                 </div>
-                <div class="form-group text-left">
-                    <div class="checkbox i-checks">
-                        <label class="no-padding">
-                            <input type="checkbox"><i></i> 我同意注册协议</label>
-                    </div>
-                </div>
-                <button id="registerButton" type="submit" class="btn btn-primary block full-width m-b">注 册</button>
-                <p class="text-muted text-center"><small>已经有账户了？</small><a href="login">点此登录</a>
+                <button id="registerButton" type="button" class="btn btn-primary block full-width m-b">注 册</button>
+                <p class="text-muted text-center"><small>已经有账户了？</small><a data-toggle="modal" href="#modal-form">点此登录</a>
                 </p>
                  
             </form> 
         </div>
     </div>
-    <script src="<%=path%>/js/jquery.min.js?v=2.1.4"></script>
-    <script src="<%=path%>/js/bootstrap.min.js?v=3.3.5"></script>
-    <script src="<%=path%>/js/plugins/iCheck/icheck.min.js"></script>
-    <script src="<%=path%>/js/content.min.js?v=1.0.0"></script>
+       
+   <div id="modal-form" class="modal fade" aria-hidden="true" style="display: none;
+    		position:absolute;
+    		top:25%;
+    		left:50%
+    		transform: translateX(-50%) translateY(-50%);">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6 b-r">
+                            <h3 class="m-t-none m-b">登录</h3>
+
+                            <p>欢迎登录本站(⊙o⊙)</p>
+
+                            <form role="form">
+                                <div class="form-group">
+                                    <label>用户名：</label>
+                                    <input id="username" type="text" placeholder="请输入用户名" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>密码：</label>
+                                    <input id="password"type="password" placeholder="请输入密码" class="form-control">
+                                </div>
+                                <div>
+                                    <button id="login_button" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="button"><strong>登录</strong>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4>还不是会员？</h4>
+                            <p>您可以注册一个账户</p>
+                            <p class="text-center">
+                                <a href="<%=request.getContextPath() %>/page/register"><i class="fa fa-sign-in big-icon"></i></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </div>
+  	<script src="<%=path %>/js/jquery-1.10.2.min.js"></script>
+    <script src="<%=path %>/js/bootstrap.min.js"></script>
+    <script src="<%=path %>/js/plugins/layer/layer.js"></script>
     <script src="<%=path%>/js/plugins/validate/jquery.validate.min.js"></script>
     <script src="<%=path%>/js/plugins/validate/messages_zh.min.js"></script>
-    <script src="<%=path%>/js/demo/form-validate-demo.min.js"></script>
-    <script>
-        $(document).ready(function(){$(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",})});
-
     <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+	<script>
+	 var ctx = "<%=path%>";
+	//验证两次密码是否相等
+	
+	$("register_password").bind("blur",function(){
+		if( $("register_password").val().length < 6){
+			layer.msg("密码长度小于6，请重新输入。",{icon:2,time:2000});
+			return;
+		}
+	});
+	$("#repassword").bind("blur",function(){
+		var password = $("#register_password").val();
+		if( $("#register_password").val() != $("#repassword").val() ){
+			layer.msg("两次密码不相同，请重新输入。",{icon:2,time:2000})
+			return;
+		}
+	});
+	
+	$("#registerButton").bind("click",function(){
+		if( $("#register_password").val() != $("#repassword").val() ){
+			layer.msg("两次密码不相同，请重新输入。",{icon:2,time:2000})
+			return;
+		}
+		if( $("register_password").val().length < 6){
+			layer.msg("密码长度小于6，请重新输入。",{icon:2,time:2000});
+			return;
+		}
+		$.ajax({
+			  type:"POST",
+				url: ctx+'/user/register',
+				dataType: 'json',
+				data:{"username":$("#register_username").val().trim(),
+					"password":$("#repassword").val().trim(),
+				},
+				success: function(ret){
+					if( ret.status == 0 ){
+						layer.msg(ret.info+"，即将回到主页。",{icon:1,time:1000});
+						setTimeout("window.location.href="+ctx,1000);
+					}else{
+						layer.msg(ret.info,{icon:2,time:2000});
+					}
+					
+				},
+				error:function(){
+					layer.msg("注册失败，请稍后重试。",{icon:2,time:2000})
+				}
+		  });
+	})
+	
+	
+	</script>
+
 </body>
 
 </html>
